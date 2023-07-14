@@ -20,7 +20,11 @@ import MempoolLegend from '../components/MempoolLegend.svelte'
 import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
 
+import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
+
+
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
+    import ConnectWallet from './ConnectWallet.svelte';
 
 let searchTabComponent
 
@@ -138,4 +142,13 @@ function showBlock () {
       <Settings />
     </div>
   </SidebarTab>
+  <SidebarTab open={$sidebarToggle === 'bitmaps'} on:click={() => {settings('bitmaps')}} tooltip="Bitmaps">
+    <span slot="tab" title="Bitmaps">
+      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      <ConnectWallet />
+    </div>
+  </SidebarTab>
+
 </div>

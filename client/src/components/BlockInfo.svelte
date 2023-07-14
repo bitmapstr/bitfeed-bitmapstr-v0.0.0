@@ -196,6 +196,14 @@
       font-size: 4.4vw;
     }
 
+    .hidden {
+      visibility: hidden;
+    }
+
+    .visible {
+      visibility: visible;
+    }
+
     .compact {
       display: none;
     }
@@ -342,50 +350,56 @@
 {#key transitionDirection}
   {#each ((block != null && visible && $blocksEnabled) ? [block] : []) as block (block.id)}
     <div class="block-info-container" out:fly|local={flyOut} in:fly|local={flyIn}>
-      <div class="block-info" class:compact={compactView} class:landscape={landscape}>
-          <!-- <span class="data-field">Hash: { block.id }</span> -->
-          <div class="full-size">
-            <div class="data-row">
-              <span class="data-field title-field" title="{block.miner_sig}"><b>{#if block.height == $latestBlockHeight}Latest {/if}Block: </b>{ numberFormat.format(block.height) }</span>
-              <button class="data-field close-button" on:click={hideBlock}><Icon icon={closeIcon} color="var(--palette-x)" /></button>
-            </div>
-            <div class="data-row">
-              <span class="data-field" title="block timestamp">{ formatDateTime(block.time) }</span>
-              <span class="data-field">{ formattedBlockValue }</span>
-            </div>
-            <div class="data-row">
-              <span class="data-field">{ formatBytes(block.bytes) }</span>
-              <span class="data-field">{ formatCount(block.txnCount) } transaction{block.txnCount == 1 ? '' : 's'}</span>
-            </div>
-            <div class="data-row spacer">&nbsp;</div>
-            <div class="data-row">
-              <span class="data-field">avg fee rate</span>
-              {#if block.fees != null}
-                <span class="data-field">{ formatFee(block.avgFeerate) } sats/vbyte</span>
-              {:else}
-                <span class="data-field">unavailable</span>
-              {/if}
-            </div>
-          </div>
-          <div class="compact">
-            <div class="data-row">
-              <span class="data-field title-field" title="{block.miner_sig}"><b>{#if block.height == $latestBlockHeight}Latest {/if}Block: </b>{ numberFormat.format(block.height) }</span>
-              <button class="data-field close-button" on:click={hideBlock}><Icon icon={closeIcon} color="var(--palette-x)" /></button>
-            </div>
-            <div class="data-row">
-              <span class="data-field">{ formatDateTime(block.time) }</span>
-              <span class="data-field">{ formattedBlockValue }</span>
-            </div>
-            <div class="data-row">
-              <span class="data-field">{ formatCount(block.txnCount) } transaction{block.txnCount == 1 ? '' : 's'}</span>
-              {#if block.fees != null}
-                <span class="data-field">{ formatFee(block.avgFeerate) } sats/vb</span>
-              {:else}
-                <span class="data-field">{ formatBytes(block.bytes) }</span>
-              {/if}
-            </div>
-          </div>
-      </div>
+      {#if $settings.showBlockInfo }        
+                <div class="block-info" class:compact={compactView} class:landscape={landscape}>
+                  <!-- <span class="data-field">Hash: { block.id }</span> -->
+                  <div class="full-size">
+                    <div class="data-row">
+                      <span class="data-field title-field" title="{block.miner_sig}"><b>{#if block.height == $latestBlockHeight}Latest {/if}Block: </b>{ numberFormat.format(block.height) }</span>
+                      <button class="data-field close-button" on:click={hideBlock}><Icon icon={closeIcon} color="var(--palette-x)" /></button>
+                    </div>
+                    <div class="data-row">
+                      <span class="data-field" title="block timestamp">{ formatDateTime(block.time) }</span>
+                      <span class="data-field">{ formattedBlockValue }</span>
+                    </div>
+                    <div class="data-row">
+                      <span class="data-field">{ formatBytes(block.bytes) }</span>
+                      <span class="data-field">{ formatCount(block.txnCount) } transaction{block.txnCount == 1 ? '' : 's'}</span>
+                    </div>
+                    <div class="data-row spacer">&nbsp;</div>
+                    <div class="data-row">
+                      <span class="data-field">avg fee rate</span>
+                      {#if block.fees != null}
+                        <span class="data-field">{ formatFee(block.avgFeerate) } sats/vbyte</span>
+                      {:else}
+                        <span class="data-field">unavailable</span>
+                      {/if}
+                    </div>
+                  </div>
+                  <div class="compact">
+                    <div class="data-row">
+                      <span class="data-field title-field" title="{block.miner_sig}"><b>{#if block.height == $latestBlockHeight}Latest {/if}Block: </b>{ numberFormat.format(block.height) }</span>
+                      <button class="data-field close-button" on:click={hideBlock}><Icon icon={closeIcon} color="var(--palette-x)" /></button>
+                    </div>
+                    <div class="data-row">
+                      <span class="data-field">{ formatDateTime(block.time) }</span>
+                      <span class="data-field">{ formattedBlockValue }</span>
+                    </div>
+                    <div class="data-row">
+                      <span class="data-field">{ formatCount(block.txnCount) } transaction{block.txnCount == 1 ? '' : 's'}</span>
+                      {#if block.fees != null}
+                        <span class="data-field">{ formatFee(block.avgFeerate) } sats/vb</span>
+                      {:else}
+                        <span class="data-field">{ formatBytes(block.bytes) }</span>
+                      {/if}
+                    </div>
+                  </div>
+</div>
+{:else if !$settings.showBlockInfo}
+{console.log($settings.showBlockInfo)}
+
+{/if}
+      
 
       {#if hasPrevBlock }
         <a href="/block/height/{block.height - 1}" on:click={explorePrevBlock} class="explore-button prev">

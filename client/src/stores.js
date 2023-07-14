@@ -107,6 +107,7 @@ const defaultSettings = {
 	colorByFee: false,
 	showMessages: true,
 	showSearch: true,
+	showBlockInfo: false,
 	noTrack: false,
 	blocksEnabled: true
 }

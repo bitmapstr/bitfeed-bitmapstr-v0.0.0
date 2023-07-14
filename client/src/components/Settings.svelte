@@ -56,6 +56,10 @@ let settingConfig = {
   showSearch: {
     label: 'Search Bar',
     valueType: 'bool'
+  },
+  showBlockInfo: {
+    label: 'Block Info',
+    valueType: 'bool'
   }
 }
 $: {

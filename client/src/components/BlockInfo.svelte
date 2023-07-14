@@ -196,14 +196,6 @@
       font-size: 4.4vw;
     }
 
-    .hidden {
-      visibility: hidden;
-    }
-
-    .visible {
-      visibility: visible;
-    }
-
     .compact {
       display: none;
     }

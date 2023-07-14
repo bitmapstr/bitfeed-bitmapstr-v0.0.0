@@ -387,9 +387,6 @@
                     </div>
                   </div>
 </div>
-{:else if !$settings.showBlockInfo}
-{console.log($settings.showBlockInfo)}
-
 {/if}
       
 

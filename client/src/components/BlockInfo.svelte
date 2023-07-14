@@ -386,27 +386,28 @@
                       {/if}
                     </div>
                   </div>
-</div>
-{/if}
+      </div>
+      {#if hasPrevBlock }
+      <a href="/block/height/{block.height - 1}" on:click={explorePrevBlock} class="explore-button prev">
+        <svg class="chevron left" height="1.5em" width="1.5em" viewBox="0 0 512 512">
+          <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
+        </svg>
+      </a>
+    {/if}
+    {#if hasNextBlock }
+      <a href="/block/height/{block.height + 1}" on:click={exploreNextBlock} class="explore-button next">
+        <svg class="chevron right" height="1.5em" width="1.5em" viewBox="0 0 512 512">
+          <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
+        </svg>
+      </a>
+    {/if}
+    <button class="close-button standalone" class:landscape={landscape} class:tinyscreen={tinyView} on:click={hideBlock}>
+      <Icon icon={closeIcon} color="var(--palette-x)" />
+    </button>
+            {/if}
       
 
-      {#if hasPrevBlock }
-        <a href="/block/height/{block.height - 1}" on:click={explorePrevBlock} class="explore-button prev">
-          <svg class="chevron left" height="1.5em" width="1.5em" viewBox="0 0 512 512">
-            <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-          </svg>
-        </a>
-      {/if}
-      {#if hasNextBlock }
-        <a href="/block/height/{block.height + 1}" on:click={exploreNextBlock} class="explore-button next">
-          <svg class="chevron right" height="1.5em" width="1.5em" viewBox="0 0 512 512">
-            <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-          </svg>
-        </a>
-      {/if}
-      <button class="close-button standalone" class:landscape={landscape} class:tinyscreen={tinyView} on:click={hideBlock}>
-        <Icon icon={closeIcon} color="var(--palette-x)" />
-      </button>
+  
     </div>
   {/each}
 {/key}

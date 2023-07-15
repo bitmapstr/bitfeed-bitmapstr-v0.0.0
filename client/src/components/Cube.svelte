@@ -3,7 +3,11 @@
 	import { onMount } from 'svelte';
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
+	import BlockInfo from './BlockInfo.svelte';
+	import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
+           mempoolScreenHeight, blockVisible, tinyScreen,
+           compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
 
 
 	onMount(() => {const container = document.querySelector('.bitmap-wrapper');
@@ -13,12 +17,12 @@
 	const renderer = new THREE.WebGL1Renderer();
 	const controls = new OrbitControls( camera, renderer.domElement );
 	const loader = new GLTFLoader();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(200,200);
 	container?.append(renderer.domElement);
 
-	const height = 0.1;
-	const width = 0.1;
-	const depth = 0.1;
+	const height = 1;
+	const width = 1;
+	const depth = 1;
 
 	const geometry = new THREE.BoxGeometry( height, width, depth);
 	const material = new THREE.MeshBasicMaterial({ color: 0xe2933b});
@@ -38,7 +42,10 @@
 
 	animate();
 	});
-
+	
     export {};
 </script>
-
+<div>
+	<BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} />
+	<p>The current block is {$currentBlock}</p>
+</div>

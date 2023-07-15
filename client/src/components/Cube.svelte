@@ -8,8 +8,13 @@
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
            devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
+	import blockinfo from './BlockInfo.svelte'
+	import TxRender from './TxRender.svelte';
+    import TxInfo from './TxInfo.svelte';
 
-
+	let txController
+	let canvasWidth = '100%'
+  	let canvasHeight = '100%'
 	onMount(() => {const container = document.querySelector('.bitmap-wrapper');
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color(0x000000);
@@ -33,8 +38,8 @@
 
 	function animate() {
 		requestAnimationFrame( animate );
-		// cube.rotation.x += 0.01;
-		// cube.rotation.y += 0.01;
+		 cube.rotation.x += 0.01;
+		 cube.rotation.y += 0.01;
 
 		renderer.render( scene, camera);
 		
@@ -42,10 +47,62 @@
 
 	animate();
 	});
+	console.log("Current Block")
+	console.log({$currentBlock})
+
 	
+	let mousePosition = { x: 0, y: 0 }
+
+function onClick (e) {
+  mousePosition = {
+	x: e.clientX,
+	y: e.clientY
+  }
+  const position = {
+	x: e.clientX,
+	y: window.innerHeight - e.clientY
+  }
+  if (txController) txController.mouseClick(position)
+}
+
+function pointerMove (e) {
+  if (!txController.selectionLocked) {
+	mousePosition = {
+	  x: e.clientX,
+	  y: e.clientY
+	}
+	const position = {
+	  x: e.clientX,
+	  y: window.innerHeight - e.clientY
+	}
+	if (txController) txController.mouseMove(position)
+  }
+}
+
+function pointerLeave (e) {
+  const position = {
+	x: null,
+	y: null
+  }
+  if (txController) txController.mouseMove(position)
+}
+
+function hideBlock () {
+    $blockVisible = false
+  }
+  function quitExploring () {
+    if (txController) txController.resumeLatest()
+  }
     export {};
 </script>
-<div>
-	<BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} />
-	<p>The current block is {$currentBlock}</p>
+
+			{#if $selectedTx }
+              <TxInfo tx={$selectedTx} position={mousePosition} />
+            {/if}
+
+<div class="cube-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+	
+	<div class="bitmap-wrapper" on:hideBlock={hideBlock} on:quitExploring={quitExploring} >
+		
+	  </div>
 </div>

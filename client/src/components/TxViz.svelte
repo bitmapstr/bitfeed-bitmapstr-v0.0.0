@@ -479,6 +479,29 @@
     }
   }
 
+  .tx-scene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* pointer-events: none; */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bitmapstrTxt {
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* pointer-events: none; */
+  overflow: hidden;
+  
+
+}
+
   @media screen and (max-width: 640px) {
     .search-bar-wrapper {
       position: fixed;
@@ -533,8 +556,21 @@
             {:else if !$settings.showMyBitmap}
             <h1>Bitmapstr!</h1>
             <div class="bitmap-wrapper"  style="visibility: {visibility};">
-              <!-- <TxRender controller={txController} /> -->
-              <Cube />
+              <TxRender controller={txController} />
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  <div class="block-area">
+                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+
             </div>
             {/if}
 
@@ -551,7 +587,7 @@
           <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
-          <span class="block-height"><b>Block: </b>{ numberFormat.format($currentBlock.height) }</span>
+          <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
         {/if}
       </div>
       <div class="row">

@@ -182,7 +182,7 @@
   }
 
   .block-info {
-    position: absolute;
+    position: relative;
     bottom: calc(100% + 0.25rem);
     left: 50%;
     min-width: 100%;

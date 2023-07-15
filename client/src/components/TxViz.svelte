@@ -211,17 +211,6 @@
   }
   let collapse = "collapse"
   let visible = "visible"
-  function toggleScene(visibility) {
-    if(collapse) {
-      visibility = visible
-    }else if(visible){
-      visibility = collapse
-    }
-    
-    console.log(visibility)
-    
-    return visibility
-  }
   $: visibility = visibility
 </script>
 

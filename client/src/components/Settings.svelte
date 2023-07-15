@@ -60,6 +60,10 @@ let settingConfig = {
   showBlockInfo: {
     label: 'Block Info',
     valueType: 'bool'
+  },
+  showMyBitmap: {
+    label: 'My Bitmap',
+    valueType: 'bool'
   }
 }
 $: {

@@ -1,19 +1,24 @@
 <script>
 	import * as THREE from 'three';
 	import { onMount } from 'svelte';
+	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+	import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+
 
 	onMount(() => {const container = document.querySelector('.bitmap-wrapper');
 	const scene = new THREE.Scene();
 	scene.background = new THREE.Color(0x000000);
 	const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 	const renderer = new THREE.WebGL1Renderer();
+	const controls = new OrbitControls( camera, renderer.domElement );
+	const loader = new GLTFLoader();
 	renderer.setSize(window.innerWidth, window.innerHeight);
-	//document.body.appendChild(renderer.domElement);
 	container?.append(renderer.domElement);
 
-	const height = 1;
-	const width = 1;
-	const depth = 1;
+	const height = 0.1;
+	const width = 0.1;
+	const depth = 0.1;
 
 	const geometry = new THREE.BoxGeometry( height, width, depth);
 	const material = new THREE.MeshBasicMaterial({ color: 0xe2933b});

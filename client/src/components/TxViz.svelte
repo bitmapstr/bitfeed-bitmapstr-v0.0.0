@@ -22,6 +22,7 @@
   import { formatCurrency } from '../utils/fx.js'
   import { fade } from 'svelte/transition'
   import config from '../config.js'
+  import Cube from './Cube.svelte'
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -543,8 +544,8 @@
             {:else if !$settings.showMyBitmap}
             <h1>Bitmapstr!</h1>
             <div class="bitmap-wrapper"  style="visibility: {visibility};">
-              <TxRender controller={txController} />
-              
+              <!-- <TxRender controller={txController} /> -->
+              <Cube />
             </div>
             {/if}
 

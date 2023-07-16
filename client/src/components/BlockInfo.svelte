@@ -246,70 +246,70 @@
     }
   }
 
-  .bitmapstr-block-info {
-    position: absolute;
-    bottom: calc(100% + 0.25rem);
-    left: 50%;
-    min-width: 100%;
-    transform: translateX(-50%);
-    pointer-events: all;
+  // .bitmapstr-block-info {
+  //   position: absolute;
+  //   bottom: calc(100% + 0.25rem);
+  //   left: 50%;
+  //   min-width: 100%;
+  //   transform: translateX(-50%);
+  //   pointer-events: all;
 
-    color: var(--palette-x);
-    font-size: 1rem;
+  //   color: var(--palette-x);
+  //   font-size: 1rem;
 
-    @media (max-width: 360px) {
-      font-size: 4.4vw;
-    }
+  //   @media (max-width: 360px) {
+  //     font-size: 4.4vw;
+  //   }
 
-    .compact {
-      display: none;
-    }
+  //   .compact {
+  //     display: none;
+  //   }
 
-    &.compact {
-      .compact {
-        display: block;
-      }
-      .full-size {
-        display: none;
-      }
-    }
+  //   &.compact {
+  //     .compact {
+  //       display: block;
+  //     }
+  //     .full-size {
+  //       display: none;
+  //     }
+  //   }
 
-    .data-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-between;
+  //   .data-row {
+  //     display: flex;
+  //     flex-direction: row;
+  //     flex-wrap: nowrap;
+  //     justify-content: space-between;
 
-      &.spacer {
-        display: none;
-      }
-    }
+  //     &.spacer {
+  //       display: none;
+  //     }
+  //   }
 
-    .data-field {
-      white-space: nowrap;
+  //   .data-field {
+  //     white-space: nowrap;
 
-      &.close-button {
-        width: 1em;
-        height: 1em;
-        background: none;
-        border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-        cursor: pointer;
-        margin-top: -5px;
-      }
+  //     &.close-button {
+  //       width: 1em;
+  //       height: 1em;
+  //       background: none;
+  //       border: none;
+  //       display: flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //       margin: 0;
+  //       padding: 0;
+  //       cursor: pointer;
+  //       margin-top: -5px;
+  //     }
 
-       &:first-child {
-         margin-right: 5px;
-       }
-       &:last-child {
-         margin-left: 5px;
-       }
-    }
-  }
+  //      &:first-child {
+  //        margin-right: 5px;
+  //      }
+  //      &:last-child {
+  //        margin-left: 5px;
+  //      }
+  //   }
+  // }
 
 
   .explore-button {

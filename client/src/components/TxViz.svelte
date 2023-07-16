@@ -405,9 +405,9 @@
         padding-top: 100%;
       }
 
-      .bitmapstr-block-area {
-        padding-top: 100%;
-      }
+      // .bitmapstr-block-area {
+      //   padding-top: 100%;
+      // }
 
       .guide-area {
         background: #00FF00;
@@ -516,6 +516,11 @@
     z-index: -1;
 
 }
+
+.bitmap-cube {
+
+  position: absolute;
+}
 .bg-logo-w-text {
     width: 375px;
     
@@ -550,7 +555,11 @@
               {:else}
               <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
               {/if} -->
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              <div class="bitmap-cube">
+                <Cube />
+
+              </div>
+              
             {#if $settings.showMyBitmap }            
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
@@ -582,6 +591,7 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
+            <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
               
@@ -600,13 +610,15 @@
               </div>
               
             </div>
-
+           
             {/if}
 
 
 
             {#if $selectedTx }
               <TxInfo tx={$selectedTx} position={mousePosition} />
+              
+             
             {/if}
 
   <div class="top-bar">

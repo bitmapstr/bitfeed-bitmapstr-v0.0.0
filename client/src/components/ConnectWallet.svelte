@@ -4,7 +4,6 @@
     import GetAllInscriptions from './Indexer.svelte'
 
     let wallet = { connected: false };
-    //wallet.connected = !wallet.connected;
 
     async function ConnectWallet() {
 		let winuni = window.unisat;
@@ -14,28 +13,21 @@
             let accounts = await winuni.requestAccounts();
 			console.log('connect success', accounts);
             wallet.connected = !wallet.connected;
+            GetMyBitmaps()
 
 		} else {
 			console.log('UniSat Wallet is not installed :(');
             console.log('connect failed');
             wallet.connected = !wallet.connected;
 
-
 		}
-
-		// try {
-		// 	let accounts = await winuni.requestAccounts();
-		// 	console.log('connect success', accounts);
-		// } catch (e) {
-		// 	console.log('connect failed');
-		// }
 		
 	}
 
     async function GetMyBitmaps() {
         let insArray = [];
         try {
-            const res = await window.unisat.getInscriptions(0, 100);
+            const res = await window.unisat.getInscriptions(0, 10);
             console.log("Total Ins: " + res.total);
             for (let i = 0; i < res.total; i++) {
                 const insID = res.list[i].inscriptionId;
@@ -44,7 +36,7 @@
                 const content = await fetch(hiro + "/content");
                 const ins = await content.text();
                 const inscriptionParts = ins.split(".");
-                const bitmapNum = inscriptionParts[0];
+                const bitmapNum = inscriptionParts[0];                
                 const textFilter = []
                 const bitmapText = "bitmap";
 
@@ -53,15 +45,13 @@
                 //     insArray.push(bitmapNum);
                 // }
 
-                if (bitmapNum === bitmapNum) {
-                insArray.push(bitmapNum)
+                if (ins.includes(bitmapText)) {
+                    //insArray.pop(bitmapText)
+                    insArray.push(bitmapNum)
             }
                 console.log("Content: " + ins)
                 console.log("InsID: " + insID)
             }
-
-           
-
 
         } catch (e) {
             console.log(e);
@@ -71,7 +61,7 @@
     }
 
     function handleSubmit(height) {
-        GetMyBitmaps()
+
         searchBlockHeight(height)
         console.log("handleSubmit")
     }

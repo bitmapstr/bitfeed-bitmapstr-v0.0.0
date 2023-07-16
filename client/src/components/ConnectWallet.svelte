@@ -44,7 +44,6 @@
                 const bitmapText = "bitmap";
                 
                 if (inscriptionParts.length > 1) {
-                    //insArray.pop(bitmapText)
                     insArray.push(bitmapNum)
             }
                 console.log("Content: " + ins)
@@ -58,32 +57,23 @@
         return [insArray];
     }
 
+    function DisconnectWallet() {
+        
+        console.log("disconnect here")
+    }
+
     function handleSubmit(height) {
 
         searchBlockHeight(height)
         console.log("handleSubmit")
     }
-    //$: wallet.connected = !wallet.connected;
     $: accounts = accounts;
     let selected;
 </script>
 
+<div class="content">
 {#if wallet.connected}
-<button class="danger" on:click={ConnectWallet}>Disconnect Wallet</button> 
-
-{:else if !wallet.connected}
-<button class="primary" on:click={ConnectWallet}>Connect a Wallet</button>
-<br />
-<button>UniSat</button>
-<br />
-<button>Hiro</button>
-<br />
-<button>Xverse</button>
-
-{:else}
-	<p>something else happened here</p>
-{/if}
-
+<button class="danger" on:click={DisconnectWallet}>Disconnect Wallet</button> 
 <h2>My bitmaps</h2>
 <form on:submit|preventDefault={handleSubmit(selected)}>
     <select bind:value={selected} on:change={() => handleSubmit(selected)}>
@@ -110,6 +100,18 @@
   
     </div>  
 </form>
+{:else if !wallet.connected}
+<button class="primary" on:click={ConnectWallet}>Connect a Wallet</button>
+<br />
+<button>UniSat</button>
+<br />
+<button>Hiro</button>
+<br />
+<button>Xverse</button>
+{:else}
+	<p>something else happened here</p>
+{/if}
+</div>
 
 <style>
     .primary {

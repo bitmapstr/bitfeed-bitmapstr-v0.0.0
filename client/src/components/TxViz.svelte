@@ -23,9 +23,7 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
-  // import bglogo from 'img/'
 
-  
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -212,7 +210,6 @@
     }
     if (txController) txController.mouseMove(position)
   }
-  $: visibility = visibility
 </script>
 
 <style type="text/scss">
@@ -550,14 +547,9 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
+           <div class="bitmap-cube">
                 <!-- <Cube /> -->
-              </div>
+          </div>
               
             {#if $settings.showMyBitmap }            
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >

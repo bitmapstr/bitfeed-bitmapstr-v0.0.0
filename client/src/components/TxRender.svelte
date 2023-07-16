@@ -214,9 +214,6 @@
       colorData
     )
 
-
-    
-
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
     widthGLsizei, heightGLsizei, border, srcFormat, srcType,
                   pixels);

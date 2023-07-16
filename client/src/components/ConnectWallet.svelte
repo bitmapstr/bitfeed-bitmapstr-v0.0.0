@@ -103,7 +103,7 @@
     <p>selected bitmap {selected ? selected : "[waiting...]"}</p> 
     <br>
     <div>
-      <GetAllInscriptions />
+      <!-- <GetAllInscriptions /> -->
   
     </div>  
 </form>

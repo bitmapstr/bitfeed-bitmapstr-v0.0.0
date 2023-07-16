@@ -23,6 +23,9 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
+  // import bglogo from 'img/'
+
+  
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -209,19 +212,6 @@
     }
     if (txController) txController.mouseMove(position)
   }
-  let collapse = "collapse"
-  let visible = "visible"
-  function toggleScene(visibility) {
-    if(collapse) {
-      visibility = visible
-    }else if(visible){
-      visibility = collapse
-    }
-    
-    console.log(visibility)
-    
-    return visibility
-  }
   $: visibility = visibility
 </script>
 
@@ -244,6 +234,12 @@
   }
 
   .canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bitmap-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
@@ -409,6 +405,10 @@
         padding-top: 100%;
       }
 
+      // .bitmapstr-block-area {
+      //   padding-top: 100%;
+      // }
+
       .guide-area {
         background: #00FF00;
         opacity: 25%;
@@ -490,6 +490,45 @@
     }
   }
 
+  .tx-scene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* pointer-events: none; */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bitmapstr {
+    width: auto;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 145px;
+    bottom: 0;
+    overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+    z-index: -1;
+
+}
+
+.bitmap-cube {
+
+  position: absolute;
+}
+.bg-logo-w-text {
+    width: 375px;
+    
+    opacity: 0.3;
+    top: 130px;
+    position: absolute;
+}
+
   @media screen and (max-width: 640px) {
     .search-bar-wrapper {
       position: fixed;
@@ -511,8 +550,18 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
+             <!-- {#if $settings.darkMode }
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {:else}
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {/if} -->
+              <div class="bitmap-cube">
+                <Cube />
+
+              </div>
+              
             {#if $settings.showMyBitmap }            
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} style="visibility: {visibility};">
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -542,17 +591,34 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
-            <h1>Bitmapstr!</h1>
-            <div class="bitmap-wrapper"  style="visibility: {visibility};">
-              <!-- <TxRender controller={txController} /> -->
-              <Cube />
+            <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender controller={txController} />
+              
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  <div class="block-area">
+                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+              
             </div>
+           
             {/if}
 
 
 
             {#if $selectedTx }
               <TxInfo tx={$selectedTx} position={mousePosition} />
+              
+             
             {/if}
 
   <div class="top-bar">
@@ -562,7 +628,7 @@
           <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
-          <span class="block-height"><b>Block: </b>{ numberFormat.format($currentBlock.height) }</span>
+          <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
         {/if}
       </div>
       <div class="row">

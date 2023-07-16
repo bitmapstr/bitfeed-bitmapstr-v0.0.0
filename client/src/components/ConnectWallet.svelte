@@ -27,7 +27,7 @@
     async function GetMyBitmaps() {
         let insArray = [];
         try {
-            const res = await window.unisat.getInscriptions(0, 10);
+            const res = await window.unisat.getInscriptions(0, 30);
             console.log("Total Ins: " + res.total);
             for (let i = 0; i < res.total; i++) {
                 const insID = res.list[i].inscriptionId;
@@ -36,16 +36,12 @@
                 const content = await fetch(hiro + "/content");
                 const ins = await content.text();
                 const inscriptionParts = ins.split(".");
+                console.log(inscriptionParts)
                 const bitmapNum = inscriptionParts[0];                
                 const textFilter = []
                 const bitmapText = "bitmap";
-
-                // if (ins.includes(bitmapText)) {
-
-                //     insArray.push(bitmapNum);
-                // }
-
-                if (ins.includes(bitmapText)) {
+                
+                if (inscriptionParts.length > 1) {
                     //insArray.pop(bitmapText)
                     insArray.push(bitmapNum)
             }

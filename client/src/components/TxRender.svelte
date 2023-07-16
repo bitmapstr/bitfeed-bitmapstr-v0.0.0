@@ -197,6 +197,8 @@
 
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
+  export const widthGLsizei = 1000
+  export const heightGLsizei = 100
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -212,8 +214,11 @@
       colorData
     )
 
+
+    
+
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-                  width, height, border, srcFormat, srcType,
+    widthGLsizei, heightGLsizei, border, srcFormat, srcType,
                   pixels);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -294,6 +299,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  width: auto;
   /* pointer-events: none; */
   overflow: hidden;
 }

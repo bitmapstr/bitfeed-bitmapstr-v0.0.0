@@ -522,10 +522,10 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 375px;
+    width: 420px;
     
     opacity: 0.3;
-    top: 147px;
+    top: 113px;
     position: absolute;
 }
 

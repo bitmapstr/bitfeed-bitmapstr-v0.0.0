@@ -1,9 +1,11 @@
 <script>
-    import { IntType } from "three";
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from './Indexer.svelte'
+    import MySlider from "./MySlider.svelte";
+
 
     let wallet = { connected: false };
+
 
     async function ConnectWallet() {
 		let winuni = window.unisat;
@@ -99,8 +101,11 @@
     <input bind:value={selected} on:change={() => handleSubmit(selected)} />
 	<button disabled={!selected} type="submit"> Submit </button>
     <p>selected bitmap {selected ? selected : "[waiting...]"}</p> 
-    <br>
+    
     <div>
+       
+        <!-- <MySlider />
+        <MySlider /> -->
       <!-- <GetAllInscriptions /> -->
   
     </div>  

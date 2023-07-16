@@ -525,7 +525,7 @@
     width: 375px;
     
     opacity: 0.3;
-    top: 130px;
+    top: 147px;
     position: absolute;
 }
 
@@ -590,7 +590,7 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
-            <!-- <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text"> -->
+            <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
               
@@ -650,7 +650,7 @@
   <Sidebar />
   <TransactionOverlay />
   <AboutOverlay />
-  
+
   {#if config.donationsEnabled }
     <DonationOverlay />
     {#if $haveSupporters}

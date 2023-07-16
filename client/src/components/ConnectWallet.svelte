@@ -1,4 +1,5 @@
 <script>
+    import { IntType } from "three";
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from './Indexer.svelte'
 
@@ -34,7 +35,7 @@
     async function GetMyBitmaps() {
         let insArray = [];
         try {
-            const res = await window.unisat.getInscriptions(0, 50);
+            const res = await window.unisat.getInscriptions(0, 100);
             console.log("Total Ins: " + res.total);
             for (let i = 0; i < res.total; i++) {
                 const insID = res.list[i].inscriptionId;
@@ -44,13 +45,24 @@
                 const ins = await content.text();
                 const inscriptionParts = ins.split(".");
                 const bitmapNum = inscriptionParts[0];
+                const textFilter = []
                 const bitmapText = "bitmap";
-                if (ins.includes(bitmapText)) {
-                    insArray.push(bitmapNum);
-                }
-                // console.log("Content: " + ins)
-                // console.log("InsID: " + insID)
+
+                // if (ins.includes(bitmapText)) {
+
+                //     insArray.push(bitmapNum);
+                // }
+
+                if (bitmapNum === bitmapNum) {
+                insArray.push(bitmapNum)
             }
+                console.log("Content: " + ins)
+                console.log("InsID: " + insID)
+            }
+
+           
+
+
         } catch (e) {
             console.log(e);
         }
@@ -59,7 +71,7 @@
     }
 
     function handleSubmit(height) {
-
+        GetMyBitmaps()
         searchBlockHeight(height)
         console.log("handleSubmit")
     }

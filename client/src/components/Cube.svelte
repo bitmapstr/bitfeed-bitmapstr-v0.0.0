@@ -95,14 +95,3 @@ function hideBlock () {
   }
     export {};
 </script>
-
-			{#if $selectedTx }
-              <TxInfo tx={$selectedTx} position={mousePosition} />
-            {/if}
-
-<div class="cube-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-	
-	<div class="bitmap-wrapper" on:hideBlock={hideBlock} on:quitExploring={quitExploring} >
-		
-	  </div>
-</div>

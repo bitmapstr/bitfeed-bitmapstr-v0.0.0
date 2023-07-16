@@ -489,9 +489,10 @@
 
   .tx-scene {
   position: absolute;
-  left: 0;
+  width: auto;
+  left: 7px;
   right: 0;
-  top: 0;
+  top: -16px;
   bottom: 0;
   /* pointer-events: none; */
   overflow: hidden;
@@ -519,10 +520,10 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 420px;
+    width: 400px;
     
     opacity: 0.3;
-    top: 113px;
+    top: 138px;
     position: absolute;
 }
 
@@ -582,7 +583,11 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
+
+            {#if $settings.showBlockInfo }  
             <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+            {/if}
+
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
               
@@ -604,7 +609,7 @@
             {/if}
 
             {#if $selectedTx }
-              <TxInfo tx={$selectedTx} position={mousePosition} />
+              <!-- <TxInfo tx={$selectedTx} position={mousePosition} /> -->
             {/if}
 
   <div class="top-bar">

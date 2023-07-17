@@ -590,7 +590,7 @@
             <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
             {/if}
 
-            <div class="bitmapstr-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
               
               <div class="block-area-wrapper">

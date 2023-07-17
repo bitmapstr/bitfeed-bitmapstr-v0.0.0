@@ -23,6 +23,8 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
+    import RunningOsterich from './RunningOsterich.svelte';
+    import TxRender2 from './TxRender2.svelte';
 
 
   let width = window.innerWidth - 20
@@ -585,11 +587,11 @@
             {:else if !$settings.showMyBitmap}
 
             {#if $settings.showBlockInfo }  
-            <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+            <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
             {/if}
 
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
+            <div class="bitmapstr-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender2 controller={txController} />
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
@@ -603,6 +605,9 @@
                 </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
+                <!-- <Cube /> -->
+                <!-- <RunningOsterich /> -->
+
               </div>
               
             </div>

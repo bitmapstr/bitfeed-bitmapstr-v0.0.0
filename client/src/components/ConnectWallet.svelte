@@ -14,8 +14,8 @@
 			console.log('UniSat Wallet is installed!');
             let accounts = await winuni.requestAccounts();
 			console.log('connect success', accounts);
-            wallet.connected = !wallet.connected;
             GetMyBitmaps()
+            wallet.connected = !wallet.connected;
 
 		} else {
 			console.log('UniSat Wallet is not installed :(');
@@ -65,13 +65,13 @@
     function handleSubmit(height) {
 
         searchBlockHeight(height)
-        console.log("handleSubmit")
+        console.log("searchBlockHeight")
     }
     $: accounts = accounts;
     let selected;
 </script>
 
-<div class="content">
+<div>
 {#if wallet.connected}
 <button class="danger" on:click={DisconnectWallet}>Disconnect Wallet</button> 
 <h2>My bitmaps</h2>
@@ -83,13 +83,12 @@
         {:then bitmaps}
             {console.log("BITMAPS: " + bitmaps)}
             {#each bitmaps[0] as bitmap, index}
-                
                 <option value={bitmap}>{bitmap}</option>
             {/each}
         {/await}
     </select>
     <input bind:value={selected} on:change={() => handleSubmit(selected)} />
-	<button disabled={!selected} type="submit"> Submit </button>
+	<!-- <button disabled={!selected} type="submit"> Submit </button> -->
     <p>selected bitmap {selected ? selected : "[waiting...]"}</p> 
     
     <div>

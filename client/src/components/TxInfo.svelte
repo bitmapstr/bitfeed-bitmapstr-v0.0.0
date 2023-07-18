@@ -142,7 +142,7 @@ function highlight () {
 </style>
 
 <div class="tx-info" class:above style="left: {clampedX}px; top: {clampedY}px">
-  <div class="icon-button" class:disabled={$highlightingFull} on:keydown={highlight} on:click={highlight} title="Add to watchlist">
+  <div class="icon-button" class:disabled={$highlightingFull} on:click={highlight} title="Add to watchlist">
     <Icon icon={BookmarkIcon}/>
   </div>
   <p class="field hash">

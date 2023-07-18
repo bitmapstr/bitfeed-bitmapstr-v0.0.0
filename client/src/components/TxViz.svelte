@@ -23,9 +23,9 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
-  // import bglogo from 'img/'
+    import RunningOsterich from './RunningOsterich.svelte';
+    import TxRender2 from './TxRender2.svelte';
 
-  
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -212,10 +212,7 @@
     }
     if (txController) txController.mouseMove(position)
   }
-  function onKeydown (e) {
-    console.log("keydown")
-  }
-  $: visibility = visibility
+
 </script>
 
 <style type="text/scss">
@@ -495,9 +492,10 @@
 
   .tx-scene {
   position: absolute;
-  left: 0;
+  width: auto;
+  left: 7px;
   right: 0;
-  top: 0;
+  top: -16px;
   bottom: 0;
   /* pointer-events: none; */
   overflow: hidden;
@@ -525,10 +523,10 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 375px;
+    width: 400px;
     
     opacity: 0.3;
-    top: 130px;
+    top: 138px;
     position: absolute;
 }
 
@@ -553,6 +551,9 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
+          
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+
              <!-- {#if $settings.darkMode }
               <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
               {:else}
@@ -564,6 +565,7 @@
               </div>
             {#if $settings.showMyBitmap }   
             <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -593,9 +595,15 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
-            <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-            <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
+
+
+            {#if $settings.showBlockInfo }  
+            <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
+            {/if}
+
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender2 controller={txController} />
+
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
@@ -609,14 +617,18 @@
                 </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
+                <!-- <Cube /> -->
+                <!-- <RunningOsterich /> -->
+
               </div>
               
             </div>
             {/if}
 
             {#if $selectedTx }
+
               <TxInfo tx={$selectedTx} position={mousePosition} />
-              
+             
             {/if}
 
   <div class="top-bar">
@@ -652,9 +664,9 @@
   </div>
 
   <Sidebar />
-
   <TransactionOverlay />
   <AboutOverlay />
+
   {#if config.donationsEnabled }
     <DonationOverlay />
     {#if $haveSupporters}

@@ -14,8 +14,8 @@
 			console.log('UniSat Wallet is installed!');
             let accounts = await winuni.requestAccounts();
 			console.log('connect success', accounts);
-            GetMyBitmaps()
             wallet.connected = !wallet.connected;
+            GetMyBitmaps()
 
 		} else {
 			console.log('UniSat Wallet is not installed :(');
@@ -53,12 +53,12 @@
         } catch (e) {
             console.log(e);
         }
-
+        console.log(insArray)
         return [insArray];
     }
 
     function DisconnectWallet() {
-        
+        wallet.connected = !wallet.connected
         console.log("disconnect here")
     }
 

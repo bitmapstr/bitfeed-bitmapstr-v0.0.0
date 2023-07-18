@@ -23,6 +23,7 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
+    import SidebarLeft from './SidebarLeft.svelte';
   // import bglogo from 'img/'
 
   
@@ -556,8 +557,7 @@
               <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
               {/if} -->
               <div class="bitmap-cube">
-                <Cube />
-
+                <!-- <Cube /> -->
               </div>
               
             {#if $settings.showMyBitmap }            
@@ -654,6 +654,7 @@
   </div>
 
   <Sidebar />
+  <SidebarLeft />
 
   <TransactionOverlay />
   <AboutOverlay />

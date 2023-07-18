@@ -212,6 +212,9 @@
     }
     if (txController) txController.mouseMove(position)
   }
+  function onKeydown (e) {
+    console.log("keydown")
+  }
   $: visibility = visibility
 </script>
 
@@ -556,12 +559,11 @@
               <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
               {/if} -->
               <div class="bitmap-cube">
-                <Cube />
+                <!-- <Cube /> -->
 
               </div>
-              
-            {#if $settings.showMyBitmap }            
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+            {#if $settings.showMyBitmap }   
+            <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -592,7 +594,7 @@
             </div>
             {:else if !$settings.showMyBitmap}
             <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+            <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
               
               <div class="block-area-wrapper">
@@ -610,22 +612,18 @@
               </div>
               
             </div>
-           
             {/if}
-
-
 
             {#if $selectedTx }
               <TxInfo tx={$selectedTx} position={mousePosition} />
               
-             
             {/if}
 
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
         {#if $settings.showFX && fxLabel }
-          <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
+          <span class="fx-ticker {fxColor}" on:keydown={onKeydown} on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
           <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>

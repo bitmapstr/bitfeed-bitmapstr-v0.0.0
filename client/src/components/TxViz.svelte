@@ -24,6 +24,7 @@
   import config from '../config.js'
   import Cube from './Cube.svelte'
     import SidebarLeft from './SidebarLeft.svelte';
+    import TxRender2 from './TxRender2.svelte';
   // import bglogo from 'img/'
 
   
@@ -593,7 +594,7 @@
             {:else if !$settings.showMyBitmap}
             <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
+              <TxRender2 controller={txController} />
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>

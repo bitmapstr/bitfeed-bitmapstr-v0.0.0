@@ -564,7 +564,7 @@
 
               </div>
             {#if $settings.showMyBitmap }   
-            <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
 
               <TxRender controller={txController} />
         
@@ -617,7 +617,6 @@
                 </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
-                <!-- <Cube /> -->
                 <!-- <RunningOsterich /> -->
 
               </div>
@@ -630,12 +629,13 @@
               <TxInfo tx={$selectedTx} position={mousePosition} />
              
             {/if}
+            </div>
 
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
         {#if $settings.showFX && fxLabel }
-          <span class="fx-ticker {fxColor}" on:keydown={onKeydown} on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
+          <span class="fx-ticker {fxColor}"  on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
           <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>

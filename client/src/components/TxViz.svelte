@@ -212,6 +212,7 @@
     }
     if (txController) txController.mouseMove(position)
   }
+
 </script>
 
 <style type="text/scss">
@@ -550,12 +551,21 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
-           <div class="bitmap-cube">
-                <!-- <Cube /> -->
-          </div>
-              
-            {#if $settings.showMyBitmap }            
+          
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+
+             <!-- {#if $settings.darkMode }
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {:else}
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {/if} -->
+              <div class="bitmap-cube">
+                <!-- <Cube /> -->
+
+              </div>
+            {#if $settings.showMyBitmap }   
+            <div class="canvas-wrapper" on:keydown={onKeydown} on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -586,12 +596,14 @@
             </div>
             {:else if !$settings.showMyBitmap}
 
+
             {#if $settings.showBlockInfo }  
             <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
             {/if}
 
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
+
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
@@ -614,14 +626,16 @@
             {/if}
 
             {#if $selectedTx }
-              <!-- <TxInfo tx={$selectedTx} position={mousePosition} /> -->
+
+              <TxInfo tx={$selectedTx} position={mousePosition} />
+             
             {/if}
 
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
         {#if $settings.showFX && fxLabel }
-          <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
+          <span class="fx-ticker {fxColor}" on:keydown={onKeydown} on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
           <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>

@@ -74,7 +74,8 @@ export default {
 			'ENVIRONMENT': JSON.stringify(process.env.ENV),
 			'INJECTED_TARGET': JSON.stringify(process.env.TARGET),
 			'INJECTED_HOST': JSON.stringify(process.env.OVERRIDE_BACKEND_HOST),
-			'INJECTED_PORT': JSON.stringify(process.env.OVERRIDE_BACKEND_PORT)
+			'INJECTED_PORT': JSON.stringify(process.env.OVERRIDE_BACKEND_PORT),
+			preventAssignment : true
 		}),
 		inlineSvg({
 			removeTags: false,

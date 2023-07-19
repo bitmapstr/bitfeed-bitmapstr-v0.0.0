@@ -524,7 +524,6 @@
 }
 .bg-logo-w-text {
     width: 400px;
-    
     opacity: 0.3;
     top: 138px;
     position: absolute;

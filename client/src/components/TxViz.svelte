@@ -596,18 +596,18 @@
             {:else if !$settings.showMyBitmap}
 
 
-            {#if $settings.showBlockInfo }  
-            <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
-            {/if}
+            
 
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
-
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
                   <div class="block-area">
+                    {#if $settings.showBlockInfo }  
+                    <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
+                    {/if}
                     <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
                   {#if config.dev && config.debug && $devSettings.guides }

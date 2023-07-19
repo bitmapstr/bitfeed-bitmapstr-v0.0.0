@@ -9,20 +9,28 @@
 
     async function ConnectWallet() {
 		let winuni = window.unisat;
-        
-		if (typeof winuni !== 'undefined') {
-			console.log('UniSat Wallet is installed!');
-            let accounts = await winuni.requestAccounts();
-			console.log('connect success', accounts);
-            wallet.connected = !wallet.connected;
-            GetMyBitmaps()
+        try{
 
-		} else {
-			console.log('UniSat Wallet is not installed :(');
-            console.log('connect failed');
-            wallet.connected = !wallet.connected;
+            if(typeof winuni !== 'undefined') {
+                console.log('UniSat Wallet is installed!');
+                let accounts = await winuni.requestAccounts();
+                console.log('connect success', accounts);
+                wallet.connected = !wallet.connected;
+                GetMyBitmaps()
 
-		}
+            }else{
+                console.log('UniSat Wallet is not installed :(');
+                console.log('connect failed');
+                alert("install a compatible wallet")
+                wallet.connected = !wallet.connected;
+            }
+            
+        }
+        catch {
+
+            console.log("Install wallets and refresh!")
+        }
+		
 		
 	}
 
@@ -80,6 +88,7 @@
         <option>Select ur bitmap</option>
         {#await GetMyBitmaps()}
             <p>...waiting for my bitmaps</p>
+           
         {:then bitmaps}
             {console.log("BITMAPS: " + bitmaps)}
             {#each bitmaps[0] as bitmap, index}
@@ -93,16 +102,11 @@
     
     <div>
        
-        <!-- <MySlider />
-        <MySlider /> -->
-      <!-- <GetAllInscriptions /> -->
-  
     </div>  
 </form>
 {:else if !wallet.connected}
-<button class="primary" on:click={ConnectWallet}>Connect a Wallet</button>
-<br />
-<button>UniSat</button>
+<h3>Connect yer wallet</h3>
+<button class="primary"  on:click={ConnectWallet}>UniSat</button>
 <br />
 <button>Hiro</button>
 <br />

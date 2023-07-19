@@ -630,7 +630,7 @@
               <TxInfo tx={$selectedTx} position={mousePosition} />
              
             {/if}
-
+</div>
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">

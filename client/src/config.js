@@ -34,7 +34,7 @@ export default {
   txDelay: 3000,
   donationsEnabled: true,
   // Enables the message bar
-  messagesEnabled: true,
+  messagesEnabled: false,
   // Delay in ms between message bar rotations
   alertDuration: 20000,
 }

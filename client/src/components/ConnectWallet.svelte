@@ -18,7 +18,7 @@
             } else {
                 console.log("UniSat Wallet is not installed :(");
                 console.log("connect failed");
-                alert("install a compatible wallet");
+                alert("Install a compatible wallet.");
             }
         } catch {
             console.log("Connect wallet");
@@ -85,10 +85,7 @@
             >Disconnect Wallet</button>
         <h2>My bitmaps</h2>
         <form on:submit|preventDefault={handleSubmit(selected)}>
-            <select
-                bind:value={selected}
-                on:change={() => handleSubmit(selected)}
-            >
+            <select bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
                 {#await GetMyBitmaps()}
                     <p>...waiting for my bitmaps</p>

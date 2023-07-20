@@ -1,119 +1,121 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
-    import GetAllInscriptions from './Indexer.svelte'
+    import GetAllInscriptions from "./Indexer.svelte";
     import MySlider from "./MySlider.svelte";
-
 
     let wallet = { connected: false };
 
-
     async function ConnectWallet() {
-		let winuni = window.unisat;
-        try{
-
-            if(typeof winuni !== 'undefined') {
-                console.log('UniSat Wallet is installed!');
+        let winuni = window.unisat;
+        try {
+            if (typeof winuni !== "undefined") {
+                console.log("UniSat Wallet is installed!");
                 let accounts = await winuni.requestAccounts();
-                console.log('connect success', accounts);
+                console.log("connect success", accounts);
                 wallet.connected = !wallet.connected;
-                GetMyBitmaps()
-
-            }else{
-                console.log('UniSat Wallet is not installed :(');
-                console.log('connect failed');
-                alert("install a compatible wallet")
+                GetMyBitmaps();
+            } else {
+                console.log("UniSat Wallet is not installed :(");
+                console.log("connect failed");
+                alert("install a compatible wallet");
                 wallet.connected = !wallet.connected;
             }
-            
+        } catch {
+            console.log("Connect wallet");
         }
-        catch {
-
-            console.log("Install wallets and refresh!")
-        }
-		
-		
-	}
+    }
 
     async function GetMyBitmaps() {
-        let insArray = [];
-        try {
-            const res = await window.unisat.getInscriptions(0, 30);
-            console.log("Total Ins: " + res.total);
-            for (let i = 0; i < res.total; i++) {
-                const insID = res.list[i].inscriptionId;
-                const hiro =
-                    "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
-                const content = await fetch(hiro + "/content");
-                const ins = await content.text();
-                const inscriptionParts = ins.split(".");
-                console.log(inscriptionParts)
-                const bitmapNum = inscriptionParts[0];                
-                const textFilter = []
-                const bitmapText = "bitmap";
-                
-                if (inscriptionParts.length > 1) {
-                    insArray.push(bitmapNum)
-            }
-                console.log("Content: " + ins)
-                console.log("InsID: " + insID)
-            }
+        if (wallet.connected) {
+            try {
+                let limit = 20;
+                let insArray = [];
+                const res = await window.unisat.getInscriptions(0, limit);
+                console.log("Total Ins: " + res.total);
+                for (let i = 0; i < limit; i++) {
+                    const insID = res.list[i].inscriptionId;
+                    const hiro =
+                        "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
+                    const content = await fetch(hiro + "/content");
+                    const ins = await content.text();
+                    const inscriptionParts = ins.split(".");
+                    console.log(inscriptionParts);
+                    const bitmapNum = inscriptionParts[0];
+                    const textFilter = [];
+                    const bitmapText = "bitmap";
 
-        } catch (e) {
-            console.log(e);
+                    if (inscriptionParts.length > 1) {
+                        insArray.push(bitmapNum);
+                    }
+                    //console.log("Content: " + ins)
+                    //console.log("InsID: " + insID)
+                }
+
+                console.log(insArray);
+                return [insArray];
+
+                } catch (e) {
+                    console.log(e);
+                }
+
+        } else {
+            console.log("no Inscriptions!?");
         }
-        console.log(insArray)
-        return [insArray];
     }
 
     function DisconnectWallet() {
-        wallet.connected = !wallet.connected
-        console.log("disconnect here")
+        wallet.connected = !wallet.connected;
+        console.log("disconnect here");
     }
 
     function handleSubmit(height) {
-
-        searchBlockHeight(height)
-        console.log("searchBlockHeight")
+        searchBlockHeight(height);
+        console.log("searchBlockHeight");
     }
     $: accounts = accounts;
     let selected;
 </script>
 
 <div>
-{#if wallet.connected}
-<button class="danger" on:click={DisconnectWallet}>Disconnect Wallet</button> 
-<h2>My bitmaps</h2>
-<form on:submit|preventDefault={handleSubmit(selected)}>
-    <select bind:value={selected} on:change={() => handleSubmit(selected)}>
-        <option>Select ur bitmap</option>
-        {#await GetMyBitmaps()}
-            <p>...waiting for my bitmaps</p>
-           
-        {:then bitmaps}
-            {console.log("BITMAPS: " + bitmaps)}
-            {#each bitmaps[0] as bitmap, index}
-                <option value={bitmap}>{bitmap}</option>
-            {/each}
-        {/await}
-    </select>
-    <input bind:value={selected} on:change={() => handleSubmit(selected)} />
-	<!-- <button disabled={!selected} type="submit"> Submit </button> -->
-    <p>selected bitmap {selected ? selected : "[waiting...]"}</p> 
-    
-    <div>
-       
-    </div>  
-</form>
-{:else if !wallet.connected}
-<h3>Connect yer wallet</h3>
-<button class="primary"  on:click={ConnectWallet}>UniSat</button>
-<br />
-<button>Hiro</button>
-<br />
-<button>Xverse</button>
-{:else}
-	<p>something else happened here</p>
-{/if}
+    {#if wallet.connected}
+        <button class="danger" on:click={DisconnectWallet}
+            >Disconnect Wallet</button
+        >
+        <h2>My bitmaps</h2>
+        <form on:submit|preventDefault={handleSubmit(selected)}>
+            <select
+                bind:value={selected}
+                on:change={() => handleSubmit(selected)}
+            >
+                <option>Select ur bitmap</option>
+                {#await GetMyBitmaps()}
+                    <p>...waiting for my bitmaps</p>
+                {:then bitmaps}
+                    {console.log("BITMAPS: " + bitmaps)}
+                    {#each bitmaps[0] as bitmap, index}
+                        <option value={bitmap}>{bitmap}</option>
+                    {/each}
+                {/await}
+            </select>
+            <input
+                bind:value={selected}
+                on:change={() => handleSubmit(selected)}
+            />
+            <!-- <button disabled={!selected} type="submit"> Submit </button> -->
+            <p>selected bitmap {selected ? selected : "[waiting...]"}</p>
+
+            <div />
+        </form>
+    {:else if !wallet.connected}
+        <h3>Connect yer wallet</h3>
+        <button class="primary" on:click={ConnectWallet}>UniSat</button>
+        <br />
+        <button>Hiro</button>
+        <br />
+        <button>Xverse</button>
+    {:else}
+        <p>something else happened here</p>
+    {/if}
 </div>
 
 <style>

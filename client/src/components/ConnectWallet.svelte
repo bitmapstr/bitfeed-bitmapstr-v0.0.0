@@ -6,6 +6,7 @@
     let wallet = { connected: false };
 
     async function ConnectWallet() {
+        // UniSat Wallet
         let winuni = window.unisat;
         try {
             if (typeof winuni !== "undefined") {
@@ -18,11 +19,13 @@
                 console.log("UniSat Wallet is not installed :(");
                 console.log("connect failed");
                 alert("install a compatible wallet");
-                wallet.connected = !wallet.connected;
             }
         } catch {
             console.log("Connect wallet");
         }
+
+        // Xverse
+
     }
 
     async function GetMyBitmaps() {
@@ -79,8 +82,7 @@
 <div>
     {#if wallet.connected}
         <button class="danger" on:click={DisconnectWallet}
-            >Disconnect Wallet</button
-        >
+            >Disconnect Wallet</button>
         <h2>My bitmaps</h2>
         <form on:submit|preventDefault={handleSubmit(selected)}>
             <select

@@ -523,10 +523,13 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 400px;
+    width: 100%;
+    height: 100%;
     opacity: 0.3;
-    top: 138px;
-    position: absolute;
+    // top: -38px;
+    // left: -42px;
+    // position: absolute;
+    // object-fit: contain;
 }
 
   @media screen and (max-width: 640px) {
@@ -604,10 +607,10 @@
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  <div class="block-area">
-                    {#if $settings.showBlockInfo }  
+                  {#if $settings.showBlockInfo }  
                     <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
                     {/if}
+                  <div class="block-area">
                     <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
                   {#if config.dev && config.debug && $devSettings.guides }

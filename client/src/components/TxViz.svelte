@@ -25,6 +25,7 @@
   import Cube from './Cube.svelte'
     import RunningOsterich from './RunningOsterich.svelte';
     import TxRender2 from './TxRender2.svelte';
+    import NavBar from './NavBar.svelte';
 
 
   let width = window.innerWidth - 20
@@ -378,6 +379,14 @@
     height: 3.5em;
     flex-grow: 1;
   }
+  .nav-bar-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 3.5em;
+    flex-grow: 1;
+  }
 
   .alert-bar-wrapper {
     width: 20em;
@@ -597,10 +606,6 @@
               
             </div>
             {:else if !$settings.showMyBitmap}
-
-
-            
-
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
               
@@ -610,6 +615,7 @@
                   {#if $settings.showBlockInfo }  
                     <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
                     {/if}
+                    
                   <div class="block-area">
                     <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
@@ -649,10 +655,13 @@
       </div>
     </div>
     {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
-      <div class="search-bar-wrapper">
-        <SearchBar />
+      <div class="search-bar-wrapper">                         
+            <SearchBar />                       
       </div>
     {/if}
+    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <NavBar />                        
+    {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

@@ -677,12 +677,12 @@
   <TransactionOverlay />
   <AboutOverlay />
 
-  {#if config.donationsEnabled }
+  <!-- {#if config.donationsEnabled }
     <DonationOverlay />
     {#if $haveSupporters}
       <SupportersOverlay />
     {/if}
-  {/if}
+  {/if} -->
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

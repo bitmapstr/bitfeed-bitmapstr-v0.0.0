@@ -8,7 +8,7 @@ import Indexer from "./Indexer.svelte";
     import Icon from './Icon.svelte';
     import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
 
-// import IndexerLocal from './Indexer-Local.svelte'
+import IndexerLocal from './Indexer-Local.svelte'
 	
 	export let menu = 1;
 const queryIcons = {
@@ -116,9 +116,9 @@ async function focusOut(e) {
 </ul>
 
 {#if menu === 1}
-<!-- <Indexer /> -->
+<Indexer />
 {:else if menu === 2}
-<!-- <IndexerLocal /> -->
+<IndexerLocal />
 {:else}
 <h1>
 	Page Not Found

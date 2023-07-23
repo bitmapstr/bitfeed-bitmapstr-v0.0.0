@@ -5,12 +5,11 @@ import { fly } from 'svelte/transition'
 import { matchQuery, searchTx, searchBlockHeight, searchBlockHash } from '../utils/search.js'
 import { selectedTx, detailTx, overlay, loading, freezeResize } from '../stores.js'
 import Indexer from "./Indexer.svelte";
-    import Icon from './Icon.svelte';
-    import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
-
+import Icon from './Icon.svelte';
+import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
 import IndexerLocal from './Indexer-Local.svelte'
 	
-	export let menu = 1;
+export let menu = 1;
 const queryIcons = {
   txid: TxIcon,
   input: TxIcon,

@@ -10,8 +10,8 @@
   let canvas
   let gl
   let animationFrameRequest
-  let displayWidth
-  let displayHeight
+  export let displayWidth
+  export let displayHeight
   let cssWidth
   let cssHeight
   let shaderProgram
@@ -205,7 +205,7 @@
 
     const colorData = computeColorTextureData(width, height)
 
-    const level = 0;
+    const level = 0.1;
     const internalFormat = gl.RGBA;
     const border = 0;
     const srcFormat = gl.RGBA;
@@ -291,13 +291,13 @@
 </script>
 
 <style type="text/scss">
-.tx-scene {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: auto;
+.tx-scene2 {
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+  // top: 0;
+  // bottom: 0;
+  // width: auto;
   /* pointer-events: none; */
   overflow: hidden;
 }
@@ -306,7 +306,7 @@
 <svelte:window on:resize={resizeCanvas} on:load={windowReady} />
 
 <canvas
-  class="tx-scene"
+  class="tx-scene2"
   width={displayWidth}
   height={displayHeight}
   style="width: {cssWidth}px; height: {cssHeight}px;"

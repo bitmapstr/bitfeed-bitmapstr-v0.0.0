@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import TxController from '../controllers/TxController.js'
-  import TxRender from './TxRender.svelte'
+  // import TxRender from './TxRender.svelte'
   import getTxStream from '../controllers/TxStream.js'
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
@@ -13,23 +13,23 @@
   import Sidebar from '../components/Sidebar.svelte'
   import TransactionOverlay from '../components/TransactionOverlay.svelte'
   import AboutOverlay from '../components/AboutOverlay.svelte'
-  import DonationOverlay from '../components/DonationOverlay.svelte'
-  import SupportersOverlay from '../components/SupportersOverlay.svelte'
   import LoadingAnimation from '../components/util/LoadingAnimation.svelte'
   import Alerts from '../components/alert/Alerts.svelte'
   import { numberFormat } from '../utils/format.js'
   import { exchangeRates, lastBlockId, haveSupporters, sidebarToggle } from '../stores.js'
   import { formatCurrency } from '../utils/fx.js'
-  import { fade } from 'svelte/transition'
+  import { fade, slide } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
-    import RunningOsterich from './RunningOsterich.svelte';
-    import TxRender2 from './TxRender2.svelte';
-    import NavBar from './NavBar.svelte';
+  import RunningOsterich from './RunningOsterich.svelte';
+  import TxRender2 from './TxRender2.svelte';
+  import NavBar from './NavBar.svelte';
+  // import getAllInscriptions from './Indexer-Local.svelte'
+  import {Button, Card, CardActions, CardSubtitle, CardText, CardTitle, Divider, Icon, Container, Row, Col, MaterialApp} from 'svelte-materialify'
+  import {mdiChevronDown} from '@mdi/js'  
 
-
-  let width = window.innerWidth - 20
-  let height = window.innerHeight - 20
+  let width = window.innerWidth - 100
+  let height = window.innerHeight - 100
   let txController
   let blockCount = 0
   let running = false
@@ -103,10 +103,10 @@
   function resize () {
     $pageWidth = window.innerWidth
     $pageHeight = window.innerHeight
-    if ((width !== window.innerWidth - 20 || height !== window.innerHeight - 20) && !$freezeResize) {
+    if ((width !== window.innerWidth - 100 || height !== window.innerHeight - 100) && !$freezeResize) {
       // don't force resize unless the viewport has actually changed
-      width = window.innerWidth - 20
-      height = window.innerHeight - 20
+      width = window.innerWidth - 100
+      height = window.innerHeight - 100
       txController.resize({
         width,
         height
@@ -212,6 +212,40 @@
       y: null
     }
     if (txController) txController.mouseMove(position)
+  }
+
+  //   function getmaps() {
+  //     getAllInscriptions()
+  //   console.log("getmaps")
+  // }
+  export async function getAllInscriptions() {
+		let insArray = [
+    {
+        "id": "2cd6956912ccb31b1288d1a36f240224e7269448712ea8348cbe346efbb8533bi0",
+        "genesis_block_height": 700000,
+        "timestamp": 1688956735000,
+        "ins": "02161.btc"
+    },
+    {
+        "id": "0af868e70e54a5a60ccb48a6c5de3589335de8cd833caddd780ed4d4ff06393bi0",
+        "genesis_block_height": 500000,
+        "timestamp": 1688956735000,
+        "ins": "351.web3"
+    },
+    {
+        "id": "4f3e92f747ca4128122be1324b78566cd52a5be71fcfb6edafa242271f88243bi0",
+        "genesis_block_height": 400000,
+        "timestamp": 1688956735000,
+        "ins": "510.web3"
+    }
+                        ];
+        console.log(insArray)
+		return insArray;
+	}
+
+  let active = false;
+  function toggle() {
+    active = !active;
   }
 
 </script>
@@ -532,13 +566,14 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
     opacity: 0.3;
-    // top: -38px;
-    // left: -42px;
-    // position: absolute;
-    // object-fit: contain;
+    // top: 0px;
+    // left: 0px;
+    position: absolute;
+    object-fit: contain;
+    z-index: inherit;
 }
 
   @media screen and (max-width: 640px) {
@@ -562,82 +597,55 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
-          
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
-                <!-- <Cube /> -->
-
-              </div>
-            {#if !$settings.showMyBitmap }   
+ 
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-              <TxRender controller={txController} />
-        
-              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
-                <div class="height-bar" />
-                {#if $tinyScreen}
-                  <div class="mempool-info">
-                    <span class="left">Mempool</span>
-                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
-                  </div>
-                {:else}
-                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
-                {/if}
-              </div>
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-              </div>
-              
-            </div>
-            {:else if $settings.showMyBitmap}
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender2 controller={txController} />
-              
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  {#if $settings.showBlockInfo }  
-                    <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
-                    {/if}
-                    
-                  <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-                <!-- <RunningOsterich /> -->
-
-              </div>
-              
-            </div>
-            {/if}
-
-            {#if $selectedTx }
-
-              <TxInfo tx={$selectedTx} position={mousePosition} />
+              {#if $settings.showBlockInfo }  
+              <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
+                          <TxRender2 controller={txController} /> 
+                          
+                          {:else if !$settings.showblockinfo}
+                          {#await getAllInscriptions()}
+                          <p>...waiting for my bitmaps</p>
+                        {:then data}
+                        {#each data as response, index}
+                         <!-- {console.log(data[1])} -->
              
-            {/if}
-</div>
+                <Container>
+                  <Row>
+                    <Card style="max-width:400px;">
+                      <!-- <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text"> -->
+                      <CardTitle>{index} - {response.genesis_block_height}</CardTitle>
+                      <CardSubtitle> {response.timestamp}</CardSubtitle>
+                      <CardText> <h5>Inscription</h5>
+                      </CardText>
+                      <CardActions>
+                        <Button text>Button</Button>
+                        <Button text fab size="small" class="ml-auto" on:click={toggle}>
+                          <Icon path={mdiChevronDown} rotate={active ? 180 : 0} />
+                        </Button>
+                      </CardActions>
+                      {#if active}
+                        <div transition:slide>
+                          <Divider />
+                          <div class="bitmap-cube">
+                            <!-- <Cube /> -->
+                          </div>
+          
+                        </div>
+                      {/if}
+                        </Card>
+                        </Row>
+                        </Container>
+                            {/each}
+                          {/await}
+                          
+              {/if}
+
+
+             
+
+  </div>
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
@@ -656,7 +664,9 @@
     </div>
     {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
-            <SearchBar />                       
+            <SearchBar />  
+            <button class="primary" on:click={getAllInscriptions}>getAll</button>
+                     
       </div>
     {/if}
     {#if $settings.showBlockInfo && !$settings.showSearch }  
@@ -674,7 +684,7 @@
   </div>
 
   <Sidebar />
-  <TransactionOverlay />
+  <!-- <TransactionOverlay /> -->
   <AboutOverlay />
 
   <!-- {#if config.donationsEnabled }

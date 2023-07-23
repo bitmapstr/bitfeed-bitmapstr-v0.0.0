@@ -31,7 +31,7 @@
     async function GetMyBitmaps() {
         if (wallet.connected) {
             try {
-                let limit = 20;
+                let limit = 30;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
                 console.log("Total Ins: " + res.total);
@@ -106,7 +106,7 @@
             <div />
         </form>
     {:else if !wallet.connected}
-        <h3>Connect yer wallet</h3>
+        <p>Connect yer wallet</p>
         <button class="primary" on:click={ConnectWallet}>UniSat</button>
         <br />
         <button>Hiro</button>

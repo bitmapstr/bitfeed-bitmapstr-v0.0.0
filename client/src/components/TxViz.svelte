@@ -26,6 +26,7 @@
     import RunningOsterich from './RunningOsterich.svelte';
     import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
+    import BlockInfo2 from './BlockInfo2.svelte';
 
 
   let width = window.innerWidth - 20
@@ -576,7 +577,6 @@
               </div>
             {#if !$settings.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -617,7 +617,7 @@
                     {/if}
                     
                   <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                    <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
                   {#if config.dev && config.debug && $devSettings.guides }
                     <div class="guide-area" />

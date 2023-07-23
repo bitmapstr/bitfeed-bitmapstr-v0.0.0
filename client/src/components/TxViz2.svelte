@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import TxController from '../controllers/TxController.js'
-  // import TxRender from './TxRender.svelte'
+  import TxRender from './TxRender.svelte'
   import getTxStream from '../controllers/TxStream.js'
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
@@ -13,24 +13,25 @@
   import Sidebar from '../components/Sidebar.svelte'
   import TransactionOverlay from '../components/TransactionOverlay.svelte'
   import AboutOverlay from '../components/AboutOverlay.svelte'
+  import DonationOverlay from '../components/DonationOverlay.svelte'
+  import SupportersOverlay from '../components/SupportersOverlay.svelte'
   import LoadingAnimation from '../components/util/LoadingAnimation.svelte'
   import Alerts from '../components/alert/Alerts.svelte'
   import { numberFormat } from '../utils/format.js'
   import { exchangeRates, lastBlockId, haveSupporters, sidebarToggle } from '../stores.js'
   import { formatCurrency } from '../utils/fx.js'
-  import { fade, slide } from 'svelte/transition'
+  import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
-  import RunningOsterich from './RunningOsterich.svelte';
-  import TxRender2 from './TxRender2.svelte';
-  import NavBar from './NavBar.svelte';
-  // import getAllInscriptions from './Indexer-Local.svelte'
-  import {Button, Card, CardActions, CardSubtitle, CardText, CardTitle, Divider, Icon, Container, Row, Col, MaterialApp} from 'svelte-materialify'
-  import {mdiChevronDown} from '@mdi/js'  
+    import RunningOsterich from './RunningOsterich.svelte';
+    import TxRender2 from './TxRender2.svelte';
+    import NavBar from './NavBar.svelte';
+    import BlockInfo2 from './BlockInfo2.svelte';
+
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
-  let txController2
+  let txController
   let blockCount = 0
   let running = false
 
@@ -41,9 +42,9 @@
 
   $: {
     if ($blockVisible) {
-      if (txController2) txController2.showBlock()
+      if (txController) txController.showBlock()
     } else {
-      if (txController2) txController2.hideBlock()
+      if (txController) txController.hideBlock()
     }
   }
 
@@ -71,20 +72,20 @@
   }
 
   onMount(() => {
-    txController2 = new TxController({ width, height })
+    txController = new TxController({ width, height })
 
     if (!config.noTxFeed) {
       txStream.subscribe('tx', tx => {
-        txController2.addTx(tx)
+        txController.addTx(tx)
       })
       txStream.subscribe('drop_tx', txid => {
-        txController2.dropTx(txid)
+        txController.dropTx(txid)
       })
     }
     if (!config.noBlockFeed) {
       txStream.subscribe('block', ({block, realtime}) => {
         if (block) {
-          const added = txController2.addBlock(block, realtime)
+          const added = txController.addBlock(block, realtime)
           if (added && added.id) $lastBlockId = added.id
         }
       })
@@ -107,7 +108,7 @@
       // don't force resize unless the viewport has actually changed
       width = window.innerWidth - 20
       height = window.innerHeight - 20
-      txController2.resize({
+      txController.resize({
         width,
         height
       })
@@ -115,8 +116,8 @@
   }
 
   function changedMode () {
-    if (txController2) {
-      txController2.redoLayout({
+    if (txController) {
+      txController.redoLayout({
         width,
         height
       })
@@ -128,12 +129,12 @@
   }
 
   function quitExploring () {
-    if (txController2) txController2.resumeLatest()
+    if (txController) txController.resumeLatest()
   }
 
   function fakeBlock () {
-    const block = txController2.simulateBlock()
-    // txController2.addBlock(new BitcoinBlock({
+    const block = txController.simulateBlock()
+    // txController.addBlock(new BitcoinBlock({
     //   version: 'fake',
     //   id: Math.random(),
     //   value: 10000,
@@ -153,11 +154,11 @@
   }
 
   function fakeTx (value) {
-    txController2.simulateDumpTx(1, value)
+    txController.simulateDumpTx(1, value)
   }
 
   function fakeTxs () {
-    txController2.simulateDumpTx(200)
+    txController.simulateDumpTx(200)
   }
 
   $: connectionColor = ($serverConnected && $serverDelay < 5000) ? ($serverDelay < 500 ? 'good' : 'ok') : 'bad'
@@ -189,11 +190,11 @@
       x: e.clientX,
       y: window.innerHeight - e.clientY
     }
-    if (txController2) txController2.mouseClick(position)
+    if (txController) txController.mouseClick(position)
   }
 
   function pointerMove (e) {
-    if (!txController2.selectionLocked) {
+    if (!txController.selectionLocked) {
       mousePosition = {
         x: e.clientX,
         y: e.clientY
@@ -202,7 +203,7 @@
         x: e.clientX,
         y: window.innerHeight - e.clientY
       }
-      if (txController2) txController2.mouseMove(position)
+      if (txController) txController.mouseMove(position)
     }
   }
 
@@ -211,90 +212,7 @@
       x: null,
       y: null
     }
-    if (txController2) txController2.mouseMove(position)
-  }
-
-
-  export async function getAllInscriptions() {
-		let insArray = [
-    {
-        "id": "6dd41aa4d9dae71303c650bc17ac2dedf6ec96b71b334da026439d360b50da67i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "02540a211aeec350fd49df50a688c5067ac03f256bcc4dd717bedee155f7d967i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "191239693e7a7888c1b8d308de17fc3bfb2e69445e209a9056d0e38baf6dd467i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "26133fe210432cadc818bb225a9d4a83e271ae858d5f213dc3c8d5431583c667i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "741c3f451441c126502548ebde6aba42ea5dc47baf7201be2e8899f206f2c567i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "8b6e2039f72e0b4836feaeeab82ac88e28e1f6c0ab818c18d1268d2dbe06c267i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "d893323e4d44a2e5f414bb15c72ab1815a7a291b1ed89513954a77438269bb67i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "56a356e8c546b3c792708afdea8bbd560c258d728bab1ed3f86f46e08c09b867i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "18389026ffb9730064e2ae172582ea67b38a378eb170edf538c5b110a053aa67i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    },
-    {
-        "id": "9e16cdc0cfb4fb244ba58bc7c1535244d2c3f6bd053da9c8870fb7529173a367i0",
-        "genesis_block_height": 799960,
-        "timestamp": 1690139846000,
-        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
-        "mime_type": "text/plain"
-    }
-];
-        console.log(insArray)
-		return insArray;
-	}
-
-  let active = false;
-  function toggle() {
-    active = !active;
+    if (txController) txController.mouseMove(position)
   }
 
 </script>
@@ -329,6 +247,54 @@
     height: 100%;
   }
 
+  .mempool-height {
+    position: absolute;
+    bottom: calc(25% + 10px);
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 0 .5rem;
+    transition: bottom 1000ms;
+
+    .mempool-count {
+      position: absolute;
+      bottom: .5em;
+      left: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--palette-x);
+    }
+
+    .mempool-info {
+      position: absolute;
+      bottom: .5em;
+      left: 0.5rem;
+      right: 0.5em;
+      font-size: 0.9rem;
+      color: var(--palette-x);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .height-bar {
+      width: 100%;
+      height: 1px;
+      border-bottom: dashed 2px var(--palette-x);
+      opacity: 0.75;
+    }
+  }
+
+  .mempool-size-label {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--palette-x);
+    transition: color 500ms;
+  }
 
   .top-bar {
     position: absolute;
@@ -426,6 +392,43 @@
   .alert-bar-wrapper {
     width: 20em;
     flex-shrink: 0;
+  }
+
+  .block-area-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+
+    .spacer {
+      flex: 1;
+    }
+
+    .block-area-outer {
+      position: relative;
+      flex: 0;
+      // width: 75vw;
+      // max-width: 40vh;
+      margin: auto;
+
+      .block-area {
+        padding-top: 100%;
+      }
+
+      // .bitmapstr-block-area {
+      //   padding-top: 100%;
+      // }
+
+      .guide-area {
+        background: #00FF00;
+        opacity: 25%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+    }
   }
 
   .guide-overlay {
@@ -530,14 +533,13 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 75%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
     opacity: 0.3;
-    top: 100px;
-    left: 160px;
-    position: absolute;
-    object-fit: contain;
-    z-index: inherit;
+    // top: -38px;
+    // left: -42px;
+    // position: absolute;
+    // object-fit: contain;
 }
 
   @media screen and (max-width: 640px) {
@@ -561,55 +563,81 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
- 
-            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              {#if $settings.showBlockInfo }  
-              <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
-                          <TxRender2 controller={txController2} /> 
-                          
-                          {:else if !$settings.showblockinfo}
-                          {#await getAllInscriptions()}
-                          <p>...waiting for my bitmaps</p>
-                        {:then data}
-                        {#each data as response, index}
-                         <!-- {console.log(data[1])} -->
-             
-                <Container>
-                  <Row>
-                    <Card style="max-width:400px;">
-                      <!-- <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text"> -->
-                      <CardTitle>{index} - {response.genesis_block_height}</CardTitle>
-                      <CardSubtitle> {response.timestamp}</CardSubtitle>
-                      <CardText> <h5>Inscription</h5>
-                      </CardText>
-                      <CardActions>
-                        <Button text>Button</Button>
-                        <Button text fab size="small" class="ml-auto" on:click={toggle}>
-                          <Icon path={mdiChevronDown} rotate={active ? 180 : 0} />
-                        </Button>
-                      </CardActions>
-                      {#if active}
-                        <div transition:slide>
-                          <Divider />
-                          <div class="bitmap-cube">
-                            <!-- <Cube /> -->
-                          </div>
           
-                        </div>
-                      {/if}
-                        </Card>
-                        </Row>
-                        </Container>
-                            {/each}
-                          {/await}
-                          
-              {/if}
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
 
+             <!-- {#if $settings.darkMode }
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {:else}
+              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
+              {/if} -->
+              <div class="bitmap-cube">
+                <!-- <Cube /> -->
 
+              </div>
+            {#if !$settings.showMyBitmap }   
+            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender controller={txController} />
+        
+              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
+                <div class="height-bar" />
+                {#if $tinyScreen}
+                  <div class="mempool-info">
+                    <span class="left">Mempool</span>
+                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
+                  </div>
+                {:else}
+                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
+                {/if}
+              </div>
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  <div class="block-area">
+                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+              
+            </div>
+            {:else if $settings.showMyBitmap}
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender2 controller={txController} />
+              
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  {#if $settings.showBlockInfo }  
+                    <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
+                    {/if}
+                    
+                  <div class="block-area">
+                    <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+                <!-- <RunningOsterich /> -->
+
+              </div>
+              
+            </div>
+            {/if}
+
+            {#if $selectedTx }
+
+              <TxInfo tx={$selectedTx} position={mousePosition} />
              
-
-  </div>
-
+            {/if}
+</div>
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
@@ -632,9 +660,7 @@
       </div>
     {/if}
     {#if $settings.showBlockInfo && !$settings.showSearch }  
-    <NavBar />              
-    <button class="primary" on:click={getAllInscriptions}>getAll</button>
-                      
+    <NavBar />                        
     {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
@@ -648,15 +674,15 @@
   </div>
 
   <Sidebar />
-  <!-- <TransactionOverlay /> -->
-  <!-- <AboutOverlay /> -->
+  <TransactionOverlay />
+  <AboutOverlay />
 
-  <!-- {#if config.donationsEnabled }
+  {#if config.donationsEnabled }
     <DonationOverlay />
     {#if $haveSupporters}
       <SupportersOverlay />
     {/if}
-  {/if} -->
+  {/if}
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

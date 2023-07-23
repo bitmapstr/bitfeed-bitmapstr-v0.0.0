@@ -329,54 +329,6 @@
     height: 100%;
   }
 
-  .mempool-height {
-    position: absolute;
-    bottom: calc(25% + 10px);
-    left: 0;
-    right: 0;
-    margin: auto;
-    padding: 0 .5rem;
-    transition: bottom 1000ms;
-
-    .mempool-count {
-      position: absolute;
-      bottom: .5em;
-      left: 0.5rem;
-      font-size: 0.9rem;
-      color: var(--palette-x);
-    }
-
-    .mempool-info {
-      position: absolute;
-      bottom: .5em;
-      left: 0.5rem;
-      right: 0.5em;
-      font-size: 0.9rem;
-      color: var(--palette-x);
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .height-bar {
-      width: 100%;
-      height: 1px;
-      border-bottom: dashed 2px var(--palette-x);
-      opacity: 0.75;
-    }
-  }
-
-  .mempool-size-label {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    font-size: 20px;
-    font-family: monospace;
-    font-weight: bold;
-    color: var(--palette-x);
-    transition: color 500ms;
-  }
 
   .top-bar {
     position: absolute;
@@ -474,43 +426,6 @@
   .alert-bar-wrapper {
     width: 20em;
     flex-shrink: 0;
-  }
-
-  .block-area-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
-
-    .spacer {
-      flex: 1;
-    }
-
-    .block-area-outer {
-      position: relative;
-      flex: 0;
-      // width: 75vw;
-      // max-width: 40vh;
-      margin: auto;
-
-      .block-area {
-        padding-top: 100%;
-      }
-
-      // .bitmapstr-block-area {
-      //   padding-top: 100%;
-      // }
-
-      .guide-area {
-        background: #00FF00;
-        opacity: 25%;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-      }
-    }
   }
 
   .guide-overlay {
@@ -734,7 +649,7 @@
 
   <Sidebar />
   <!-- <TransactionOverlay /> -->
-  <AboutOverlay />
+  <!-- <AboutOverlay /> -->
 
   <!-- {#if config.donationsEnabled }
     <DonationOverlay />

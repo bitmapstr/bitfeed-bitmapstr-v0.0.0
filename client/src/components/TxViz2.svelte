@@ -28,8 +28,8 @@
   import {Button, Card, CardActions, CardSubtitle, CardText, CardTitle, Divider, Icon, Container, Row, Col, MaterialApp} from 'svelte-materialify'
   import {mdiChevronDown} from '@mdi/js'  
 
-  let width = window.innerWidth - 100
-  let height = window.innerHeight - 100
+  let width = window.innerWidth - 20
+  let height = window.innerHeight - 20
   let txController
   let blockCount = 0
   let running = false
@@ -103,10 +103,10 @@
   function resize () {
     $pageWidth = window.innerWidth
     $pageHeight = window.innerHeight
-    if ((width !== window.innerWidth - 100 || height !== window.innerHeight - 100) && !$freezeResize) {
+    if ((width !== window.innerWidth - 20 || height !== window.innerHeight - 20) && !$freezeResize) {
       // don't force resize unless the viewport has actually changed
-      width = window.innerWidth - 100
-      height = window.innerHeight - 100
+      width = window.innerWidth - 20
+      height = window.innerHeight - 20
       txController.resize({
         width,
         height
@@ -214,31 +214,80 @@
     if (txController) txController.mouseMove(position)
   }
 
-  //   function getmaps() {
-  //     getAllInscriptions()
-  //   console.log("getmaps")
-  // }
+
   export async function getAllInscriptions() {
 		let insArray = [
     {
-        "id": "2cd6956912ccb31b1288d1a36f240224e7269448712ea8348cbe346efbb8533bi0",
-        "genesis_block_height": 700000,
-        "timestamp": 1688956735000,
-        "ins": "02161.btc"
+        "id": "6dd41aa4d9dae71303c650bc17ac2dedf6ec96b71b334da026439d360b50da67i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
     },
     {
-        "id": "0af868e70e54a5a60ccb48a6c5de3589335de8cd833caddd780ed4d4ff06393bi0",
-        "genesis_block_height": 500000,
-        "timestamp": 1688956735000,
-        "ins": "351.web3"
+        "id": "02540a211aeec350fd49df50a688c5067ac03f256bcc4dd717bedee155f7d967i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
     },
     {
-        "id": "4f3e92f747ca4128122be1324b78566cd52a5be71fcfb6edafa242271f88243bi0",
-        "genesis_block_height": 400000,
-        "timestamp": 1688956735000,
-        "ins": "510.web3"
+        "id": "191239693e7a7888c1b8d308de17fc3bfb2e69445e209a9056d0e38baf6dd467i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "26133fe210432cadc818bb225a9d4a83e271ae858d5f213dc3c8d5431583c667i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "741c3f451441c126502548ebde6aba42ea5dc47baf7201be2e8899f206f2c567i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "8b6e2039f72e0b4836feaeeab82ac88e28e1f6c0ab818c18d1268d2dbe06c267i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "d893323e4d44a2e5f414bb15c72ab1815a7a291b1ed89513954a77438269bb67i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "56a356e8c546b3c792708afdea8bbd560c258d728bab1ed3f86f46e08c09b867i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "18389026ffb9730064e2ae172582ea67b38a378eb170edf538c5b110a053aa67i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
+    },
+    {
+        "id": "9e16cdc0cfb4fb244ba58bc7c1535244d2c3f6bd053da9c8870fb7529173a367i0",
+        "genesis_block_height": 799960,
+        "timestamp": 1690139846000,
+        "ins": "{\"p\":\"brc-20\",\"op\":\"mint\",\"tick\":\"sats\",\"amt\":\"100000000\"}",
+        "mime_type": "text/plain"
     }
-                        ];
+];
         console.log(insArray)
 		return insArray;
 	}
@@ -569,8 +618,8 @@
     width: 75%;
     height: 75%;
     opacity: 0.3;
-    // top: 0px;
-    // left: 0px;
+    top: 100px;
+    left: 160px;
     position: absolute;
     object-fit: contain;
     z-index: inherit;
@@ -664,13 +713,13 @@
     </div>
     {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
-            <SearchBar />  
-            <button class="primary" on:click={getAllInscriptions}>getAll</button>
-                     
+            <SearchBar />                       
       </div>
     {/if}
     {#if $settings.showBlockInfo && !$settings.showSearch }  
-    <NavBar />                        
+    <NavBar />              
+    <button class="primary" on:click={getAllInscriptions}>getAll</button>
+                      
     {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">

@@ -30,7 +30,7 @@
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
-  let txController
+  let txController2
   let blockCount = 0
   let running = false
 
@@ -41,9 +41,9 @@
 
   $: {
     if ($blockVisible) {
-      if (txController) txController.showBlock()
+      if (txController2) txController2.showBlock()
     } else {
-      if (txController) txController.hideBlock()
+      if (txController2) txController2.hideBlock()
     }
   }
 
@@ -71,20 +71,20 @@
   }
 
   onMount(() => {
-    txController = new TxController({ width, height })
+    txController2 = new TxController({ width, height })
 
     if (!config.noTxFeed) {
       txStream.subscribe('tx', tx => {
-        txController.addTx(tx)
+        txController2.addTx(tx)
       })
       txStream.subscribe('drop_tx', txid => {
-        txController.dropTx(txid)
+        txController2.dropTx(txid)
       })
     }
     if (!config.noBlockFeed) {
       txStream.subscribe('block', ({block, realtime}) => {
         if (block) {
-          const added = txController.addBlock(block, realtime)
+          const added = txController2.addBlock(block, realtime)
           if (added && added.id) $lastBlockId = added.id
         }
       })
@@ -107,7 +107,7 @@
       // don't force resize unless the viewport has actually changed
       width = window.innerWidth - 20
       height = window.innerHeight - 20
-      txController.resize({
+      txController2.resize({
         width,
         height
       })
@@ -115,8 +115,8 @@
   }
 
   function changedMode () {
-    if (txController) {
-      txController.redoLayout({
+    if (txController2) {
+      txController2.redoLayout({
         width,
         height
       })
@@ -128,12 +128,12 @@
   }
 
   function quitExploring () {
-    if (txController) txController.resumeLatest()
+    if (txController2) txController2.resumeLatest()
   }
 
   function fakeBlock () {
-    const block = txController.simulateBlock()
-    // txController.addBlock(new BitcoinBlock({
+    const block = txController2.simulateBlock()
+    // txController2.addBlock(new BitcoinBlock({
     //   version: 'fake',
     //   id: Math.random(),
     //   value: 10000,
@@ -153,11 +153,11 @@
   }
 
   function fakeTx (value) {
-    txController.simulateDumpTx(1, value)
+    txController2.simulateDumpTx(1, value)
   }
 
   function fakeTxs () {
-    txController.simulateDumpTx(200)
+    txController2.simulateDumpTx(200)
   }
 
   $: connectionColor = ($serverConnected && $serverDelay < 5000) ? ($serverDelay < 500 ? 'good' : 'ok') : 'bad'
@@ -189,11 +189,11 @@
       x: e.clientX,
       y: window.innerHeight - e.clientY
     }
-    if (txController) txController.mouseClick(position)
+    if (txController2) txController2.mouseClick(position)
   }
 
   function pointerMove (e) {
-    if (!txController.selectionLocked) {
+    if (!txController2.selectionLocked) {
       mousePosition = {
         x: e.clientX,
         y: e.clientY
@@ -202,7 +202,7 @@
         x: e.clientX,
         y: window.innerHeight - e.clientY
       }
-      if (txController) txController.mouseMove(position)
+      if (txController2) txController2.mouseMove(position)
     }
   }
 
@@ -211,7 +211,7 @@
       x: null,
       y: null
     }
-    if (txController) txController.mouseMove(position)
+    if (txController2) txController2.mouseMove(position)
   }
 
 
@@ -565,7 +565,7 @@
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               {#if $settings.showBlockInfo }  
               <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
-                          <TxRender2 controller={txController} /> 
+                          <TxRender2 controller={txController2} /> 
                           
                           {:else if !$settings.showblockinfo}
                           {#await getAllInscriptions()}

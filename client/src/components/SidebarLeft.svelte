@@ -24,6 +24,7 @@
   
   
   import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
+    import NostrLogin from './NostrLogin.svelte';
   
   let searchTabComponent
   
@@ -119,6 +120,7 @@
         <Icon icon={bitmapIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
+        <NostrLogin />
       </div>
     </SidebarTab>
   

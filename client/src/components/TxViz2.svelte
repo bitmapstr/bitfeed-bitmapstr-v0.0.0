@@ -23,12 +23,10 @@
   import { fade } from 'svelte/transition'
   import config from '../config.js'
   import Cube from './Cube.svelte'
-
     import RunningOsterich from './RunningOsterich.svelte';
     import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
-
 
 
   let width = window.innerWidth - 20
@@ -538,10 +536,12 @@
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    // top: -38px;
-    // left: -42px;
-    // position: absolute;
-    // object-fit: contain;
+    left: 0px;
+    // top: 115px;
+    // left: 240px;
+    position: absolute;
+    object-fit: contain;
+    z-index: inherit;
 }
 
   @media screen and (max-width: 640px) {
@@ -676,16 +676,7 @@
   </div>
 
   <Sidebar />
-
-  <TransactionOverlay />
-  <AboutOverlay />
-
-  {#if config.donationsEnabled }
-    <DonationOverlay />
-    {#if $haveSupporters}
-      <SupportersOverlay />
-    {/if}
-  {/if}
+  
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

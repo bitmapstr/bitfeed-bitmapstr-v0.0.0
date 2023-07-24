@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-	import BlockInfo from './BlockInfo.svelte';
 	import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
@@ -22,7 +21,7 @@
 	const renderer = new THREE.WebGL1Renderer();
 	const controls = new OrbitControls( camera, renderer.domElement );
 	const loader = new GLTFLoader();
-	renderer.setSize(200,200);
+	renderer.setSize(400,400);
 	container?.append(renderer.domElement);
 
 	const height = 3;

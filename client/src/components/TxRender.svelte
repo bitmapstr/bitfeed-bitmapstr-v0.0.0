@@ -213,7 +213,7 @@
     )
 
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-                  width, height, border, srcFormat, srcType,
+    width, height, border, srcFormat, srcType,
                   pixels);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -294,6 +294,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  width: auto;
   /* pointer-events: none; */
   overflow: hidden;
 }

@@ -10,8 +10,10 @@
   let canvas
   let gl
   let animationFrameRequest
-  let displayWidth
-  let displayHeight
+
+  export let displayWidth
+  export let displayHeight
+
   let cssWidth
   let cssHeight
   let shaderProgram
@@ -197,8 +199,10 @@
 
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
-  const width1 = 1000
-  const height1 = 10
+
+  export const widthGLsizei  = 500
+  export const heightGLsizei = 300
+
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -214,8 +218,11 @@
       colorData
     )
 
+   
+
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-                  width1, height1, border, srcFormat, srcType,
+    widthGLsizei, heightGLsizei, border, srcFormat, srcType,
+
                   pixels);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -290,12 +297,14 @@
 </script>
 
 <style type="text/scss">
-.tx-scene {
+
+.tx-scene2 {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  width: auto;
   /* pointer-events: none; */
   overflow: hidden;
 }
@@ -304,7 +313,7 @@
 <svelte:window on:resize={resizeCanvas} on:load={windowReady} />
 
 <canvas
-  class="tx-scene"
+  class="tx-scene2"
   width={displayWidth}
   height={displayHeight}
   style="width: {cssWidth}px; height: {cssHeight}px;"

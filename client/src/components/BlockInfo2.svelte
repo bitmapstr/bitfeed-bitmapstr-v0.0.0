@@ -3,7 +3,7 @@
   import { fly } from 'svelte/transition'
   import { smootherstep } from '../utils/easing.js'
   import { createEventDispatcher } from 'svelte'
-  import Icon from './Icon.svelte.js'
+  import Icon from '../components/Icon.svelte'
   import closeIcon from '../assets/icon/cil-x-circle.svg'
   import { shortBtcFormat, longBtcFormat, dateFormat, numberFormat } from '../utils/format.js'
   import { exchangeRates, settings, blocksEnabled, latestBlockHeight, blockTransitionDirection, loading, freezeResize, pageWidth, pageHeight } from '../stores.js'

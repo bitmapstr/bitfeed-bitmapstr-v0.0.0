@@ -10,8 +10,10 @@
   let canvas
   let gl
   let animationFrameRequest
+
   export let displayWidth
   export let displayHeight
+
   let cssWidth
   let cssHeight
   let shaderProgram
@@ -197,8 +199,10 @@
 
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
+
   export const widthGLsizei  = 500
   export const heightGLsizei = 300
+
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -213,10 +217,12 @@
     const pixels = new Uint8Array(
       colorData
     )
+
    
 
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
     widthGLsizei, heightGLsizei, border, srcFormat, srcType,
+
                   pixels);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -291,6 +297,7 @@
 </script>
 
 <style type="text/scss">
+
 .tx-scene2 {
   position: absolute;
   left: 0;

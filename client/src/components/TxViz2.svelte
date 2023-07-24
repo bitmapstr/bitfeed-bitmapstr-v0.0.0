@@ -536,10 +536,12 @@
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    // top: -38px;
-    // left: -42px;
-    // position: absolute;
-    // object-fit: contain;
+    left: 0px;
+    // top: 115px;
+    // left: 240px;
+    position: absolute;
+    object-fit: contain;
+    z-index: inherit;
 }
 
   @media screen and (max-width: 640px) {

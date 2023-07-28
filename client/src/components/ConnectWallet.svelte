@@ -83,7 +83,7 @@
     {#if wallet.connected}
         <button class="danger" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
-        <h2>My bitmaps</h2>
+        <h2>unverified bitmaps</h2>
         <form on:submit|preventDefault={handleSubmit(selected)}>
             <select bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>

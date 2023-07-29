@@ -2,41 +2,6 @@
     let isOpen = false;
     let selectedTheme = '';
     const themes = ['LIGHT PINK', 'AQUA BLUES', 'PINK', 'PINK-RED', 'PINK-WHITE-RED'];
-    import {widthGLsizei, heightGLsizei} from './TxRender2.svelte'
-
-      /////////// ORANGY AUTUMN THEME/////////
-    widthGLsizei  = 256
-    heightGLsizei = 256
-  /////////// ORANGY AUTUMN THEME/////////
-
-  /////////// LIGHT PINK THEME/////////
-  // export const widthGLsizei  = 25
-  // export const heightGLsizei = 25
-  /////////// LIGHT PINK THEME/////////
-
-
-  /////////// AQUA BLUES THEME/////////
-  // export const widthGLsizei  = 500
-  // export const heightGLsizei = 500
-  /////////// AQUA BLUES THEME/////////
-
-
-  /////////// PINK THEME/////////
-  // export const widthGLsizei  = 150
-  // export const heightGLsizei = 150
-  /////////// PINK THEME/////////
-
-
-  /////////// PINK-RED THEME/////////
-  // export const widthGLsizei  = 100
-  // export const heightGLsizei = 100
-  /////////// PINK-RED THEME/////////
-
-  /////////// PINK-WHITE-RED THEME/////////
-  // export const widthGLsizei  = 75
-  // export const heightGLsizei = 75
-  /////////// PINK-WHITE-RED THEME/////////
-
 
   
     function toggleDropdown() {

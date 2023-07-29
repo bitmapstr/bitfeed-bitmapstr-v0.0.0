@@ -32,7 +32,7 @@
   </script>
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
-    <button on:click={toggleDropdown}>
+    <button class="dropdown" on:click={toggleDropdown}>
       {selectedTheme || 'Select a theme'}
     </button>
     {#if isOpen}
@@ -49,10 +49,10 @@
       position: relative;
     }
     .dropdown button {
+      background-color: var(--palette-good);
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      background-color: #fff;
       cursor: pointer;
     }
     .dropdown ul {
@@ -65,7 +65,7 @@
       margin: 0;
       border: 1px solid #ccc;
       border-radius: 4px;
-      background-color: #fff;
+      background-color:var(--palette-good);
     }
     .dropdown ul li {
       padding: 5px 10px;

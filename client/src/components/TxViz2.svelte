@@ -340,6 +340,24 @@
         }
       }
 
+      .audioOn-light {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+
+        &.bad {
+          background: var(--palette-bad);
+        }
+        &.ok {
+          background: var(--palette-ok);
+        }
+        &.good {
+          background: var(--palette-good);
+        }
+      }
+
+
       .stat-counter, .fx-ticker {
         white-space: nowrap;
         cursor: pointer;
@@ -649,6 +667,11 @@
         {/if}
         {#if $tinyScreen && $currentBlock }
           <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
+        {/if}
+      </div>
+      <div class="row">
+        {#if $settings.audioOn }
+          <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
         {/if}
       </div>
       <div class="row">

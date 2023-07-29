@@ -14,7 +14,7 @@
 <main>
 	{#if $settings.showMyBitmap }   
 	<TxViz2 />
-	{:else}
+	{:else if !$settings.showMyBitmap}
 	<TxViz />
 	{/if}
 	<!-- <TxViz /> -->

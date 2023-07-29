@@ -21,13 +21,11 @@ import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
 
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
-import bitmapunverified from '../assets/icon/unverified.svg'
 
 
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
-    import MySlider from './MySlider.svelte';
-    import MyDropdown from './MyDropdown.svelte';
+    import ThemePicker from './ThemePicker.svelte';
 
 let searchTabComponent
 
@@ -159,7 +157,7 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-      <MyDropdown />
+   <ThemePicker />
     </div>
   </SidebarTab>
 

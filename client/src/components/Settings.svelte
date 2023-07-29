@@ -33,21 +33,11 @@ let settingConfig = {
     label: 'Dark Mode',
     valueType: 'bool'
   },
-  audioOn: {
-    label: 'Audio On',
-    valueType: 'bool'
-  },
   currency: {
     label: 'Fiat Currency',
     type: 'dropdown',
     valueType: 'string',
     options: currencyOptions
-  },
-  unverifiedtheme: {
-    label: 'Unverified',
-    type: 'dropdown',
-    valueType: 'string'
-    // options: currencyOptions
   },
   vbytes: {
     label: 'Size by',
@@ -70,16 +60,8 @@ let settingConfig = {
   showBlockInfo: {
     label: 'Block Info',
     valueType: 'bool'
-  },
-  showMyBitmap: {
-    label: 'My Bitmap',
-    valueType: 'bool'
-  },
-  verified: {
-    label: 'Verified',
-    valueType: 'bool'
   }
-}
+ }
 $: {
   if (config.messagesEnabled && $haveMessages) {
     settingConfig.showMessages = {

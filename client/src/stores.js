@@ -129,6 +129,8 @@ if (urlSettings.showMessages == null) urlSettings.showMessages = true
 if (urlSettings.blocksEnabled == null) urlSettings.blocksEnabled = true
 
 export const settings = createCachedDict('settings', urlSettings, defaultSettings)
+export const settingsBitmap = createCachedDict('settingsBitmap', urlSettings, defaultSettings)
+
 
 export const colorMode = derived([settings], ([$settings]) => {
 	return $settings.colorByFee ? "fee" : "age"

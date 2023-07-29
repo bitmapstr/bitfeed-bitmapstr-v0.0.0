@@ -23,7 +23,7 @@ import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
     import MyDropdown from './MyDropdown.svelte';
-    // import SettingsBitmap from './SettingsBitmap.svelte';
+    import SettingsBitmap from './SettingsBitmap.svelte';
 
 let searchTabComponent
 
@@ -156,7 +156,7 @@ function showBlock () {
     </span>
     <div slot="content">
       <MyDropdown />
-      <!-- <SettingsBitmap /> -->
+      <SettingsBitmap />
     </div>
   </SidebarTab>
 

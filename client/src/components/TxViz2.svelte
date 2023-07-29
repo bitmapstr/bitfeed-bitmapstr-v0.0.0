@@ -615,7 +615,8 @@
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
                   {#if $settings.showBlockInfo }  
-                    <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
+                    <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
+                    <h1>UNVERIFIED</h1>
                     {/if}
                     
                   <div class="block-area">

@@ -200,8 +200,45 @@
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
 
-  export const widthGLsizei  = 500
-  export const heightGLsizei = 300
+
+  /////////// ORANGY THEME/////////
+  export const widthGLsizei  = 256
+  export const heightGLsizei = 256
+  /////////// ORANGY THEME/////////
+
+  /////////// LIGHT PINK THEME/////////
+  // export const widthGLsizei  = 25
+  // export const heightGLsizei = 25
+  /////////// LIGHT PINK THEME/////////
+
+
+  /////////// AQUA BLUES THEME/////////
+  // export const widthGLsizei  = 500
+  // export const heightGLsizei = 500
+  /////////// AQUA BLUES THEME/////////
+
+
+  /////////// PINK THEME/////////
+  // export const widthGLsizei  = 150
+  // export const heightGLsizei = 150
+  /////////// PINK THEME/////////
+
+
+  /////////// PINK-RED THEME/////////
+  // export const widthGLsizei  = 100
+  // export const heightGLsizei = 100
+  /////////// PINK-RED THEME/////////
+
+  /////////// PINK-WHITE-RED THEME/////////
+  // export const widthGLsizei  = 75
+  // export const heightGLsizei = 75
+  /////////// PINK-WHITE-RED THEME/////////
+
+
+
+
+
+
 
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();

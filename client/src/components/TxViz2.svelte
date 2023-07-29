@@ -599,7 +599,7 @@
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
-              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
+              <!-- <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
                 <div class="height-bar" />
                 {#if $tinyScreen}
                   <div class="mempool-info">
@@ -609,7 +609,7 @@
                 {:else}
                   <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
                 {/if}
-              </div>
+              </div> -->
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">

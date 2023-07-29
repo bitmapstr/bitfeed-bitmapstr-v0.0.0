@@ -74,6 +74,10 @@ let settingConfig = {
   verified: {
     label: 'Verified',
     valueType: 'bool'
+  },
+  audioOn: {
+    label: 'Audio On',
+    valueType: 'bool'
   }
 }
 $: {

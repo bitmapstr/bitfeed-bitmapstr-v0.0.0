@@ -22,8 +22,9 @@ import SearchTab from '../components/SearchTab.svelte'
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
-    import MyDropdown from './MyDropdown.svelte';
+    import MyDropdown from './MyThemesDropdown.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
+    import MyThemesDropdown from './MyThemesDropdown.svelte';
 
 let searchTabComponent
 
@@ -155,7 +156,7 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-      <MyDropdown />
+      <MyThemesDropdown />
       <SettingsBitmap />
     </div>
   </SidebarTab>

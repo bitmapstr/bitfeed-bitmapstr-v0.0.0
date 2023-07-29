@@ -1,18 +1,27 @@
 <script>
-    let isOpen = false;
-    let selectedTheme = '';
-    const themes = ['LIGHT PINK', 'AQUA BLUES', 'PINK', 'PINK-RED', 'PINK-WHITE-RED'];
+      import { theme  } from "../stores";
 
+    let isOpen = false;
+    let selectedTheme 
+    export let themes = [
+      { name: 'LIGHT PINK', value: 25 },
+      { name: 'PINK-WHITE-RED', value: 75 },
+      { name: 'PINK-RED', value: 100 },
+      { name: 'LIGHT PINK', value: 150 },
+      { name: 'ORANGY AUTUMN', value: 256 },
+      { name: 'AQUA BLUES', value: 500 }
+
+    ];
   
     function toggleDropdown() {
       isOpen = !isOpen;
     }
   
-    function selectTheme(Theme) {
-      selectedTheme = Theme;
-
+    export function selectTheme(theme) {
+      selectedTheme = theme.name;
+      console.log(theme.value)
       //  widthGLsizei  = 256
-        // heightGLsizei = 256
+      // heightGLsizei = 256
       toggleDropdown();
     }
   
@@ -21,7 +30,6 @@
         toggleDropdown();
       }
     }
-  
     // Listen for clicks outside the dropdown to close it
     // onMount(() => {
     //   document.addEventListener('click', handleOutsideClick);
@@ -38,7 +46,7 @@
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme)}>{theme}</li>
+          <li on:click={() => selectTheme(theme)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

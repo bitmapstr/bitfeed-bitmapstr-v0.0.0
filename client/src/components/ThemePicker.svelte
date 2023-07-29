@@ -1,27 +1,29 @@
 <script>
-    //import { themes } from "../stores";
+    import { writable } from 'svelte/store';
    export let themes = [
-      { name: 'ORANGY AUTUMN', value: 256 },
       { name: 'LIGHT PINK', value: 25 },
-      { name: 'AQUA BLUES', value: 500 },
-      { name: 'LIGHT PINK', value: 150 },
-      { name: 'PINK-RED', value: 100 },
       { name: 'PINK-WHITE-RED', value: 75 },
+      { name: 'PINK-RED', value: 100 },
+      { name: 'LIGHT PINK', value: 150 },
+      { name: 'ORANGY AUTUMN', value: 256 },
+      { name: 'AQUA BLUES', value: 500 }
+
     ];
 
     let isOpen = false;
  
-    export let selectedtheme = themes[0].name;
-  
+    export let selectedTheme = themes[0].value;
+    console.log(selectedTheme)
+
      function toggleDropdown() {
       isOpen = !isOpen;
     }
   
     function selectTheme(theme) {
-        console.log(theme)
-        selectedtheme = theme;
-       
-      toggleDropdown();
+        
+        selectedTheme =theme;       
+        console.log(selectedTheme)      
+        toggleDropdown();
     }
   
     function handleOutsideClick(event) {
@@ -33,10 +35,10 @@
   
   <div class="dropdown" class:open={isOpen}>
     <form on:submit|preventDefault={selectTheme}>
-        <select bind:value={selectedtheme} on:change={() => selectTheme(selectedtheme)}>
+        <select bind:value={selectedTheme} on:change={() => selectTheme(selectedTheme)}>
             <option>Select ur Theme</option>
                 {#each themes as theme, value}
-                <!-- {console.log("Theme: " + theme.name)} -->
+                {console.log("{Theme:} " + theme.value)}
                     <option value={theme.name}>{theme.name}</option>
                 {/each}
         </select>

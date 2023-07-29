@@ -39,12 +39,6 @@ let settingConfig = {
     valueType: 'string',
     options: currencyOptions
   },
-  unverifiedtheme: {
-    label: 'Unverified',
-    type: 'dropdown',
-    valueType: 'string'
-    // options: currencyOptions
-  },
   vbytes: {
     label: 'Size by',
     type: 'pill',
@@ -74,7 +68,12 @@ let settingConfig = {
   verified: {
     label: 'Verified',
     valueType: 'bool'
-  }
+  },
+  themes: {
+    label: 'themes',
+    type: 'dropdown',
+    valueType: 'string'
+  },
 }
 $: {
   if (config.messagesEnabled && $haveMessages) {

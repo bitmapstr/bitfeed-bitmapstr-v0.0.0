@@ -4,6 +4,7 @@ import { makePollStore } from './utils/pollStore.js'
 import LocaleCurrency from 'locale-currency'
 import { currencies } from './utils/fx.js'
 import config from './config.js'
+import Themes from './components/ThemePicker.svelte'
 
 function createCounter () {
 	const { subscribe, set, update } = writable(0)
@@ -74,6 +75,10 @@ export const haveSupporters = derived([heroes, sponsors], ([$heroes,$sponsors]) 
 })
 
 export const darkMode = writable(true)
+export const themes = writable({Themes})
+console.log("themes form store")
+console.log(themes)
+
 export const serverConnected = writable(false)
 export const serverDelay = writable(1000)
 

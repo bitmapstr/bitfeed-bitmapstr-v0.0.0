@@ -100,6 +100,7 @@ if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
 
 const defaultSettings = {
 	darkMode: true,
+	audioOn: false,
 	showNetworkStatus: true,
 	currency: localeCurrencyCode,
 	showFX: true,
@@ -110,8 +111,7 @@ const defaultSettings = {
 	showBlockInfo: false,
 	showMyBitmap: true,
 	noTrack: false,
-	blocksEnabled: true,
-	audioOn: false
+	blocksEnabled: true
 
 }
 

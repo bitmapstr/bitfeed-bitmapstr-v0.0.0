@@ -19,15 +19,11 @@ import bookmarkIcon from '../assets/icon/cil-bookmark.svg'
 import MempoolLegend from '../components/MempoolLegend.svelte'
 import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
-
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
-import bitmapunverified from '../assets/icon/unverified.svg'
-
-
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
-    import MySlider from './MySlider.svelte';
     import MyDropdown from './MyDropdown.svelte';
+    // import SettingsBitmap from './SettingsBitmap.svelte';
 
 let searchTabComponent
 
@@ -160,6 +156,7 @@ function showBlock () {
     </span>
     <div slot="content">
       <MyDropdown />
+      <!-- <SettingsBitmap /> -->
     </div>
   </SidebarTab>
 

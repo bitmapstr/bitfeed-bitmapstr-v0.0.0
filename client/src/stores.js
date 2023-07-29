@@ -110,7 +110,9 @@ const defaultSettings = {
 	showBlockInfo: false,
 	showMyBitmap: true,
 	noTrack: false,
-	blocksEnabled: true
+	blocksEnabled: true,
+	audioOn: false
+
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}

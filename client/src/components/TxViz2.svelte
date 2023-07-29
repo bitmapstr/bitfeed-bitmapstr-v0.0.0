@@ -27,6 +27,7 @@
     import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
+    import TxAudio from './TxAudio.svelte';
 
 
   let width = window.innerWidth - 20
@@ -180,6 +181,7 @@
 	}
 
   let mousePosition = { x: 0, y: 0 }
+  let audioInfoPosition = {x: 0, y: 0}
 
   function onClick (e) {
     mousePosition = {
@@ -265,6 +267,19 @@
     }
 
     .mempool-info {
+      position: absolute;
+      bottom: .5em;
+      left: 0.5rem;
+      right: 0.5em;
+      font-size: 0.9rem;
+      color: var(--palette-x);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .audio-info {
       position: absolute;
       bottom: .5em;
       left: 0.5rem;
@@ -645,6 +660,8 @@
                     <div class="guide-area" />
                   {/if}
                 </div>
+                <div class="audio-info">
+                               </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
                 <!-- <RunningOsterich /> -->
@@ -653,12 +670,13 @@
               
             </div>
             {/if}
-
             {#if $selectedTx }
 
-              <TxInfo tx={$selectedTx} position={mousePosition} />
-             
-            {/if}
+            <TxAudio tx={$selectedTx} position={audioInfoPosition} />
+           
+          {/if}  
+
+           
 </div>
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>

@@ -3,41 +3,6 @@
     let selectedTheme = '';
     const themes = ['LIGHT PINK', 'AQUA BLUES', 'PINK', 'PINK-RED', 'PINK-WHITE-RED'];
     import {widthGLsizei, heightGLsizei} from './TxRender2.svelte'
-
-      /////////// ORANGY AUTUMN THEME/////////
-    widthGLsizei  = 256
-    heightGLsizei = 256
-  /////////// ORANGY AUTUMN THEME/////////
-
-  /////////// LIGHT PINK THEME/////////
-  // export const widthGLsizei  = 25
-  // export const heightGLsizei = 25
-  /////////// LIGHT PINK THEME/////////
-
-
-  /////////// AQUA BLUES THEME/////////
-  // export const widthGLsizei  = 500
-  // export const heightGLsizei = 500
-  /////////// AQUA BLUES THEME/////////
-
-
-  /////////// PINK THEME/////////
-  // export const widthGLsizei  = 150
-  // export const heightGLsizei = 150
-  /////////// PINK THEME/////////
-
-
-  /////////// PINK-RED THEME/////////
-  // export const widthGLsizei  = 100
-  // export const heightGLsizei = 100
-  /////////// PINK-RED THEME/////////
-
-  /////////// PINK-WHITE-RED THEME/////////
-  // export const widthGLsizei  = 75
-  // export const heightGLsizei = 75
-  /////////// PINK-WHITE-RED THEME/////////
-
-
   
     function toggleDropdown() {
       isOpen = !isOpen;
@@ -46,8 +11,8 @@
     function selectTheme(Theme) {
       selectedTheme = Theme;
 
-      //  widthGLsizei  = 256
-        // heightGLsizei = 256
+        widthGLsizei  = 256
+        heightGLsizei = 256
       toggleDropdown();
     }
   
@@ -67,7 +32,16 @@
   </script>
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
-    <button on:click={toggleDropdown}>
+
+
+    <form on:submit|preventDefault={selectTheme()}>
+        <select bind:value={selectedTheme} on:change={() => selectTheme()}>
+            <option>Select ur Theme</option>
+            <option value={selectTheme.name}>{selectTheme.name}</option>
+        </select>
+       
+    </form>
+    <!-- <button on:click={toggleDropdown}>
       {selectedTheme || 'Select a theme'}
     </button>
     {#if isOpen}
@@ -76,7 +50,7 @@
           <li on:click={() => selectTheme(theme)}>{theme}</li>
         {/each}
       </ul>
-    {/if}
+    {/if} -->
   </div>
   
   <style>

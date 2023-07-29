@@ -2,7 +2,7 @@
 import config from '../config.js'
 import analytics from '../utils/analytics.js'
 import SidebarMenuItem from '../components/SidebarMenuItem.svelte'
-import { settings, exchangeRates, haveMessages } from '../stores.js'
+import { settings, exchangeRates, haveMessages} from '../stores.js'
 import { currencies } from '../utils/fx.js'
 
 function toggle(setting) {
@@ -39,6 +39,12 @@ let settingConfig = {
     valueType: 'string',
     options: currencyOptions
   },
+  unverifiedtheme: {
+    label: 'Unverified',
+    type: 'dropdown',
+    valueType: 'string'
+    // options: currencyOptions
+  },
   vbytes: {
     label: 'Size by',
     type: 'pill',
@@ -63,6 +69,10 @@ let settingConfig = {
   },
   showMyBitmap: {
     label: 'My Bitmap',
+    valueType: 'bool'
+  },
+  verified: {
+    label: 'Verified',
     valueType: 'bool'
   }
 }

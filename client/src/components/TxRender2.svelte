@@ -201,10 +201,10 @@
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
 
 
-  /////////// ORANGY THEME/////////
+  /////////// ORANGY AUTUMN THEME/////////
   export const widthGLsizei  = 256
   export const heightGLsizei = 256
-  /////////// ORANGY THEME/////////
+  /////////// ORANGY AUTUMN THEME/////////
 
   /////////// LIGHT PINK THEME/////////
   // export const widthGLsizei  = 25

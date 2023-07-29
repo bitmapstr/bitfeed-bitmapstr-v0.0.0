@@ -33,6 +33,10 @@ let settingConfig = {
     label: 'Dark Mode',
     valueType: 'bool'
   },
+  audioOn: {
+    label: 'Audio On',
+    valueType: 'bool'
+  },
   currency: {
     label: 'Fiat Currency',
     type: 'dropdown',
@@ -73,10 +77,6 @@ let settingConfig = {
   },
   verified: {
     label: 'Verified',
-    valueType: 'bool'
-  },
-  audioOn: {
-    label: 'Audio On',
     valueType: 'bool'
   }
 }

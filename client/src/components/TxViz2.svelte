@@ -600,51 +600,9 @@
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
           
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
-                <!-- <Cube /> -->
-
-              </div>
-            {#if !$settings.showMyBitmap }   
-            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
-        
-              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
-                <div class="height-bar" />
-                {#if $tinyScreen}
-                  <div class="mempool-info">
-                    <span class="left">Mempool</span>
-                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
-                  </div>
-                {:else}
-                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
-                {/if}
-              </div>
-
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-              </div>
-              
-            </div>
-            {:else if $settings.showMyBitmap}
+            {#if $settings.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
-              
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
@@ -652,7 +610,6 @@
                     <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
                     <h1>UNVERIFIED</h1>
                     {/if}
-                    
                   <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
@@ -664,10 +621,7 @@
                                </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
-                <!-- <RunningOsterich /> -->
-
               </div>
-              
             </div>
             {/if}
             {#if $selectedTx }

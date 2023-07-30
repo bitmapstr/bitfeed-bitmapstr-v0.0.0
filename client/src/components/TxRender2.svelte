@@ -76,17 +76,17 @@
 
   let resizeTimer
   function resizeCanvas () {
+
     if (resizeTimer) clearTimeout(resizeTimer)
     resizeTimer = null
     // var rect = canvas.parentNode.getBoundingClientRect()
     if (canvas && !sizeFrozen) {
 
-        /////////////////////////////////                                                  ///////
-        console.log("selectedTheme")//////            <--------------------------------------------
+        /////////////////////////////////                                                ///////
+      console.log("selectedTheme")//////            <--------------------------------------------
       console.log(currentThemeValue)/////                                                \\\\\\\
       currentThemeValue = currentThemeValue                                              
       /////////////////////////////////////
-
 
       cssWidth = window.innerWidth
       cssHeight = window.innerHeight
@@ -220,6 +220,7 @@
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     const colorData = computeColorTextureData(width, height)
+  
     /////////// THEME /////////
   const widthGLsizei  = currentThemeValue
   const heightGLsizei = currentThemeValue
@@ -246,6 +247,7 @@
 
     return texture;
   }
+
 
   function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
@@ -325,7 +327,7 @@
 }
 </style>
 
-<svelte:window on:resize={resizeCanvas} on:load={windowReady} />
+<svelte:window on:resize={resizeCanvas} on:load={windowReady} on:dblclick={initCanvas} />
 
 <canvas
   class="tx-scene2"

@@ -6,6 +6,9 @@
   import { color, hcl } from 'd3-color'
   import { darkMode, settings, devSettings, freezeResize } from '../stores.js'
   import config from '../config.js'
+  
+
+  
 
   let canvas
   let gl
@@ -34,6 +37,7 @@
   freezeResize.subscribe(val => {
     sizeFrozen = val
   })
+  
 
   // Shader attributes
   // each attribute (except index) contains [x: startValue, y: endValue, z: startTime, w: rate]
@@ -204,41 +208,6 @@
   /////////// ORANGY AUTUMN THEME/////////
   export const widthGLsizei  = 256
   export const heightGLsizei = 256
-  /////////// ORANGY AUTUMN THEME/////////
-
-  /////////// LIGHT PINK THEME/////////
-  // export const widthGLsizei  = 25
-  // export const heightGLsizei = 25
-  /////////// LIGHT PINK THEME/////////
-
-
-  /////////// AQUA BLUES THEME/////////
-  // export const widthGLsizei  = 500
-  // export const heightGLsizei = 500
-  /////////// AQUA BLUES THEME/////////
-
-
-  /////////// PINK THEME/////////
-  // export const widthGLsizei  = 150
-  // export const heightGLsizei = 150
-  /////////// PINK THEME/////////
-
-
-  /////////// PINK-RED THEME/////////
-  // export const widthGLsizei  = 100
-  // export const heightGLsizei = 100
-  /////////// PINK-RED THEME/////////
-
-  /////////// PINK-WHITE-RED THEME/////////
-  // export const widthGLsizei  = 75
-  // export const heightGLsizei = 75
-  /////////// PINK-WHITE-RED THEME/////////
-
-
-
-
-
-
 
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();

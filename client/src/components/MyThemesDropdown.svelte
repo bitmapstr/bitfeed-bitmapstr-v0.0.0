@@ -1,22 +1,26 @@
 <script>
 import { writable } from 'svelte/store';
 import { themes } from '../themes';
+import { currentTheme } from '../stores';
 
     let isOpen = false;
     export let selectedTheme = writable(themes[0].name);
-  
-    
+   
     function toggleDropdown() {
       isOpen = !isOpen;
     }
      
      function selectTheme(theme) {
+
+      
       selectedTheme.set(theme);
       console.log(theme)
-      
-      // widthGLsizei  = 256
-      // heightGLsizei = 256
+
+      console.log("currentTheme")
+      console.log(currentTheme.set(theme))
+
       toggleDropdown();
+      
     }
 
 
@@ -39,7 +43,7 @@ import { themes } from '../themes';
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
     <button class="dropdown" on:click={toggleDropdown}>
-      {selectedTheme || 'Select a theme'}
+      {selectedTheme.value || 'Select a theme'}
     </button>
     {#if isOpen}
       <ul>

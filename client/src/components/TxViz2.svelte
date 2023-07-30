@@ -27,6 +27,7 @@
     import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
+    import TxAudio from './TxAudio.svelte';
 
 
   let width = window.innerWidth - 20
@@ -180,6 +181,7 @@
 	}
 
   let mousePosition = { x: 0, y: 0 }
+  let audioInfoPosition = {x: 0, y: 0}
 
   function onClick (e) {
     mousePosition = {
@@ -277,6 +279,19 @@
       align-items: baseline;
     }
 
+    .audio-info {
+      position: absolute;
+      bottom: .5em;
+      left: 0.5rem;
+      right: 0.5em;
+      font-size: 0.9rem;
+      color: var(--palette-x);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
     .height-bar {
       width: 100%;
       height: 1px;
@@ -339,6 +354,24 @@
           background: var(--palette-good);
         }
       }
+
+      .audioOn-light {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+
+        &.bad {
+          background: var(--palette-bad);
+        }
+        &.ok {
+          background: var(--palette-ok);
+        }
+        &.good {
+          background: var(--palette-good);
+        }
+      }
+
 
       .stat-counter, .fx-ticker {
         white-space: nowrap;
@@ -567,50 +600,9 @@
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
           
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
-                <!-- <Cube /> -->
-
-              </div>
-            {#if !$settings.showMyBitmap }   
-            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
-        
-              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
-                <div class="height-bar" />
-                {#if $tinyScreen}
-                  <div class="mempool-info">
-                    <span class="left">Mempool</span>
-                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
-                  </div>
-                {:else}
-                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
-                {/if}
-              </div>
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-              </div>
-              
-            </div>
-            {:else if $settings.showMyBitmap}
+            {#if $settings.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
-              
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
@@ -618,7 +610,6 @@
                     <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
                     <h1>UNVERIFIED</h1>
                     {/if}
-                    
                   <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
@@ -626,20 +617,20 @@
                     <div class="guide-area" />
                   {/if}
                 </div>
+                <div class="audio-info">
+                               </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
-                <!-- <RunningOsterich /> -->
-
               </div>
-              
             </div>
             {/if}
-
             {#if $selectedTx }
 
-              <TxInfo tx={$selectedTx} position={mousePosition} />
-             
-            {/if}
+            <TxAudio tx={$selectedTx} position={audioInfoPosition} />
+           
+          {/if}  
+
+           
 </div>
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
@@ -649,6 +640,11 @@
         {/if}
         {#if $tinyScreen && $currentBlock }
           <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
+        {/if}
+      </div>
+      <div class="row">
+        {#if $settings.audioOn }
+          <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
         {/if}
       </div>
       <div class="row">

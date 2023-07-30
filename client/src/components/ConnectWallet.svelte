@@ -4,10 +4,10 @@
     import MySlider from "./MySlider.svelte";
 
     let wallet = { connected: false };
-
+    let winuni = window.unisat;
     async function ConnectWallet() {
         // UniSat Wallet
-        let winuni = window.unisat;
+       
         try {
             if (typeof winuni !== "undefined") {
                 console.log("UniSat Wallet is installed!");
@@ -79,13 +79,13 @@
     let selected;
 </script>
 
-<div>
+<div class="dropdown"> 
     {#if wallet.connected}
         <button class="danger" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
-        <h2>unverified bitmaps</h2>
-        <form on:submit|preventDefault={handleSubmit(selected)}>
-            <select bind:value={selected} on:change={() => handleSubmit(selected)}>
+        <h3>unverified bitmaps</h3>
+        <form  on:submit|preventDefault={handleSubmit(selected)}>
+            <select class="dropdown" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
                 {#await GetMyBitmaps()}
                     <p>...waiting for my bitmaps</p>
@@ -117,8 +117,10 @@
     {/if}
 </div>
 
+
 <style>
-    .primary {
+
+.primary {
         color: orange;
     }
     .danger {
@@ -129,4 +131,37 @@
         width: 200px;
         max-width: 100%;
     }
-</style>
+    .dropdown {
+      position: relative;
+    }
+    .dropdown button {
+      background-color: var(--palette-good);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .dropdown ul {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color:var(--palette-good);
+    }
+    .dropdown ul li {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .dropdown ul li:hover {
+      background-color: #f1f1f1;
+    }
+    .open .dropdown ul {
+      display: block;
+    }
+  </style>
+

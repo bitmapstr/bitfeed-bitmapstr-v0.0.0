@@ -60,21 +60,8 @@ let settingConfig = {
   showBlockInfo: {
     label: 'Block Info',
     valueType: 'bool'
-  },
-  showMyBitmap: {
-    label: 'My Bitmap',
-    valueType: 'bool'
-  },
-  verified: {
-    label: 'Verified',
-    valueType: 'bool'
-  },
-  themes: {
-    label: 'themes',
-    type: 'dropdown',
-    valueType: 'string'
-  },
-}
+  }
+ }
 $: {
   if (config.messagesEnabled && $haveMessages) {
     settingConfig.showMessages = {

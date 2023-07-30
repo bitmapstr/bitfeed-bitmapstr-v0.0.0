@@ -22,6 +22,13 @@
   import { formatCurrency } from '../utils/fx.js'
   import { fade } from 'svelte/transition'
   import config from '../config.js'
+  import Cube from './Cube.svelte'
+    import RunningOsterich from './RunningOsterich.svelte';
+    import TxRender2 from './TxRender2.svelte';
+    import NavBar from './NavBar.svelte';
+    import BlockInfo2 from './BlockInfo2.svelte';
+    import TxAudio from './TxAudio.svelte';
+
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -174,6 +181,7 @@
 	}
 
   let mousePosition = { x: 0, y: 0 }
+  let audioInfoPosition = {x: 0, y: 0}
 
   function onClick (e) {
     mousePosition = {
@@ -208,6 +216,7 @@
     }
     if (txController) txController.mouseMove(position)
   }
+
 </script>
 
 <style type="text/scss">
@@ -234,6 +243,12 @@
     height: 100%;
   }
 
+  .bitmap-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   .mempool-height {
     position: absolute;
     bottom: calc(25% + 10px);
@@ -252,6 +267,19 @@
     }
 
     .mempool-info {
+      position: absolute;
+      bottom: .5em;
+      left: 0.5rem;
+      right: 0.5em;
+      font-size: 0.9rem;
+      color: var(--palette-x);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .audio-info {
       position: absolute;
       bottom: .5em;
       left: 0.5rem;
@@ -327,6 +355,24 @@
         }
       }
 
+      .audioOn-light {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+
+        &.bad {
+          background: var(--palette-bad);
+        }
+        &.ok {
+          background: var(--palette-ok);
+        }
+        &.good {
+          background: var(--palette-good);
+        }
+      }
+
+
       .stat-counter, .fx-ticker {
         white-space: nowrap;
         cursor: pointer;
@@ -367,6 +413,14 @@
     height: 3.5em;
     flex-grow: 1;
   }
+  .nav-bar-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 3.5em;
+    flex-grow: 1;
+  }
 
   .alert-bar-wrapper {
     width: 20em;
@@ -393,6 +447,10 @@
       .block-area {
         padding-top: 100%;
       }
+
+      // .bitmapstr-block-area {
+      //   padding-top: 100%;
+      // }
 
       .guide-area {
         background: #00FF00;
@@ -475,6 +533,50 @@
     }
   }
 
+  .tx-scene {
+  position: absolute;
+  width: auto;
+  left: 7px;
+  right: 0;
+  top: -16px;
+  bottom: 0;
+  /* pointer-events: none; */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bitmapstr {
+    width: auto;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 145px;
+    bottom: 0;
+    overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+    z-index: -1;
+
+}
+
+.bitmap-cube {
+
+  position: absolute;
+}
+.bg-logo-w-text {
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    left: 0px;
+    // top: 115px;
+    // left: 240px;
+    position: absolute;
+    object-fit: contain;
+    z-index: inherit;
+}
+
   @media screen and (max-width: 640px) {
     .search-bar-wrapper {
       position: fixed;
@@ -496,48 +598,53 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
-  <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick}>
-    <TxRender controller={txController} />
+          
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+            {#if $settings.showMyBitmap}
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender2 controller={txController} />
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  {#if $settings.showBlockInfo }  
+                    <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
+                    <h1>UNVERIFIED</h1>
+                    {/if}
+                  <div class="block-area">
+                    <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="audio-info">
+                               </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+            </div>
+            {/if}
+            {#if $selectedTx }
 
-    <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
-      <div class="height-bar" />
-      {#if $tinyScreen}
-        <div class="mempool-info">
-          <span class="left">Mempool</span>
-          <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
-        </div>
-      {:else}
-        <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
-      {/if}
-    </div>
+            <TxAudio tx={$selectedTx} position={audioInfoPosition} />
+           
+          {/if}  
 
-    <div class="block-area-wrapper">
-      <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-      <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-        <div class="block-area">
-          <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-        </div>
-        {#if config.dev && config.debug && $devSettings.guides }
-          <div class="guide-area" />
-        {/if}
-      </div>
-      <div class="spacer"></div>
-      <div class="spacer"></div>
-    </div>
-  </div>
-
-  {#if $selectedTx }
-    <TxInfo tx={$selectedTx} position={mousePosition} />
-  {/if}
-
+           
+</div>
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
         {#if $settings.showFX && fxLabel }
-          <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
+          <span class="fx-ticker {fxColor}"  on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
-          <span class="block-height"><b>Block: </b>{ numberFormat.format($currentBlock.height) }</span>
+          <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
+        {/if}
+      </div>
+      <div class="row">
+        {#if $settings.audioOn }
+          <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
         {/if}
       </div>
       <div class="row">
@@ -547,10 +654,13 @@
       </div>
     </div>
     {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
-      <div class="search-bar-wrapper">
-        <SearchBar />
+      <div class="search-bar-wrapper">                         
+            <SearchBar />                       
       </div>
     {/if}
+    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <NavBar />                        
+    {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}
@@ -563,15 +673,7 @@
   </div>
 
   <Sidebar />
-
-  <TransactionOverlay />
-  <AboutOverlay />
-  {#if config.donationsEnabled }
-    <DonationOverlay />
-    {#if $haveSupporters}
-      <SupportersOverlay />
-    {/if}
-  {/if}
+  
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

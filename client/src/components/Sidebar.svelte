@@ -19,13 +19,12 @@ import bookmarkIcon from '../assets/icon/cil-bookmark.svg'
 import MempoolLegend from '../components/MempoolLegend.svelte'
 import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
-
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
-
-
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
-
+    import SettingsBitmap from './SettingsBitmap.svelte';
+    import MyThemesDropdown from './MyThemesDropdown.svelte';
+    import BitcoinAudio from './BitcoinAudio.svelte';
 let searchTabComponent
 
 let blockHidden = false
@@ -148,6 +147,17 @@ function showBlock () {
     </span>
     <div slot="content">
       <ConnectWallet />
+    </div>
+  </SidebarTab>
+
+  <SidebarTab open={$sidebarToggle === 'verified'} on:click={() => {settings('verified')}} tooltip="Verified?">
+    <span slot="tab" title="Bitmaps">
+      <Icon icon={cogIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      <MyThemesDropdown />
+      <SettingsBitmap />
+      <BitcoinAudio />
     </div>
   </SidebarTab>
 

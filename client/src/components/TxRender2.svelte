@@ -6,12 +6,17 @@
   import { color, hcl } from 'd3-color'
   import { darkMode, settings, devSettings, freezeResize } from '../stores.js'
   import config from '../config.js'
+  import {currentTheme}  from '../stores';
+  $: currentThemeValue = $currentTheme;
+
 
   let canvas
   let gl
   let animationFrameRequest
-  let displayWidth
-  let displayHeight
+
+  export let displayWidth
+  export let displayHeight
+
   let cssWidth
   let cssHeight
   let shaderProgram
@@ -32,6 +37,7 @@
   freezeResize.subscribe(val => {
     sizeFrozen = val
   })
+  
 
   // Shader attributes
   // each attribute (except index) contains [x: startValue, y: endValue, z: startTime, w: rate]
@@ -70,10 +76,18 @@
 
   let resizeTimer
   function resizeCanvas () {
+
     if (resizeTimer) clearTimeout(resizeTimer)
     resizeTimer = null
     // var rect = canvas.parentNode.getBoundingClientRect()
     if (canvas && !sizeFrozen) {
+
+        /////////////////////////////////                                                ///////
+      console.log("selectedTheme")//////            <--------------------------------------------
+      console.log(currentThemeValue)/////                                                \\\\\\\
+      currentThemeValue = currentThemeValue                                              
+      /////////////////////////////////////
+
       cssWidth = window.innerWidth
       cssHeight = window.innerHeight
       displayWidth = cssWidth * window.devicePixelRatio
@@ -197,13 +211,19 @@
 
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
-  export const widthGLsizei  = 10000
-  export const heightGLsizei = 20
+
+
+  
+  
   function loadColorTexture(gl, width, height) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     const colorData = computeColorTextureData(width, height)
+  
+    /////////// THEME /////////
+  const widthGLsizei  = currentThemeValue
+  const heightGLsizei = currentThemeValue
 
     const level = 0;
     const internalFormat = gl.RGBA;
@@ -213,10 +233,12 @@
     const pixels = new Uint8Array(
       colorData
     )
+
    
 
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
     widthGLsizei, heightGLsizei, border, srcFormat, srcType,
+
                   pixels);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -225,6 +247,7 @@
 
     return texture;
   }
+
 
   function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
@@ -291,7 +314,8 @@
 </script>
 
 <style type="text/scss">
-.tx-scene {
+
+.tx-scene2 {
   position: absolute;
   left: 0;
   right: 0;
@@ -303,10 +327,10 @@
 }
 </style>
 
-<svelte:window on:resize={resizeCanvas} on:load={windowReady} />
+<svelte:window on:resize={resizeCanvas} on:load={windowReady} on:dblclick={initCanvas} />
 
 <canvas
-  class="tx-scene"
+  class="tx-scene2"
   width={displayWidth}
   height={displayHeight}
   style="width: {cssWidth}px; height: {cssHeight}px;"

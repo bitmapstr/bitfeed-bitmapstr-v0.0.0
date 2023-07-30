@@ -4,6 +4,21 @@ import { makePollStore } from './utils/pollStore.js'
 import LocaleCurrency from 'locale-currency'
 import { currencies } from './utils/fx.js'
 import config from './config.js'
+import { themes } from './themes.js';
+
+// Get the theme value from local storage if available, otherwise use the first theme as the default
+const initialTheme = parseInt(localStorage.getItem('selectedTheme')) || themes[5].value;
+// const initialTheme = 99;
+
+// Create the selectedTheme store and export it
+export const currentTheme = writable(initialTheme);
+
+// Subscribe to the selectedTheme store and save the current theme value to local storage on changes
+currentTheme.subscribe(value => {
+	localStorage.setItem('selectedTheme', value.toString());
+	console.log("value From stores.js")
+	console.log(value)
+  });
 
 function createCounter () {
 	const { subscribe, set, update } = writable(0)
@@ -100,6 +115,7 @@ if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
 
 const defaultSettings = {
 	darkMode: true,
+	audioOn: false,
 	showNetworkStatus: true,
 	currency: localeCurrencyCode,
 	showFX: true,
@@ -111,6 +127,7 @@ const defaultSettings = {
 	showMyBitmap: false,
 	noTrack: false,
 	blocksEnabled: true
+
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}
@@ -127,6 +144,8 @@ if (urlSettings.showMessages == null) urlSettings.showMessages = true
 if (urlSettings.blocksEnabled == null) urlSettings.blocksEnabled = true
 
 export const settings = createCachedDict('settings', urlSettings, defaultSettings)
+export const settingsBitmap = createCachedDict('settingsBitmap', urlSettings, defaultSettings)
+
 
 export const colorMode = derived([settings], ([$settings]) => {
 	return $settings.colorByFee ? "fee" : "age"

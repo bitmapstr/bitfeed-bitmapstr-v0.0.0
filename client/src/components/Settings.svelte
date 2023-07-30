@@ -2,7 +2,7 @@
 import config from '../config.js'
 import analytics from '../utils/analytics.js'
 import SidebarMenuItem from '../components/SidebarMenuItem.svelte'
-import { settings, exchangeRates, haveMessages } from '../stores.js'
+import { settings, exchangeRates, haveMessages} from '../stores.js'
 import { currencies } from '../utils/fx.js'
 
 function toggle(setting) {
@@ -60,12 +60,8 @@ let settingConfig = {
   showBlockInfo: {
     label: 'Block Info',
     valueType: 'bool'
-  },
-  showMyBitmap: {
-    label: 'My Bitmap',
-    valueType: 'bool'
   }
-}
+ }
 $: {
   if (config.messagesEnabled && $haveMessages) {
     settingConfig.showMessages = {

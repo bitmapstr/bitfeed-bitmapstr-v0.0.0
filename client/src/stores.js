@@ -16,7 +16,7 @@ export const currentTheme = writable(initialTheme);
 // Subscribe to the selectedTheme store and save the current theme value to local storage on changes
 currentTheme.subscribe(value => {
 	localStorage.setItem('selectedTheme', value.toString());
-	console.log("subscribed?")
+	console.log("value From stores.js")
 	console.log(value)
   });
 

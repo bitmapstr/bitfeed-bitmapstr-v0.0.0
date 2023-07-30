@@ -1,30 +1,25 @@
 <script>
-      import { theme  } from "../stores";
+import { writable } from 'svelte/store';
+import { themes } from '../themes';
 
     let isOpen = false;
-    let selectedTheme 
-    export let themes = [
-      { name: 'LIGHT PINK', value: 25 },
-      { name: 'PINK-WHITE-RED', value: 75 },
-      { name: 'PINK-RED', value: 100 },
-      { name: 'LIGHT PINK', value: 150 },
-      { name: 'ORANGY AUTUMN', value: 256 },
-      { name: 'AQUA BLUES', value: 500 }
-
-    ];
+    export let selectedTheme = writable(themes[0].name);
   
+    
     function toggleDropdown() {
       isOpen = !isOpen;
     }
-  
-    export function selectTheme(theme) {
-      selectedTheme = theme.name;
-      console.log(theme.value)
-      //  widthGLsizei  = 256
+     
+     function selectTheme(theme) {
+      selectedTheme.set(theme);
+      console.log(theme)
+      
+      // widthGLsizei  = 256
       // heightGLsizei = 256
       toggleDropdown();
     }
-  
+
+
     function handleOutsideClick(event) {
       if (isOpen && !event.target.closest('.dropdown')) {
         toggleDropdown();
@@ -37,6 +32,9 @@
     //     document.removeEventListener('click', handleOutsideClick);
     //   };
     // });
+
+    $: selectedTheme = selectedTheme; 
+
   </script>
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
@@ -46,7 +44,7 @@
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme)}>{theme.name}</li>
+          <li on:click={() => selectTheme(theme.value)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

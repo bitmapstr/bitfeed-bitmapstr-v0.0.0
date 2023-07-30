@@ -24,6 +24,7 @@ import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, fre
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
     import MyThemesDropdown from './MyThemesDropdown.svelte';
+    import BitcoinAudio from './BitcoinAudio.svelte';
 let searchTabComponent
 
 let blockHidden = false
@@ -154,9 +155,9 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-      <!-- <ThemePicker /> -->
       <MyThemesDropdown />
       <SettingsBitmap />
+      <BitcoinAudio />
     </div>
   </SidebarTab>
 

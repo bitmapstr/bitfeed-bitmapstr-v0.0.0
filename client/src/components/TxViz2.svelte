@@ -61,6 +61,9 @@
 
   let canvasWidth = '100%'
   let canvasHeight = '100%'
+  console.log("currentcolor1")
+  console.log(currentColor1)
+  // document.documentElement.style.setProperty('--background', currentColor1);
   $: {
     if ($freezeResize) {
       canvasWidth = `${window.innerWidth}px`
@@ -599,17 +602,7 @@
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
           
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
-                <!-- <Cube /> -->
-
-              </div>
+      
             {#if !$settings.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
@@ -677,7 +670,7 @@
           {/if}  
 
            
-</div>
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">

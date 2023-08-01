@@ -6,7 +6,7 @@
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
-           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1 } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import TxInfo from '../components/TxInfo.svelte'
@@ -533,7 +533,7 @@
     }
   }
 
-  .tx-scene {
+  .tx-scene2 {
   position: absolute;
   width: auto;
   left: 7px;
@@ -704,9 +704,9 @@
             <SearchBar />                       
       </div>
     {/if}
-    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
     <NavBar />                        
-    {/if} 
+    {/if}  -->
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

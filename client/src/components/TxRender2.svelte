@@ -1,4 +1,5 @@
 <script>
+  import { writable } from 'svelte/store';
   import { onMount } from 'svelte'
   import vertShaderSrc from '../shaders/tx.vert'
   import fragShaderSrc from '../shaders/tx.frag'
@@ -9,7 +10,15 @@
   import {currentTheme}  from '../stores';
   $: currentThemeValue = $currentTheme;
 
+  import { currentColor1 } from '../stores.js'
+  import { currentColor2 } from '../stores.js'
 
+
+  $: currentColorValue1 = writable(currentColor1);
+  $: currentColorValue2 = writable(currentColor2);
+
+
+  
   let canvas
   let gl
   let animationFrameRequest
@@ -83,9 +92,9 @@
     if (canvas && !sizeFrozen) {
 
         /////////////////////////////////                                                ///////
-      console.log("selectedTheme")//////            <--------------------------------------------
-      console.log(currentThemeValue)/////                                                \\\\\\\
-      currentThemeValue = currentThemeValue                                              
+      // console.log("selectedTheme")//////            <--------------------------------------------
+      // console.log(currentThemeValue)/////                                                \\\\\\\
+       currentThemeValue = currentThemeValue  
       /////////////////////////////////////
 
       cssWidth = window.innerWidth
@@ -194,11 +203,12 @@
       animationFrameRequest = requestAnimationFrame(run)
     }
   }
-
+  let rgbArray = []
   function computeColorTextureData(width, height) {
     return [...Array(Math.floor(height)).keys()].flatMap(row => {
       return [...Array(width).keys()].flatMap(step => {
         let rgb = color(hcl((row/height) * 360, 78.225, (step / width) * 150)).rgb()
+        rgbArray.push(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`)
         return [
           rgb.r,
           rgb.g,
@@ -206,13 +216,11 @@
           255
         ]
       })
-    })
+    })    
   }
 
   // Precomputes an 2d color texture projected from HCL space with chroma=78.225
   // transitions between points in this space are much more aesthetically pleasing than RGB interpolations
-
-
   
   
   function loadColorTexture(gl, width, height) {
@@ -220,10 +228,25 @@
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     const colorData = computeColorTextureData(width, height)
-  
+
+    currentColorValue1 = rgbArray[0]
+    currentColorValue1 = currentColorValue1
+    currentColor1.set(currentColorValue1)  
+
+    currentColorValue2 = rgbArray[99]
+    currentColorValue2 = currentColorValue2
+    currentColor2.set(currentColorValue2)                                         
+
+
+    console.log("currentColorValue1")
+    console.log(currentColorValue1)
+    console.log("currentColorValue2")
+    console.log(currentColorValue2)
+    
+        
     /////////// THEME /////////
-  const widthGLsizei  = currentThemeValue
-  const heightGLsizei = currentThemeValue
+    const widthGLsizei  = currentThemeValue
+    const heightGLsizei = currentThemeValue
 
     const level = 0;
     const internalFormat = gl.RGBA;
@@ -247,7 +270,7 @@
 
     return texture;
   }
-
+  
 
   function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)

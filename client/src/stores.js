@@ -6,19 +6,29 @@ import { currencies } from './utils/fx.js'
 import config from './config.js'
 import { themes } from './themes.js';
 
-// Get the theme value from local storage if available, otherwise use the first theme as the default
-const initialTheme = parseInt(localStorage.getItem('selectedTheme')) || themes[5].value;
-// const initialTheme = 99;
 
-// Create the selectedTheme store and export it
+const initialTheme = parseInt(localStorage.getItem('selectedTheme')) || themes[0].value;
 export const currentTheme = writable(initialTheme);
-
-// Subscribe to the selectedTheme store and save the current theme value to local storage on changes
 currentTheme.subscribe(value => {
 	localStorage.setItem('selectedTheme', value.toString());
 	console.log("value From stores.js")
 	console.log(value)
   });
+
+ const initialRGB1 = '' || "null"
+ export const currentColor1 = writable(initialRGB1)
+ currentColor1.subscribe(value => {
+	localStorage.setItem("currentColor1", value.toString())
+	console.log("currentColor1 From stores.js")
+	console.log(value)
+});
+ const initialRGB2 = '' || "null"
+ export const currentColor2 = writable(initialRGB2)
+ currentColor2.subscribe(value => {
+	localStorage.setItem("currentColor2", value.toString())
+	console.log("currentColor2 From stores.js")
+	console.log(value)
+});
 
 function createCounter () {
 	const { subscribe, set, update } = writable(0)

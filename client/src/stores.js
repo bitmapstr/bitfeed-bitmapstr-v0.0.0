@@ -18,15 +18,15 @@ currentTheme.subscribe(value => {
  const initialRGB1 = '' || "null"
  export const currentColor1 = writable(initialRGB1)
  currentColor1.subscribe(value => {
-	localStorage.setItem("currentColor1", value.toString())
-	console.log("currentColor1 From stores.js")
+	localStorage.setItem("currentColorValue1", value.toString())
+	console.log("currentColorValue1 From stores.js")
 	console.log(value)
 });
  const initialRGB2 = '' || "null"
  export const currentColor2 = writable(initialRGB2)
  currentColor2.subscribe(value => {
-	localStorage.setItem("currentColor2", value.toString())
-	console.log("currentColor2 From stores.js")
+	localStorage.setItem("currentColorValue2", value.toString())
+	console.log("currentColorValue2 From stores.js")
 	console.log(value)
 });
 

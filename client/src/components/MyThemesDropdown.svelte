@@ -14,7 +14,7 @@ import { currentTheme } from '../stores';
       selectedTheme.set(theme);
       // console.log(theme)
       // console.log("currentTheme")
-      console.log(currentTheme.set(theme))
+      // console.log(currentTheme.set(theme))
       toggleDropdown();
       
     }

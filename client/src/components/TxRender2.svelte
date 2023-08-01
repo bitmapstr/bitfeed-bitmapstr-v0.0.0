@@ -13,9 +13,8 @@
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
 
-
-  $: currentColorValue1 = writable(currentColor1);
-  $: currentColorValue2 = writable(currentColor2);
+  export let currentColorValue1 = writable(currentColor1);
+  export let currentColorValue2 = writable(currentColor2);
 
 
   
@@ -231,18 +230,17 @@
 
     currentColorValue1 = rgbArray[0]
     currentColorValue1 = currentColorValue1
-    currentColor1.set(currentColorValue1)  
+    currentColorValue1.set(currentColorValue1)  
 
     currentColorValue2 = rgbArray[99]
     currentColorValue2 = currentColorValue2
-    currentColor2.set(currentColorValue2)                                         
+    currentColorValue1.set(currentColorValue2) 
+    
 
-
-    console.log("currentColorValue1")
+    console.log("currentColor2")
     console.log(currentColorValue1)
     console.log("currentColorValue2")
-    console.log(currentColorValue2)
-    
+    console.log(currentColorValue2) 
         
     /////////// THEME /////////
     const widthGLsizei  = currentThemeValue
@@ -337,7 +335,6 @@
 </script>
 
 <style type="text/scss">
-
 .tx-scene2 {
   position: absolute;
   left: 0;

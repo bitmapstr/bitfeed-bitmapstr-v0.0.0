@@ -12,9 +12,10 @@ import { currentTheme } from '../stores';
      
      function selectTheme(theme) {
       selectedTheme.set(theme);
+      currentTheme.set(theme)
       console.log(theme)
       console.log("currentTheme")
-      console.log(currentTheme.set(theme))
+      
       toggleDropdown();
       
     }
@@ -38,7 +39,7 @@ import { currentTheme } from '../stores';
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
     <button class="dropdown" on:click={toggleDropdown}>
-      {selectedTheme.value || 'Select a theme'}
+      {selectedTheme.name || 'Select a theme'}
     </button>
     {#if isOpen}
       <ul>

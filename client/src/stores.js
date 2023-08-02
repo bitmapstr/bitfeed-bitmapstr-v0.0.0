@@ -7,8 +7,7 @@ import config from './config.js'
 import { themes } from './themes.js';
 
 // Get the theme value from local storage if available, otherwise use the first theme as the default
-const initialTheme = parseInt(localStorage.getItem('selectedTheme')) || themes[5].value;
-// const initialTheme = 99;
+const initialTheme = parseInt(localStorage.getItem('selectedTheme')) || themes[0].value;
 
 // Create the selectedTheme store and export it
 export const currentTheme = writable(initialTheme);

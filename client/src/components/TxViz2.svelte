@@ -24,10 +24,10 @@
   import config from '../config.js'
   import Cube from './Cube.svelte'
     import RunningOsterich from './RunningOsterich.svelte';
-    import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
+    import TxRender2 from './TxRender2.svelte';
 
 
   let width = window.innerWidth - 20

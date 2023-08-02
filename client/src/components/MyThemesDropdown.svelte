@@ -4,12 +4,12 @@ import { themes } from '../themes';
 import { currentColor1, currentColor2, currentThemename, currentThemevalue } from '../stores';
 
     let isOpen = false;
-    export let selectedThemevalue = writable(themes[0].value);
     export let selectedThemename = writable(themes[0].name);
+    export let selectedThemevalue = writable(themes[0].value);
       console.log("MyThemesDropdown")
-      console.log("selectedThemevalue")
+      console.log("currentThemename")
       console.log($currentThemename)
-      console.log("selectedThemename")
+      console.log("currentThemevalue")
       console.log($currentThemevalue)
 
     function toggleDropdown() {
@@ -21,7 +21,9 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
       const color2 = $currentColor2
 
       selectedThemevalue.set(value);
+      currentThemevalue.set(value)
       selectedThemename.set(name);
+      currentThemename.set(name)
 
       console.log("currentThemename")
       console.log($currentThemename)

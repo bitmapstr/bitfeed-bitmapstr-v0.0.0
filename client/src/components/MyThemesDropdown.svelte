@@ -1,22 +1,38 @@
 <script>
 import { writable } from 'svelte/store';
 import { themes } from '../themes';
-import { currentTheme } from '../stores';
+import { currentColor1, currentColor2, currentThemename, currentThemevalue } from '../stores';
 
     let isOpen = false;
-    export let selectedTheme = writable(themes[0].name);
-   
+    export let selectedThemevalue = writable(themes[0].value);
+    export let selectedThemename = writable(themes[0].name);
+      console.log("MyThemesDropdown")
+      console.log("selectedThemevalue")
+      console.log($currentThemename)
+      console.log("selectedThemename")
+      console.log($currentThemevalue)
+
     function toggleDropdown() {
       isOpen = !isOpen;
     }
      
-     function selectTheme(theme) {
-      selectedTheme.set(theme);
-      // console.log(theme)
-      // console.log("currentTheme")
-      // console.log(currentTheme.set(theme))
-      toggleDropdown();
-      
+     function selectTheme(name, value) {
+      const color1 = $currentColor1
+      const color2 = $currentColor2
+
+      selectedThemevalue.set(value);
+      selectedThemename.set(name);
+
+      console.log("currentThemename")
+      console.log($currentThemename)
+      console.log("currentThemevalue")
+      console.log($currentThemevalue)
+      console.log("color1")
+      console.log(color1)
+      console.log("color2")
+      console.log(color2)
+
+      toggleDropdown();      
     }
 
     function handleOutsideClick(event) {
@@ -32,18 +48,18 @@ import { currentTheme } from '../stores';
     //   };
     // });
 
-    $: selectedTheme = selectedTheme; 
-
+    $: selectedThemevalue = selectedThemevalue; 
+    $: selectedThemename = selectedThemename; 
   </script>
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
     <button class="dropdown" on:click={toggleDropdown}>
-      {selectedTheme.value || 'Select a theme'}
+      {$selectedThemename || 'Select a theme'}
     </button>
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme.value)}>{theme.name}</li>
+          <li on:click={() => selectTheme(theme.name)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

@@ -7,16 +7,16 @@
   import { color, hcl } from 'd3-color'
   import { darkMode, settings, devSettings, freezeResize } from '../stores.js'
   import config from '../config.js'
-  import {currentTheme}  from '../stores';
-  $: currentThemeValue = $currentTheme;
+  import {currentThemevalue}  from '../stores';
 
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
 
+
+
+    $: currentthemevalue = $currentThemevalue;
   export let currentColorValue1 = writable(currentColor1);
   export let currentColorValue2 = writable(currentColor2);
-
-
   
   let canvas
   let gl
@@ -91,9 +91,9 @@
     if (canvas && !sizeFrozen) {
 
         /////////////////////////////////                                                ///////
-      // console.log("selectedTheme")//////            <--------------------------------------------
-      // console.log(currentThemeValue)/////                                                \\\\\\\
-       currentThemeValue = currentThemeValue  
+      console.log("selectedTheme")//////            <--------------------------------------------
+      console.log(currentthemevalue)/////                                                \\\\\\\
+      currentthemevalue = currentthemevalue  
       /////////////////////////////////////
 
       cssWidth = window.innerWidth
@@ -227,24 +227,10 @@
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     const colorData = computeColorTextureData(width, height)
-
-    currentColorValue1 = rgbArray[0]
-    currentColorValue1 = currentColorValue1
-    currentColorValue1.set(currentColorValue1)  
-
-    currentColorValue2 = rgbArray[99]
-    currentColorValue2 = currentColorValue2
-    currentColorValue1.set(currentColorValue2) 
-    
-
-    console.log("currentColor2")
-    console.log(currentColorValue1)
-    console.log("currentColorValue2")
-    console.log(currentColorValue2) 
-        
+       
     /////////// THEME /////////
-    const widthGLsizei  = currentThemeValue
-    const heightGLsizei = currentThemeValue
+    const widthGLsizei  = currentthemevalue
+    const heightGLsizei = currentthemevalue
 
     const level = 0;
     const internalFormat = gl.RGBA;
@@ -255,7 +241,17 @@
       colorData
     )
 
-   
+    currentColorValue1 = rgbArray[0]
+    // currentColorValue1 = currentColorValue1
+    currentColor1.set(currentColorValue1)  
+    currentColorValue2 = rgbArray[99]
+    // currentColorValue2 = currentColorValue2
+    currentColor2.set(currentColorValue1) 
+    
+    console.log("currentColor2")
+    console.log(currentColorValue1)
+    console.log("currentColorValue2")
+    console.log(currentColorValue2) 
 
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
     widthGLsizei, heightGLsizei, border, srcFormat, srcType,

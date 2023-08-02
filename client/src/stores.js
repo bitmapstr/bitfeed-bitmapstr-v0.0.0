@@ -11,15 +11,17 @@ export const currentThemename = writable(initialThemename);
 currentThemename.subscribe(value => {
 	localStorage.setItem('selectedThemename', value.toString());
 	console.log("selectedThemename From stores.js")
-	console.log(value)
+	console.log(initialThemename)
   });
 
 const initialThemevalue = parseInt(localStorage.getItem('selectedThemevalue')) || themes[0].value;
 export const currentThemevalue = writable(initialThemevalue);
 currentThemevalue.subscribe(value => {
-	localStorage.setItem('selectedThemevalue', value.toString());
+	localStorage.setItem('selectedThemename', value.valueOf());
 	console.log("selectedThemevalue From stores.js")
-	console.log(value)
+	console.log(currentThemevalue)
+	console.log(initialThemevalue)
+
   });
 
 

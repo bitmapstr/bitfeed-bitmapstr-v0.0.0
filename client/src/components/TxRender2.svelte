@@ -15,8 +15,12 @@
 
 
     $: currentthemevalue = $currentThemevalue;
+
+   
+  export let selectedThemevalue = writable(currentThemevalue);
   export let currentColorValue1 = writable(currentColor1);
   export let currentColorValue2 = writable(currentColor2);
+ 
   
   let canvas
   let gl
@@ -89,12 +93,6 @@
     resizeTimer = null
     // var rect = canvas.parentNode.getBoundingClientRect()
     if (canvas && !sizeFrozen) {
-
-        /////////////////////////////////                                                ///////
-      console.log("selectedTheme")//////            <--------------------------------------------
-      console.log(currentthemevalue)/////                                                \\\\\\\
-      currentthemevalue = currentthemevalue  
-      /////////////////////////////////////
 
       cssWidth = window.innerWidth
       cssHeight = window.innerHeight
@@ -229,8 +227,13 @@
     const colorData = computeColorTextureData(width, height)
        
     /////////// THEME /////////
-    const widthGLsizei  = currentthemevalue
-    const heightGLsizei = currentthemevalue
+
+    console.log("currentthemevalue From TxRender2")
+    console.log(typeof currentthemevalue)
+    console.log(currentthemevalue)
+    selectedThemevalue.set(currentthemevalue);
+    
+    currentthemevalue = parseInt(currentthemevalue)
 
     const level = 0;
     const internalFormat = gl.RGBA;
@@ -254,7 +257,7 @@
     console.log(currentColorValue2) 
 
     gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-    widthGLsizei, heightGLsizei, border, srcFormat, srcType,
+    currentthemevalue, currentthemevalue, border, srcFormat, srcType,
 
                   pixels);
 

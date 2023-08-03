@@ -10,29 +10,21 @@ const initialThemename = parseInt(localStorage.getItem('selectedThemename')) || 
 export const currentThemename = writable(initialThemename);
 currentThemename.subscribe(value => {
 	localStorage.setItem('selectedThemename', value.toString());
-	console.log("selectedThemename From stores.js")
-	console.log(initialThemename)
   });
 
 const initialThemevalue = parseInt(localStorage.getItem('selectedThemevalue')) || themes[0].value.toString();
 export const currentThemevalue = writable(initialThemevalue);
 currentThemevalue.subscribe(value => {
 	localStorage.setItem('selectedThemevalue', value);
-	console.log("selectedThemevalue From stores.js")
-	console.log(initialThemevalue)
   });
-
-
-
-
- const initialRGB1 = localStorage.getItem('currentColorValue1') || "null"
+ const initialRGB1 = localStorage.getItem('currentColor1') || "null"
  export const currentColor1 = writable(initialRGB1)
  currentColor1.subscribe(value => {
 	localStorage.setItem("currentColor1", value.toString())
 	console.log("currentColor1 From stores.js")
 	console.log(value)
 });
- const initialRGB2 = localStorage.getItem('currentColorValue2') || "null"
+ const initialRGB2 = localStorage.getItem('currentColor2') || "null"
  export const currentColor2 = writable(initialRGB2)
  currentColor2.subscribe(value => {
 	localStorage.setItem("currentColor2", value.toString())

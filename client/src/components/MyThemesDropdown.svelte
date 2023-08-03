@@ -6,28 +6,29 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
     let isOpen = false;
     export let selectedThemename = writable(themes[0].name);
     export let selectedThemevalue = writable(themes[0].value);
-      // console.log("MyThemesDropdown")
-      // console.log("currentThemename")
-      // console.log($currentThemename)
-      // console.log("currentThemevalue")
-      // console.log($currentThemevalue)
-    
+    export let color1 = writable(currentColor1);
+    export let color2 = writable(currentColor2);
+
      
      function selectTheme(name, value) {
       selectedThemename.set(name);
       currentThemename.set(name)
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
-
-      const color1 = $currentColor1
-      const color2 = $currentColor2
-      console.log("color1")
-      console.log(color1)
-      console.log("color2")
-      console.log(color2)
+      
+      
+      console.log("currentColor1")
+      console.log($currentColor1)
+      console.log("currentColor2")
+      console.log($currentColor2)
 
       toggleDropdown();      
     }
+    $: selectedThemename = selectedThemename; 
+    $: selectedThemevalue = selectedThemevalue;
+
+    $: color1 = color1; 
+    $: color2 = color2;
 
     function toggleDropdown() {
       isOpen = !isOpen;
@@ -46,8 +47,7 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
     //   };
     // });
 
-    $: selectedThemename = selectedThemename; 
-    $: selectedThemevalue = selectedThemevalue;
+    
      
   </script>
   <h3>Themes</h3>

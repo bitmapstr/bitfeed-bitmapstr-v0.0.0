@@ -14,14 +14,12 @@ currentThemename.subscribe(value => {
 	console.log(initialThemename)
   });
 
-const initialThemevalue = parseInt(localStorage.getItem('selectedThemevalue')) || themes[0].value;
+const initialThemevalue = parseInt(localStorage.getItem('selectedThemevalue')) || themes[0].value.toString();
 export const currentThemevalue = writable(initialThemevalue);
 currentThemevalue.subscribe(value => {
-	localStorage.setItem('selectedThemename', value.valueOf());
+	localStorage.setItem('selectedThemevalue', value);
 	console.log("selectedThemevalue From stores.js")
-	console.log(currentThemevalue)
 	console.log(initialThemevalue)
-
   });
 
 

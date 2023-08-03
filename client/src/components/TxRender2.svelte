@@ -238,11 +238,11 @@
     selectedThemevalue.set(currentthemevalue);
     currentthemevalue = parseInt(currentthemevalue)
 
-    currentColorValue1 = rgbArray[0]
+    currentColorValue1 = rgbArray[currentthemevalue]
     currentColorValue1 = currentColorValue1
     currentColor1.set(currentColorValue1) 
 
-    currentColorValue2 = rgbArray[255]
+    currentColorValue2 = rgbArray[currentthemevalue + 255]
     currentColorValue2 = currentColorValue2
     currentColor2.set(currentColorValue1) 
 

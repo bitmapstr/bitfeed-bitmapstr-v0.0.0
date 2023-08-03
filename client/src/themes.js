@@ -12,11 +12,5 @@ export const themes = [
     { name: 'PINK', value: 15 },
     { name: 'PINK-WHITE', value: 32 },
     { name: 'Torquise', value: 495 }
-
-
-
-
-
-
   ];
   

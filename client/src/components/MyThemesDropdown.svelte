@@ -1,21 +1,37 @@
 <script>
 import { writable } from 'svelte/store';
 import { themes } from '../themes';
-import { currentTheme } from '../stores';
+import { currentColor1, currentColor2, currentThemename, currentThemevalue } from '../stores';
+import { onMount } from 'svelte';
 
     let isOpen = false;
-    export let selectedTheme = writable(themes[0].name);
-   
+    export let selectedThemename = writable(themes[0].name);
+    export let selectedThemevalue = writable(themes[0].value);
+    export let color1 = writable(currentColor1);
+    export let color2 = writable(currentColor2);
+
+     
+    function selectTheme(name, value) {
+      selectedThemename.set(name);
+      currentThemename.set(name)
+      selectedThemevalue.set(value);
+      currentThemevalue.set(value)
+
+      console.log("currentColor1")
+      console.log($currentColor1)
+      console.log("currentColor2")
+      console.log($currentColor2)
+
+      toggleDropdown();      
+    }
+    $: selectedThemename = selectedThemename; 
+    $: selectedThemevalue = selectedThemevalue;
+
+    $: color1 = color1; 
+    $: color2 = color2;
+
     function toggleDropdown() {
       isOpen = !isOpen;
-    }
-     
-     function selectTheme(theme) {
-      selectedTheme.set(theme);
-      console.log(theme)
-      console.log("currentTheme")
-      console.log(currentTheme.set(theme))
-      toggleDropdown();
       
     }
 
@@ -24,26 +40,28 @@ import { currentTheme } from '../stores';
         toggleDropdown();
       }
     }
+
+    
     // Listen for clicks outside the dropdown to close it
-    // onMount(() => {
-    //   document.addEventListener('click', handleOutsideClick);
-    //   return () => {
-    //     document.removeEventListener('click', handleOutsideClick);
-    //   };
-    // });
+    onMount(() => {
+      document.addEventListener('click', handleOutsideClick);
+      return () => {
+        document.removeEventListener('click', handleOutsideClick);
+      };
+    });
 
-    $: selectedTheme = selectedTheme; 
-
+    
+     
   </script>
   <h3>Themes</h3>
   <div class="dropdown" class:open={isOpen}>
     <button class="dropdown" on:click={toggleDropdown}>
-      {selectedTheme.value || 'Select a theme'}
+      {$selectedThemename || 'Select a theme'}
     </button>
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme.value)}>{theme.name}</li>
+          <li on:click={() => selectTheme(theme.name, theme.value)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

@@ -6,7 +6,7 @@
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
-           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1 } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import TxInfo from '../components/TxInfo.svelte'
@@ -24,10 +24,10 @@
   import config from '../config.js'
   import Cube from './Cube.svelte'
     import RunningOsterich from './RunningOsterich.svelte';
-    import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
+    import TxRender2 from './TxRender2.svelte';
 
 
   let width = window.innerWidth - 20
@@ -61,6 +61,9 @@
 
   let canvasWidth = '100%'
   let canvasHeight = '100%'
+  console.log("currentcolor1")
+  console.log(currentColor1)
+  // document.documentElement.style.setProperty('--background', currentColor1);
   $: {
     if ($freezeResize) {
       canvasWidth = `${window.innerWidth}px`
@@ -533,7 +536,7 @@
     }
   }
 
-  .tx-scene {
+  .tx-scene2 {
   position: absolute;
   width: auto;
   left: 7px;
@@ -599,10 +602,42 @@
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
           
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-            {#if $settings.showMyBitmap}
+      
+            {#if !$settings.showMyBitmap }   
+            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender controller={txController} />
+        
+              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
+                <div class="height-bar" />
+                {#if $tinyScreen}
+                  <div class="mempool-info">
+                    <span class="left">Mempool</span>
+                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
+                  </div>
+                {:else}
+                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
+                {/if}
+              </div>
+
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                  <div class="block-area">
+                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+              
+            </div>
+            {:else if $settings.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 controller={txController} />
+              
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
@@ -610,6 +645,7 @@
                     <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
                     <h1>UNVERIFIED</h1>
                     {/if}
+                    
                   <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
@@ -621,7 +657,10 @@
                                </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
+                <!-- <RunningOsterich /> -->
+
               </div>
+              
             </div>
             {/if}
             {#if $selectedTx }
@@ -631,7 +670,7 @@
           {/if}  
 
            
-</div>
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
@@ -658,9 +697,9 @@
             <SearchBar />                       
       </div>
     {/if}
-    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
     <NavBar />                        
-    {/if} 
+    {/if}  -->
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

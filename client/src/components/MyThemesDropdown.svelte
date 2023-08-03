@@ -15,8 +15,7 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
       currentThemename.set(name)
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
-      
-      
+
       console.log("currentColor1")
       console.log($currentColor1)
       console.log("currentColor2")
@@ -32,6 +31,7 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
 
     function toggleDropdown() {
       isOpen = !isOpen;
+      
     }
 
     function handleOutsideClick(event) {

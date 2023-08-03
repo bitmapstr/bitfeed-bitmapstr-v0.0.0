@@ -2,6 +2,7 @@
 import { writable } from 'svelte/store';
 import { themes } from '../themes';
 import { currentColor1, currentColor2, currentThemename, currentThemevalue } from '../stores';
+import { onMount } from 'svelte';
 
     let isOpen = false;
     export let selectedThemename = writable(themes[0].name);
@@ -10,7 +11,7 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
     export let color2 = writable(currentColor2);
 
      
-     function selectTheme(name, value) {
+    function selectTheme(name, value) {
       selectedThemename.set(name);
       currentThemename.set(name)
       selectedThemevalue.set(value);
@@ -39,13 +40,15 @@ import { currentColor1, currentColor2, currentThemename, currentThemevalue } fro
         toggleDropdown();
       }
     }
+
+    
     // Listen for clicks outside the dropdown to close it
-    // onMount(() => {
-    //   document.addEventListener('click', handleOutsideClick);
-    //   return () => {
-    //     document.removeEventListener('click', handleOutsideClick);
-    //   };
-    // });
+    onMount(() => {
+      document.addEventListener('click', handleOutsideClick);
+      return () => {
+        document.removeEventListener('click', handleOutsideClick);
+      };
+    });
 
     
      

@@ -122,6 +122,8 @@ export const blockAreaSize = writable(0)
 
 export const settingsOpen = writable(false)
 
+export const currentHeight = writable(0)
+
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
 

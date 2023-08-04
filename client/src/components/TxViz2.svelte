@@ -61,9 +61,9 @@
 
   let canvasWidth = '100%'
   let canvasHeight = '100%'
-  console.log("currentcolor1")
-  console.log(currentColor1)
-  // document.documentElement.style.setProperty('--background', currentColor1);
+  // console.log("currentcolor1")
+  // console.log($currentColor1)
+  $: color1 = $currentColor1
   $: {
     if ($freezeResize) {
       canvasWidth = `${window.innerWidth}px`
@@ -600,9 +600,8 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-<div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
+<div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
-      
             {#if !$settings.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />

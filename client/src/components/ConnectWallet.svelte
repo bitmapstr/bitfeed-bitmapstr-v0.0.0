@@ -2,6 +2,7 @@
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
     import MySlider from "./MySlider.svelte";
+    import { currentHeight } from "../stores";
 
     let wallet = { connected: false };
     let winuni = window.unisat;
@@ -73,7 +74,9 @@
 
     function handleSubmit(height) {
         searchBlockHeight(height);
-        console.log("searchBlockHeight");
+        $currentHeight = height
+        console.log("currentHeight");
+        console.log($currentHeight)
     }
     $: accounts = accounts;
     let selected;

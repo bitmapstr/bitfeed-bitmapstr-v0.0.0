@@ -6,7 +6,7 @@
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
-           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1 } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import TxInfo from '../components/TxInfo.svelte'
@@ -24,10 +24,10 @@
   import config from '../config.js'
   import Cube from './Cube.svelte'
     import RunningOsterich from './RunningOsterich.svelte';
-    import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
+    import TxRender2 from './TxRender2.svelte';
 
 
   let width = window.innerWidth - 20
@@ -61,6 +61,9 @@
 
   let canvasWidth = '100%'
   let canvasHeight = '100%'
+  // console.log("currentcolor1")
+  // console.log($currentColor1)
+  $: color1 = $currentColor1
   $: {
     if ($freezeResize) {
       canvasWidth = `${window.innerWidth}px`
@@ -533,7 +536,7 @@
     }
   }
 
-  .tx-scene {
+  .tx-scene2 {
   position: absolute;
   width: auto;
   left: 7px;
@@ -597,19 +600,8 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-<div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
+<div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-
-             <!-- {#if $settings.darkMode }
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {:else}
-              <img src="/img/bg-logo-w-text.png" alt="" class="bg-logo-w-text">
-              {/if} -->
-              <div class="bitmap-cube">
-                <!-- <Cube /> -->
-
-              </div>
             {#if !$settings.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
@@ -677,7 +669,7 @@
           {/if}  
 
            
-</div>
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
@@ -704,9 +696,9 @@
             <SearchBar />                       
       </div>
     {/if}
-    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
     <NavBar />                        
-    {/if} 
+    {/if}  -->
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

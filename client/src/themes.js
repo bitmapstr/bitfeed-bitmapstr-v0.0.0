@@ -7,16 +7,10 @@ export const themes = [
     { name: 'AQUA BLUES', value: 500 },
     { name: 'AQUA', value: 450 },
     { name: 'GREEN', value: 350 },
-    { name: 'BLUE', value: 0 },
+    { name: 'BLUE', value: 1 },
     { name: 'BLOOD', value: 5 },
     { name: 'PINK', value: 15 },
     { name: 'PINK-WHITE', value: 32 },
     { name: 'Torquise', value: 495 }
-
-
-
-
-
-
   ];
   

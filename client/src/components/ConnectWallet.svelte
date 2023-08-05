@@ -2,6 +2,7 @@
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
     import MySlider from "./MySlider.svelte";
+    import  {currentHeight, currentColor1} from "../stores";
 
     let wallet = { connected: false };
     let winuni = window.unisat;
@@ -31,7 +32,7 @@
     async function GetMyBitmaps() {
         if (wallet.connected) {
             try {
-                let limit = 30;
+                let limit = 13;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
                 console.log("Total Ins: " + res.total);
@@ -73,7 +74,9 @@
 
     function handleSubmit(height) {
         searchBlockHeight(height);
-        console.log("searchBlockHeight");
+        $currentHeight = height
+        console.log("currentHeight");
+        console.log($currentHeight)
     }
     $: accounts = accounts;
     let selected;
@@ -81,11 +84,11 @@
 
 <div class="dropdown"> 
     {#if wallet.connected}
-        <button class="danger" on:click={DisconnectWallet}
+        <button class="danger" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
         <h3>unverified bitmaps</h3>
         <form  on:submit|preventDefault={handleSubmit(selected)}>
-            <select class="dropdown" bind:value={selected} on:change={() => handleSubmit(selected)}>
+            <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
                 {#await GetMyBitmaps()}
                     <p>...waiting for my bitmaps</p>
@@ -96,10 +99,10 @@
                     {/each}
                 {/await}
             </select>
-            <input
+            <!-- <input
                 bind:value={selected}
                 on:change={() => handleSubmit(selected)}
-            />
+            /> -->
             <!-- <button disabled={!selected} type="submit"> Submit </button> -->
             <p>selected bitmap {selected ? selected : "[waiting...]"}</p>
 
@@ -107,11 +110,11 @@
         </form>
     {:else if !wallet.connected}
         <p>Connect yer wallet</p>
-        <button class="primary" on:click={ConnectWallet}>UniSat</button>
+        <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
         <br />
-        <button>Hiro</button>
+        <button style="background-color: {$currentColor1}">Hiro</button>
         <br />
-        <button>Xverse</button>
+        <button style="background-color: {$currentColor1}">Xverse</button>
     {:else}
         <p>something else happened here</p>
     {/if}

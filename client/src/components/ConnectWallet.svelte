@@ -2,7 +2,7 @@
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
     import MySlider from "./MySlider.svelte";
-    import { currentHeight } from "../stores";
+    import  {currentHeight, currentColor1} from "../stores";
 
     let wallet = { connected: false };
     let winuni = window.unisat;
@@ -32,7 +32,7 @@
     async function GetMyBitmaps() {
         if (wallet.connected) {
             try {
-                let limit = 30;
+                let limit = 13;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
                 console.log("Total Ins: " + res.total);
@@ -110,11 +110,11 @@
         </form>
     {:else if !wallet.connected}
         <p>Connect yer wallet</p>
-        <button class="primary" on:click={ConnectWallet}>UniSat</button>
+        <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
         <br />
-        <button>Hiro</button>
+        <button style="background-color: {$currentColor1}">Hiro</button>
         <br />
-        <button>Xverse</button>
+        <button style="background-color: {$currentColor1}">Xverse</button>
     {:else}
         <p>something else happened here</p>
     {/if}

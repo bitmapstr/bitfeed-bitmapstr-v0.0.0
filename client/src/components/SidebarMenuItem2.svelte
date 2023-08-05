@@ -4,7 +4,7 @@ import Toggle from './util/Toggle.svelte'
 import Pill from './util/Pill.svelte'
 import Select from 'svelte-select'
 import { createEventDispatcher } from 'svelte'
-import { freezeResize } from '../stores.js'
+import { freezeResize, currentColor1 } from '../stores.js'
 const dispatch = createEventDispatcher()
 
 export let value = false
@@ -82,7 +82,7 @@ async function focusOut(e) {
   }
 </style>
 
-<div class="sidebar-menu-item" class:active={value} on:click>
+<div class="sidebar-menu-item" class:active={value}  on:click>
   {#if type === 'pill'}
     <span class="label">{ label }</span>
     <Pill active={value} left={falseLabel} right={trueLabel} />

@@ -1,5 +1,6 @@
 <script>
-export let active
+import { currentColor1 } from "../../stores";
+export let active = $currentColor1
 
 </script>
 

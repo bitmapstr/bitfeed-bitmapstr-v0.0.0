@@ -54,14 +54,14 @@ import { onMount } from 'svelte';
      
   </script>
   <h3>Themes</h3>
-  <div class="dropdown" class:open={isOpen}>
-    <button class="dropdown" on:click={toggleDropdown}>
+  <div class="dropdown" class:open={isOpen} >
+    <button class="dropdown" style="background-color: {$currentColor1}" on:click={toggleDropdown} >
       {$selectedThemename || 'Select a theme'}
     </button>
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme.name, theme.value)}>{theme.name}</li>
+          <li style="background-color: {$currentColor1}" on:click={() => selectTheme(theme.name, theme.value)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

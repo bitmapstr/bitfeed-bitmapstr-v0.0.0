@@ -1,4 +1,5 @@
 <script>
+    import { currentColor1 } from "../stores";
 
 
 </script>
@@ -14,6 +15,6 @@
 </style>
 
 <div>
-    <button class="baButton" ></button>
+    <button class="baButton" style="background-color: {$currentColor1}" >Play</button>
     <h1>BITCOIN AUDIO</h1>
 </div>

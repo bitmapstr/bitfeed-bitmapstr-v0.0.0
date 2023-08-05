@@ -140,7 +140,8 @@ const defaultSettings = {
 	showBlockInfo: false,
 	showMyBitmap: false,
 	noTrack: false,
-	blocksEnabled: true
+	blocksEnabled: true,
+	verifiedBitmapstr: false
 
 }
 

@@ -1,13 +1,14 @@
 <script>
 import { currentColor1 } from "../../stores";
-export let active = $currentColor1
-
+export let active
 </script>
 
 <div class="toggle" class:active={active} on:click>
-  <div class="track">
+
+  <div class="track" >
     <div class="handle" />
   </div>
+  
 </div>
 
 <style type="text/scss">

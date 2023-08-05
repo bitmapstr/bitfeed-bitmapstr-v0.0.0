@@ -28,6 +28,7 @@
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
+    import BitcoinAudio from './BitcoinAudio.svelte';
 
 
   let width = window.innerWidth - 20
@@ -662,12 +663,12 @@
               
             </div>
             {/if}
-            {#if $selectedTx }
+            <!-- {#if $selectedTx }
 
             <TxAudio tx={$selectedTx} position={audioInfoPosition} />
            
           {/if}  
-
+ -->
            
 
   <div class="top-bar">
@@ -683,6 +684,7 @@
       <div class="row">
         {#if $settings.audioOn }
           <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
+          <BitcoinAudio />
         {/if}
       </div>
       <div class="row">

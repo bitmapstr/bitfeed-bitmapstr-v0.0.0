@@ -1,10 +1,9 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import MySlider from "./MySlider.svelte";
-    import  {currentHeight, currentColor1} from "../stores";
+    import  {currentHeight, currentColor1, walletConnected} from "../stores";
 
-    let wallet = { connected: false };
+    export let wallet = walletConnected;
     let winuni = window.unisat;
     async function ConnectWallet() {
         // UniSat Wallet
@@ -14,8 +13,12 @@
                 console.log("UniSat Wallet is installed!");
                 let accounts = await winuni.requestAccounts();
                 console.log("connect success", accounts);
-                wallet.connected = !wallet.connected;
+                wallet.connected = true
+                console.log("wallet.ConnectWallet")
+                console.log(wallet.ConnectWallet)
+
                 GetMyBitmaps();
+
             } else {
                 console.log("UniSat Wallet is not installed :(");
                 console.log("connect failed");
@@ -29,13 +32,23 @@
 
     }
 
+    function VerifyBitmapstr () {
+        verified = true
+        console.log("verified")
+        console.log(verified)
+    }
+
     async function GetMyBitmaps() {
         if (wallet.connected) {
             try {
-                let limit = 13;
+                
+                let limit = 20;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
-                console.log("Total Ins: " + res.total);
+                let total = res.total
+                console.log("Total Ins: " + total);
+                const insTotal = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + total
+                console.log(insTotal)
                 for (let i = 0; i < limit; i++) {
                     const insID = res.list[i].inscriptionId;
                     const hiro =
@@ -47,28 +60,31 @@
                     const bitmapNum = inscriptionParts[0];
                     const textFilter = [];
                     const bitmapText = "bitmap";
-
+                        
                     if (inscriptionParts.length > 1) {
                         insArray.push(bitmapNum);
                     }
                     //console.log("Content: " + ins)
                     //console.log("InsID: " + insID)
+                    
                 }
-
+                // VerifyBitmapstr()
                 console.log(insArray);
                 return [insArray];
 
                 } catch (e) {
+                    console.log(" catch GetMyBitmaps ERROR");
                     console.log(e);
                 }
 
         } else {
-            console.log("no Inscriptions!?");
+            console.log("else GetMyBitmaps ERROR");
         }
     }
 
     function DisconnectWallet() {
-        wallet.connected = !wallet.connected;
+        wallet.connected = false;
+        console.log()
         console.log("disconnect here");
     }
 
@@ -84,7 +100,7 @@
 
 <div class="dropdown"> 
     {#if wallet.connected}
-        <button class="danger" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
+        <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
         <h3>unverified bitmaps</h3>
         <form  on:submit|preventDefault={handleSubmit(selected)}>

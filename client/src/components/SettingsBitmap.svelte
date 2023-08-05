@@ -36,11 +36,8 @@ let settingConfig = {
   showMyBitmap: {
     label: 'My Bitmap',
     valueType: 'bool'
-  },
-  verified: {
-    label: 'Verified',
-    valueType: 'bool'
   }
+ 
 }
 
 

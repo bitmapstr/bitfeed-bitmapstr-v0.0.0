@@ -123,6 +123,8 @@ export const blockAreaSize = writable(0)
 export const settingsOpen = writable(false)
 
 export const currentHeight = writable(0)
+export const walletConnected = writable()
+export const verifiedBitmapstr = writable()
 
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
@@ -141,8 +143,6 @@ const defaultSettings = {
 	showMyBitmap: false,
 	noTrack: false,
 	blocksEnabled: true,
-	verifiedBitmapstr: false
-
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}

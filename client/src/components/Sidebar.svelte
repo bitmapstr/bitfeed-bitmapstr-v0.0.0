@@ -150,8 +150,8 @@ function showBlock () {
     </div>
   </SidebarTab>
 
-  <SidebarTab open={$sidebarToggle === 'verified'} on:click={() => {settings('verified')}} tooltip="Verified?">
-    <span slot="tab" title="Bitmaps">
+  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified?">
+    <span slot="tab" title="Verified">
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">

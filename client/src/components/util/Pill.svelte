@@ -11,10 +11,10 @@ export let rightDisabled = false
 
 <div class="pill" class:active={active} on:click>
   {#if !leftDisabled}
-    <span class="side left" class:selected={!active} style="background: {$currentColor1}"><slot name="left">{ left }</slot></span>
+    <span class="side left" class:selected={!active} ><slot name="left">{ left }</slot></span>
   {/if}
   {#if !rightDisabled}
-    <span class="side right" class:selected={active} style="background: {$currentColor1}"><slot name="right">{ right }</slot></span>
+    <span class="side right" class:selected={active} ><slot name="right">{ right }</slot></span>
   {/if}
 </div>
 

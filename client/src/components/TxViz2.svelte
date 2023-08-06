@@ -570,15 +570,18 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 100%;
-    height: 100%;
+
+    width: 150%;
+    height: 150%;
     opacity: 0.3;
-    left: 0px;
-    // top: 115px;
-    // left: 240px;
-    position: absolute;
+    left: -76px;
+    top: -16px;
+    position: inherit;
     object-fit: contain;
     z-index: inherit;
+
+    // top: 115px;
+    // left: 240px;
 }
 
   @media screen and (max-width: 640px) {
@@ -641,14 +644,16 @@
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  {#if !$verifiedBitmapstr }  
-                    <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
-                    <h1>unverified</h1>
-                    {/if}
-                    {#if $verifiedBitmapstr }  
-                    <!-- <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text"> -->
-                    <h1>verified</h1>
-                    {/if}
+                 {#if $settingsBitmap.showBlockInfo}
+                 {#if !$verifiedBitmapstr }  
+                 <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
+                 <!-- <h1>unverified</h1> -->
+                 {/if}
+                 {#if $verifiedBitmapstr }  
+                 <img src="/img/bitmapVERIFIED.svg" alt="" class="bg-logo-w-text">
+                 <!-- <h1>verified</h1> -->
+                 {/if}
+                 {/if}
                     
                   <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />

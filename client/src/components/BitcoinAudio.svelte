@@ -49,5 +49,5 @@ export function stopPlaying() {
     <RangeSlider bind:value={value} on:change={(e) => value = e.detail.value} id="Frequency"  />
         {value}
 
-    <h1>BITCOIN AUDIO</h1>
+    <p>BITCOIN AUDIO</p>
 </div>

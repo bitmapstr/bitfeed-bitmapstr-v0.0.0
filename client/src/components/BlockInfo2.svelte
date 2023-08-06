@@ -6,7 +6,7 @@
   import Icon from '../components/Icon.svelte'
   import closeIcon from '../assets/icon/cil-x-circle.svg'
   import { shortBtcFormat, longBtcFormat, dateFormat, numberFormat } from '../utils/format.js'
-  import { exchangeRates, settings, blocksEnabled, latestBlockHeight, blockTransitionDirection, loading, freezeResize, pageWidth, pageHeight } from '../stores.js'
+  import { exchangeRates, settings, blocksEnabled, latestBlockHeight, blockTransitionDirection, loading, freezeResize, pageWidth, pageHeight, settingsBitmap } from '../stores.js'
   import { formatCurrency } from '../utils/fx.js'
   import { searchBlockHeight } from '../utils/search.js'
 
@@ -408,7 +408,7 @@
 {#key transitionDirection}
   {#each ((block != null && visible && $blocksEnabled) ? [block] : []) as block (block.id)}
     <div class="block-info-container" out:fly|local={flyOut} in:fly|local={flyIn}>
-      {#if $settings.showBlockInfo }        
+      {#if $settingsBitmap.showBlockInfo }        
                 <div class="block-info" class:compact={compactView} class:landscape={landscape}>
                   <!-- <span class="data-field">Hash: { block.id }</span> -->
                   <div class="full-size">

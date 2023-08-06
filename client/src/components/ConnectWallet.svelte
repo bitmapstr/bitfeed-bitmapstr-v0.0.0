@@ -35,7 +35,7 @@
     }
 
     async function GetMyBitmaps() {
-        if (wallet.connected) {
+        if (wallet.connected =true) {
             try {
                 
                 let limit = 20;
@@ -43,9 +43,9 @@
                 const res = await window.unisat.getInscriptions(0, limit);
                 let total = res.total
                 console.log("Total Ins: " + total);
-                const insTotal = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + total
-                console.log(insTotal)
-                for (let i = 0; i < limit; i++) {
+                // const insTotal = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + total
+                // console.log(insTotal)
+                for (let i = 0; i < 20; i++) {
                     const insID = res.list[i].inscriptionId;
                     const hiro =
                         "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
@@ -56,7 +56,7 @@
                     const bitmapNum = inscriptionParts[0];
                     const textFilter = [];
                     const bitmapText = "bitmap";
-                        
+
                     if (inscriptionParts.length > 1) {
                         insArray.push(bitmapNum);
                         
@@ -66,7 +66,6 @@
                     
                 }
                 $verifiedBitmapstr = true
-                // VerifyBitmapstr()
                 console.log(insArray);
                 return [insArray];
 
@@ -83,7 +82,6 @@
     function DisconnectWallet() {
         wallet.connected = false;
         $verifiedBitmapstr = false
-        console.log()
         console.log("disconnect here");
     }
 

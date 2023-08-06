@@ -1,9 +1,9 @@
 <script>
 export let icon
-export let inline = false
+export let inline = true
 import { currentColor1 } from "../stores";
-$: color1 = $currentColor1
-// export let color1 = "inherit"
+$: color = $currentColor1
+export let color = "inherit"
 
 
 </script>
@@ -27,11 +27,11 @@ $: color1 = $currentColor1
 </style>
 
 {#if inline}
-<span class="svg-icon inline" style="fill: {color1}; stroke: {color1}; color: {color1}">
+<span class="svg-icon inline" style="fill: {color}; stroke: {color}; color: {color}">
   {@html icon }
 </span>
 {:else}
-<div class="svg-icon" style="fill: {color1}; stroke: {color1}; color: {color1}">
+<div class="svg-icon" style="fill: {color}; stroke: {color}; color: {color}">
   {@html icon }
 </div>
 {/if}

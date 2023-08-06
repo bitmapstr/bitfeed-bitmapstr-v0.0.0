@@ -6,7 +6,7 @@ export const themes = [
     { name: 'ORANGY AUTUMN', value: 256 },
     { name: 'AQUA BLUES', value: 500 },
     { name: 'AQUA', value: 450 },
-    { name: 'GREEN', value: 350 },
+    { name: 'GREEN/PINK', value: 350 },
     { name: 'BLUE', value: 1 },
     { name: 'BLOOD', value: 5 },
     { name: 'PINK', value: 15 },

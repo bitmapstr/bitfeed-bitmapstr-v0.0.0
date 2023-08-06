@@ -29,7 +29,6 @@ let searchTabComponent
 
 let blockHidden = false
 $: blockHidden = ($currentBlock && !$blockVisible)
-
 function settings (tab) {
   if ($sidebarToggle) analytics.trackEvent('sidebar', $sidebarToggle, 'close')
   if ($sidebarToggle === tab) {
@@ -141,19 +140,6 @@ function showBlock () {
       <Settings />
     </div>
   </SidebarTab>
-  
-  {#if walletConnected && verifiedBitmapstr}
-  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
-    <span slot="tab" title="Verified">
-      <Icon icon={bitmapIcon} color="var(--bold-a)" />
-    </span>
-    <div slot="content">
-      <MyThemesDropdown />
-      <SettingsBitmap />
-      <BitcoinAudio />
-    </div>
-  </SidebarTab>
-  {/if}
 
   <SidebarTab open={$sidebarToggle === 'bitmaps'} on:click={() => {settings('bitmaps')}} tooltip="Connect Wallet">
     <span slot="tab" title="Connect Wallet">
@@ -163,5 +149,21 @@ function showBlock () {
       <ConnectWallet />
     </div>
   </SidebarTab>
+  
+  {#if  $verifiedBitmapstr}
+  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
+    <span slot="tab" title="Verified">
+      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+
+      <MyThemesDropdown />
+      <SettingsBitmap />
+      <BitcoinAudio />
+    </div>
+  </SidebarTab>
+  {/if}
+
+
 
 </div>

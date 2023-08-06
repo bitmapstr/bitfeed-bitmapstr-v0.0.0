@@ -697,7 +697,7 @@
         {/if}
       </div>
     </div>
-    {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
+    {#if $settingsBitmap.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
             <SearchBar />                       
       </div>

@@ -3,7 +3,7 @@ export let icon
 export let inline = false
 import { currentColor1 } from "../stores";
 $: color1 = $currentColor1
-export let color1 = "inherit"
+// export let color1 = "inherit"
 
 
 </script>

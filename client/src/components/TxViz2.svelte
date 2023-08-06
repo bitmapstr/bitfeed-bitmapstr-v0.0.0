@@ -603,7 +603,7 @@
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
-            {#if !$settings.showMyBitmap }   
+            {#if !$settingsBitmap.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
@@ -634,9 +634,9 @@
               </div>
               
             </div>
-            {:else if $settings.showMyBitmap}
+            {:else if $settingsBitmap.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender2 controller={txController} />
+              <TxRender2 displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
@@ -686,7 +686,7 @@
         {/if}
       </div>
       <div class="row">
-        {#if $settings.audioOn }
+        {#if $verifiedBitmapstr && $settingsBitmap.audioOn }
           <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
           <BitcoinAudio />
         {/if}

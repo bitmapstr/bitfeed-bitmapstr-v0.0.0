@@ -6,7 +6,7 @@
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
-           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1 } from '../stores.js'
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1, settingsBitmap, verifiedBitmapstr } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import TxInfo from '../components/TxInfo.svelte'
@@ -641,9 +641,13 @@
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  {#if $settings.showBlockInfo }  
+                  {#if !$verifiedBitmapstr }  
                     <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
-                    <h1>UNVERIFIED</h1>
+                    <h1>unverified</h1>
+                    {/if}
+                    {#if $verifiedBitmapstr }  
+                    <!-- <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text"> -->
+                    <h1>verified</h1>
                     {/if}
                     
                   <div class="block-area">

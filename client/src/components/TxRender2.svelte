@@ -244,12 +244,12 @@
 
     currentColorValue2 = rgbArray[currentthemevalue]
     currentColorValue2 = currentColorValue2
-    currentColor2.set(currentColorValue1) 
+    currentColor2.set(currentColorValue2) 
 
-    console.log("currentColorValue1")
-    console.log(currentColorValue1)
-    console.log("currentColorValue2")
-    console.log(currentColorValue2) 
+    // console.log("currentColorValue1")
+    // console.log(currentColorValue1)
+    // console.log("currentColorValue2")
+    // console.log(currentColorValue2) 
     /////////// THEME /////////
 
 

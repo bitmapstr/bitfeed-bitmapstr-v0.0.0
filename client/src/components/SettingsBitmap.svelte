@@ -20,11 +20,6 @@ let settingConfig = {
     label: 'Audio On',
     valueType: 'bool'
   },
-  unverifiedtheme: {
-    label: 'Unverified',
-    type: 'dropdown',
-    valueType: 'string'
-  },
   showSearch: {
     label: 'Search Bar',
     valueType: 'bool'

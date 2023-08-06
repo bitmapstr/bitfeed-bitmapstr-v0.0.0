@@ -1,7 +1,7 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, walletConnected} from "../stores";
+    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr} from "../stores";
 
     export let wallet = walletConnected;
     let winuni = window.unisat;
@@ -14,9 +14,6 @@
                 let accounts = await winuni.requestAccounts();
                 console.log("connect success", accounts);
                 wallet.connected = true
-                console.log("wallet.ConnectWallet")
-                console.log(wallet.ConnectWallet)
-
                 GetMyBitmaps();
 
             } else {
@@ -35,7 +32,6 @@
     function VerifyBitmapstr () {
         verified = true
         console.log("verified")
-        console.log(verified)
     }
 
     async function GetMyBitmaps() {
@@ -63,11 +59,13 @@
                         
                     if (inscriptionParts.length > 1) {
                         insArray.push(bitmapNum);
+                        
                     }
                     //console.log("Content: " + ins)
                     //console.log("InsID: " + insID)
                     
                 }
+                $verifiedBitmapstr = true
                 // VerifyBitmapstr()
                 console.log(insArray);
                 return [insArray];
@@ -84,6 +82,7 @@
 
     function DisconnectWallet() {
         wallet.connected = false;
+        $verifiedBitmapstr = false
         console.log()
         console.log("disconnect here");
     }
@@ -102,7 +101,7 @@
     {#if wallet.connected}
         <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
-        <h3>unverified bitmaps</h3>
+        <h3>{$verifiedBitmapstr}</h3>
         <form  on:submit|preventDefault={handleSubmit(selected)}>
             <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>

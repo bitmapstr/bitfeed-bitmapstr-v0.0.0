@@ -159,7 +159,6 @@ function showBlock () {
 
       <MyThemesDropdown />
       <SettingsBitmap />
-      <BitcoinAudio />
     </div>
   </SidebarTab>
   {/if}

@@ -1,7 +1,7 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr, unisatAccounts} from "../stores";
+    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner} from "../stores";
     import io from 'socket.io-client'
  
 
@@ -20,8 +20,6 @@
                 unisatAccounts.set(accounts)
                 wallet.connected = true
                 GetMyBitmaps();
-                
-
 
             } else {
                 console.log("UniSat Wallet is not installed :(");
@@ -29,7 +27,8 @@
                 alert("Install a compatible wallet.");
             }
         } catch {
-            console.log("Connect wallet");
+            // console.log("Connect wallet");
+            alert("UniSat Wallet is installed! Connect your Wallet")
         }
 
         // Xverse
@@ -93,9 +92,8 @@
         trac.connect();
         trac.on('response', async function(msg)
         {
-            isBitmapOwner = JSON.parse(msg.result)
-            console.log("isBitmapOwner");
-            console.log(isBitmapOwner);
+            $isBitmapOwner = JSON.parse(msg.result)
+            isBitmapOwner.set($isBitmapOwner)
 
         });
         trac.on('error', async function(msg)
@@ -109,7 +107,6 @@
         });
 
     }
-$: isBitmapOwner = isBitmapOwner
     function DisconnectWallet() {
         wallet.connected = false;
         $verifiedBitmapstr = false
@@ -132,7 +129,7 @@ $: isBitmapOwner = isBitmapOwner
     {#if wallet.connected}
         <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
-        <h3>{$verifiedBitmapstr}</h3>
+        <!-- <h3>{$verifiedBitmapstr}</h3> -->
         <form  on:submit|preventDefault={handleSubmit(selected)}>
             <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
@@ -145,19 +142,11 @@ $: isBitmapOwner = isBitmapOwner
                     {/each}
                 {/await}
             </select>
-            <!-- <input
-                bind:value={selected}
-                on:change={() => handleSubmit(selected)}
-            /> -->
-            <!-- <button disabled={!selected} type="submit"> Submit </button> -->
-            <!-- <p>selected bitmap {selected ? selected : "[waiting...]"}</p> -->
             {#if isBitmapOwner}
             <p>{selected} is verified</p>
             {:else}
-            <p>{selected} is not verified</p>
+            <p class="danger">{selected} is not verified</p>
             {/if}
-            
-            <div />
 
         </form>
         
@@ -172,24 +161,17 @@ $: isBitmapOwner = isBitmapOwner
     {:else}
         <p>something else happened here</p>
     {/if}
+
 </div>
 
 
 <style>
-
 .primary {
         color: orange;
     }
-    .danger {
-        color: rgba(255, 119, 0, 0.675);
-    }
-    input {
-        display: block;
-        width: 200px;
-        max-width: 100%;
-    }
     .dropdown {
       position: relative;
+      
     }
     .dropdown button {
       background-color: var(--palette-good);
@@ -198,27 +180,5 @@ $: isBitmapOwner = isBitmapOwner
       border-radius: 4px;
       cursor: pointer;
     }
-    .dropdown ul {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: 1;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color:var(--palette-good);
-    }
-    .dropdown ul li {
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    .dropdown ul li:hover {
-      background-color: #f1f1f1;
-    }
-    .open .dropdown ul {
-      display: block;
-    }
-  </style>
+</style>
 

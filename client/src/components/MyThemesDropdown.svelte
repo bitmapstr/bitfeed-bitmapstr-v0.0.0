@@ -17,10 +17,10 @@ import { onMount } from 'svelte';
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
 
-      console.log("currentColor1")
-      console.log($currentColor1)
-      console.log("currentColor2")
-      console.log($currentColor2)
+      // console.log("currentColor1")
+      // console.log($currentColor1)
+      // console.log("currentColor2")
+      // console.log($currentColor2)
 
       toggleDropdown();      
     }

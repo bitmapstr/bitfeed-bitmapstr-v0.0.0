@@ -152,10 +152,11 @@ $: isBitmapOwner = isBitmapOwner
             <!-- <button disabled={!selected} type="submit"> Submit </button> -->
             <!-- <p>selected bitmap {selected ? selected : "[waiting...]"}</p> -->
             {#if isBitmapOwner}
-            <p>Bitmap is verified</p>
+            <p>{selected} is verified</p>
             {:else}
-            <p>Bitmap is not verified</p>
+            <p>{selected} is not verified</p>
             {/if}
+            
             <div />
 
         </form>

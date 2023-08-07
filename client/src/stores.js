@@ -125,6 +125,7 @@ export const settingsOpen = writable(false)
 export const currentHeight = writable(0)
 export const walletConnected = writable()
 export const verifiedBitmapstr = writable()
+export const unisatAccounts = writable("no accounts")
 
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'

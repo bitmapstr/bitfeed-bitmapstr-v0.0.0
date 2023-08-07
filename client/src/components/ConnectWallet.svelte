@@ -1,9 +1,12 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr} from "../stores";
+    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr, unisatAccounts} from "../stores";
+    import io from 'socket.io-client'
+ 
 
     export let wallet = walletConnected;
+    export let accounts = unisatAccounts;
     let winuni = window.unisat;
     async function ConnectWallet() {
         // UniSat Wallet
@@ -11,10 +14,14 @@
         try {
             if (typeof winuni !== "undefined") {
                 console.log("UniSat Wallet is installed!");
-                let accounts = await winuni.requestAccounts();
+                accounts = await winuni.requestAccounts();
                 console.log("connect success", accounts);
+
+                unisatAccounts.set(accounts)
                 wallet.connected = true
                 GetMyBitmaps();
+                
+
 
             } else {
                 console.log("UniSat Wallet is not installed :(");
@@ -28,12 +35,7 @@
         // Xverse
 
     }
-
-    function VerifyBitmapstr () {
-        verified = true
-        console.log("verified")
-    }
-
+  
     async function GetMyBitmaps() {
         if (wallet.connected =true) {
             try {
@@ -42,7 +44,7 @@
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
                 let total = res.total
-                console.log("Total Ins: " + total);
+                // console.log("Total Ins: " + total);
                 // const insTotal = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + total
                 // console.log(insTotal)
                 for (let i = 0; i < 20; i++) {
@@ -52,7 +54,7 @@
                     const content = await fetch(hiro + "/content");
                     const ins = await content.text();
                     const inscriptionParts = ins.split(".");
-                    console.log(inscriptionParts);
+                    // console.log(inscriptionParts);
                     const bitmapNum = inscriptionParts[0];
                     const textFilter = [];
                     const bitmapText = "bitmap";
@@ -79,6 +81,35 @@
         }
     }
 
+    function VerifyBitmap() {
+
+        const trac = io("https://bitmap.trac.network", {
+            autoConnect : true,
+            reconnection: true,
+            reconnectionDelay: 500,
+            econnectionDelayMax : 500,
+            randomizationFactor : 0
+        });
+        trac.connect();
+        trac.on('response', async function(msg)
+        {
+            isBitmapOwner = JSON.parse(msg.result)
+            console.log("isBitmapOwner");
+            console.log(isBitmapOwner);
+
+        });
+        trac.on('error', async function(msg)
+        {
+            console.log(msg);
+        });
+        trac.emit('get', {
+        func : 'isBitmapOwner',
+        args : [$unisatAccounts[0], $currentHeight],
+        call_id : ''
+        });
+
+    }
+$: isBitmapOwner = isBitmapOwner
     function DisconnectWallet() {
         wallet.connected = false;
         $verifiedBitmapstr = false
@@ -90,8 +121,10 @@
         $currentHeight = height
         console.log("currentHeight");
         console.log($currentHeight)
+        VerifyBitmap()
     }
-    $: accounts = accounts;
+
+
     let selected;
 </script>
 
@@ -117,10 +150,17 @@
                 on:change={() => handleSubmit(selected)}
             /> -->
             <!-- <button disabled={!selected} type="submit"> Submit </button> -->
-            <p>selected bitmap {selected ? selected : "[waiting...]"}</p>
-
+            <!-- <p>selected bitmap {selected ? selected : "[waiting...]"}</p> -->
+            {#if isBitmapOwner}
+            <p>Bitmap is verified</p>
+            {:else}
+            <p>Bitmap is not verified</p>
+            {/if}
             <div />
+
         </form>
+        
+
     {:else if !wallet.connected}
         <p>Connect yer wallet</p>
         <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>

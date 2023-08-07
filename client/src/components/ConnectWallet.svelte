@@ -1,7 +1,7 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner} from "../stores";
+    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner} from "../stores";
     import io from 'socket.io-client'
  
 
@@ -38,7 +38,7 @@
     async function GetMyBitmaps() {
         if (wallet.connected =true) {
             try {
-                
+                const regex = /^(?:0|[1-9][0-9]*).bitmap$/;
                 let limit = 20;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
@@ -55,10 +55,8 @@
                     const inscriptionParts = ins.split(".");
                     // console.log(inscriptionParts);
                     const bitmapNum = inscriptionParts[0];
-                    const textFilter = [];
-                    const bitmapText = "bitmap";
-
-                    if (inscriptionParts.length > 1) {
+                    const bitmapText = regex.test(ins)
+                    if (bitmapText) {
                         insArray.push(bitmapNum);
                         
                     }
@@ -82,6 +80,8 @@
 
     function VerifyBitmap() {
 
+        console.log($unisatAccounts[0], $currentHeight)
+
         const trac = io("https://bitmap.trac.network", {
             autoConnect : true,
             reconnection: true,
@@ -94,7 +94,8 @@
         {
             $isBitmapOwner = JSON.parse(msg.result)
             isBitmapOwner.set($isBitmapOwner)
-
+            console.log("$isBitmapOwner")
+            console.log($isBitmapOwner)
         });
         trac.on('error', async function(msg)
         {
@@ -110,7 +111,8 @@
     function DisconnectWallet() {
         wallet.connected = false;
         $verifiedBitmapstr = false
-        console.log("disconnect here");
+        $isBitmapOwner = false
+        console.log("Wallet disconnected");
     }
 
     function handleSubmit(height) {
@@ -138,15 +140,15 @@
                 {:then bitmaps}
                     {console.log("BITMAPS: " + bitmaps)}
                     {#each bitmaps[0] as bitmap, index}
-                        <option value={bitmap}>{bitmap}</option>
+                        <option style="background-color: {$currentColor1} color: {$currentColor2}" value={bitmap}>{bitmap}</option>
                     {/each}
                 {/await}
             </select>
-            {#if isBitmapOwner}
-            <p>{selected} is verified</p>
+            <!-- {#if isBitmapOwner}
+            <p>{selected} verified</p>
             {:else}
-            <p class="danger">{selected} is not verified</p>
-            {/if}
+            <p class="danger">{selected} not verified</p>
+            {/if} -->
 
         </form>
         

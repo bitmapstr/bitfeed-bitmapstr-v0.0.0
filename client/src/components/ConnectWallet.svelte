@@ -3,11 +3,17 @@
     import GetAllInscriptions from "./Indexer.svelte";
     import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner} from "../stores";
     import io from 'socket.io-client'
- 
 
     export let wallet = walletConnected;
     export let accounts = unisatAccounts;
     let winuni = window.unisat;
+    winuni.on('accountsChanged', function(accounts) {
+        reconnectWallet()
+    });
+
+    winuni.removeListener('accountsChanged', function(accounts) {
+        reconnectWallet()
+    });
     async function ConnectWallet() {
         // UniSat Wallet
        
@@ -35,10 +41,18 @@
 
     }
   
+    function reconnectWallet() {
+        DisconnectWallet()
+        ConnectWallet()
+
+    }
+
     async function GetMyBitmaps() {
         if (wallet.connected =true) {
             try {
-                const regex = /^(?:0|[1-9][0-9]*).bitmap$/;
+                const regexBitmap = /^(?:0|[1-9][0-9]*).bitmap$/;
+                const regexBitmapstr = /^(?:0|[1-9][0-9]*).bitmapstr$/;
+
                 let limit = 20;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
@@ -55,16 +69,20 @@
                     const inscriptionParts = ins.split(".");
                     // console.log(inscriptionParts);
                     const bitmapNum = inscriptionParts[0];
-                    const bitmapText = regex.test(ins)
+                    const bitmapText = regexBitmap.test(ins)
+                    const bitmapstrText = regexBitmapstr.test(ins)
+                    
                     if (bitmapText) {
                         insArray.push(bitmapNum);
                         
                     }
+                    
                     //console.log("Content: " + ins)
                     //console.log("InsID: " + insID)
                     
                 }
                 $verifiedBitmapstr = true
+
                 console.log(insArray);
                 return [insArray];
 
@@ -144,14 +162,14 @@
                     {/each}
                 {/await}
             </select>
-            <!-- {#if isBitmapOwner}
-            <p>{selected} verified</p>
+            {#if $isBitmapOwner}
+            <p>{selected} Verified</p>
             {:else}
-            <p class="danger">{selected} not verified</p>
-            {/if} -->
+            <p>{selected} Not Verified</p>
+            {/if}
 
         </form>
-        
+    
 
     {:else if !wallet.connected}
         <p>Connect yer wallet</p>

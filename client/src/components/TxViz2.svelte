@@ -645,11 +645,11 @@
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
                  {#if $settingsBitmap.showBlockInfo }
-                 {#if !$verifiedBitmapstr && !$isBitmapOwner }  
+                 {#if  !$isBitmapOwner }  
                  <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
                  <!-- <h1>unverified</h1> -->
                  {/if}
-                 {#if $verifiedBitmapstr && $isBitmapOwner }  
+                 {#if  $isBitmapOwner }  
                  <img src="/img/bitmapVERIFIED.svg" alt="" class="bg-logo-w-text">
                  <!-- <h1>verified</h1> -->
                  {/if}

@@ -1,5 +1,4 @@
 <script>
-import { tick } from 'svelte'
 import Toggle from './util/Toggle.svelte'
 import Pill from './util/Pill.svelte'
 import Select from 'svelte-select'
@@ -44,7 +43,7 @@ async function focusOut(e) {
 </script>
 
 <style type="text/scss">
-  .sidebar-menu-item {
+  .sidebar-menu-item2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -82,7 +81,7 @@ async function focusOut(e) {
   }
 </style>
 
-<div class="sidebar-menu-item" class:active={value} on:click>
+<div class="sidebar-menu-item2" class:active={value}  on:click>
   {#if type === 'pill'}
     <span class="label">{ label }</span>
     <Pill active={value} left={falseLabel} right={trueLabel} />

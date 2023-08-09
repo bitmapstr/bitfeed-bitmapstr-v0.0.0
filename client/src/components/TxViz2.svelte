@@ -6,7 +6,7 @@
   import { settings, overlay, serverConnected, serverDelay, txCount, mempoolCount,
            mempoolScreenHeight, blockVisible, tinyScreen,
            compactScreen, currentBlock, latestBlockHeight, selectedTx, blockAreaSize,
-           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize } from '../stores.js'
+           devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1, settingsBitmap, verifiedBitmapstr, isBitmapOwner } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import TxInfo from '../components/TxInfo.svelte'
@@ -24,12 +24,13 @@
   import config from '../config.js'
   import Cube from './Cube.svelte'
     import RunningOsterich from './RunningOsterich.svelte';
-    import TxRender2 from './TxRender2.svelte';
     import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
+    import TxRender2 from './TxRender2.svelte';
+    import BitcoinAudio from './BitcoinAudio.svelte';
 
-
+  let initCanvas
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
   let txController
@@ -61,6 +62,9 @@
 
   let canvasWidth = '100%'
   let canvasHeight = '100%'
+  // console.log("currentcolor1")
+  // console.log($currentColor1)
+  $: color1 = $currentColor1
   $: {
     if ($freezeResize) {
       canvasWidth = `${window.innerWidth}px`
@@ -533,7 +537,7 @@
     }
   }
 
-  .tx-scene {
+  .tx-scene2 {
   position: absolute;
   width: auto;
   left: 7px;
@@ -566,15 +570,18 @@
   position: absolute;
 }
 .bg-logo-w-text {
-    width: 100%;
-    height: 100%;
+
+    width: 150%;
+    height: 150%;
     opacity: 0.3;
-    left: 0px;
-    // top: 115px;
-    // left: 240px;
-    position: absolute;
+    left: -76px;
+    top: -16px;
+    position: inherit;
     object-fit: contain;
     z-index: inherit;
+
+    // top: 115px;
+    // left: 240px;
 }
 
   @media screen and (max-width: 640px) {
@@ -597,19 +604,57 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-<div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
+<div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-            {#if $settings.showMyBitmap}
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender2 controller={txController} />
+            {#if !$settingsBitmap.showMyBitmap }   
+            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender controller={txController} />
+        
+              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
+                <div class="height-bar" />
+                {#if $tinyScreen}
+                  <div class="mempool-info">
+                    <span class="left">Mempool</span>
+                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
+                  </div>
+                {:else}
+                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
+                {/if}
+              </div>
+
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
                 <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  {#if $settings.showBlockInfo }  
-                    <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
-                    <h1>UNVERIFIED</h1>
-                    {/if}
+                  <div class="block-area">
+                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+                  </div>
+                  {#if config.dev && config.debug && $devSettings.guides }
+                    <div class="guide-area" />
+                  {/if}
+                </div>
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+              </div>
+              
+            </div>
+            {:else if $settingsBitmap.showMyBitmap}
+            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              <TxRender2 bind:initCanvas={initCanvas}  displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
+              
+              <div class="block-area-wrapper">
+                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+                 {#if $settingsBitmap.showBlockInfo }
+                 {#if  !$isBitmapOwner }  
+                 <img src="/img/bitmapUNVERIFIED.svg" alt="" class="bg-logo-w-text">
+                 <!-- <h1>unverified</h1> -->
+                 {/if}
+                 {#if  $isBitmapOwner }  
+                 <img src="/img/bitmapVERIFIED.svg" alt="" class="bg-logo-w-text">
+                 <!-- <h1>verified</h1> -->
+                 {/if}
+                 {/if}
+                    
                   <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
                   </div>
@@ -621,17 +666,20 @@
                                </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
+                <!-- <RunningOsterich /> -->
+
               </div>
+              
             </div>
             {/if}
-            {#if $selectedTx }
+            <!-- {#if $selectedTx }
 
             <TxAudio tx={$selectedTx} position={audioInfoPosition} />
            
           {/if}  
-
+ -->
            
-</div>
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
@@ -643,8 +691,9 @@
         {/if}
       </div>
       <div class="row">
-        {#if $settings.audioOn }
+        {#if $verifiedBitmapstr && $settingsBitmap.audioOn }
           <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
+          <BitcoinAudio />
         {/if}
       </div>
       <div class="row">
@@ -653,14 +702,14 @@
         {/if}
       </div>
     </div>
-    {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
+    {#if $settingsBitmap.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
             <SearchBar />                       
       </div>
     {/if}
-    {#if $settings.showBlockInfo && !$settings.showSearch }  
+    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
     <NavBar />                        
-    {/if} 
+    {/if}  -->
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

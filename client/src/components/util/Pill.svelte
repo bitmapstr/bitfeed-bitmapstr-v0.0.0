@@ -1,4 +1,6 @@
 <script>
+import { currentColor1 } from "../../stores";
+
 export let active
 export let left
 export let right
@@ -9,10 +11,10 @@ export let rightDisabled = false
 
 <div class="pill" class:active={active} on:click>
   {#if !leftDisabled}
-    <span class="side left" class:selected={!active}><slot name="left">{ left }</slot></span>
+    <span class="side left" class:selected={!active} ><slot name="left">{ left }</slot></span>
   {/if}
   {#if !rightDisabled}
-    <span class="side right" class:selected={active}><slot name="right">{ right }</slot></span>
+    <span class="side right" class:selected={active} ><slot name="right">{ right }</slot></span>
   {/if}
 </div>
 

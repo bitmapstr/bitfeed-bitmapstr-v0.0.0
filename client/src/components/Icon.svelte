@@ -1,7 +1,11 @@
 <script>
 export let icon
-export let inline = false
+export let inline = true
+import { currentColor1 } from "../stores";
+$: color = $currentColor1
 export let color = "inherit"
+
+
 </script>
 
 <style type="text/scss">

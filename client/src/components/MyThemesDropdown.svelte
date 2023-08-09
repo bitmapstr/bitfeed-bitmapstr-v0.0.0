@@ -16,7 +16,6 @@ import { onMount } from 'svelte';
       currentThemename.set(name)
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
-
       // console.log("currentColor1")
       // console.log($currentColor1)
       // console.log("currentColor2")
@@ -61,7 +60,7 @@ import { onMount } from 'svelte';
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li style="background-color: {$currentColor1}" on:click={() => selectTheme(theme.name, theme.value)}>{theme.name}</li>
+        <li style="background-color: {$currentColor1}" on:click={(e) => selectTheme(theme.name, theme.value)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

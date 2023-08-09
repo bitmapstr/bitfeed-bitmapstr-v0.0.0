@@ -12,10 +12,6 @@
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
 
-
-
-    $: currentthemevalue = $currentThemevalue;
-
    
   export let selectedThemevalue = writable(currentThemevalue);
   export let currentColorValue1 = writable(currentColor1);
@@ -82,6 +78,21 @@
     if (running) run()
   }
 
+  let canvasInitialized = false;
+  $: currentthemevalue = $currentThemevalue;
+
+  async function initializeCanvas() {
+
+    await initCanvas(); // Assuming initCanvas is an async function
+    canvasInitialized = true;
+    
+    currentThemevalue.subscribe(value => {
+      if (canvasInitialized && $currentThemevalue ) {
+        initCanvas()
+      }
+    });
+  }
+ 
   function windowReady () {
     resizeCanvas()
   }
@@ -265,8 +276,7 @@
     return texture;
   }
   
-
-  function initCanvas () {
+  async function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT)
 
@@ -326,8 +336,10 @@
     canvas.addEventListener("webglcontextlost", handleContextLost, false)
     canvas.addEventListener("webglcontextrestored", handleContextRestored, false)
     gl = canvas.getContext('webgl')
-    initCanvas()
+    //initCanvas()
+    initializeCanvas()
   })
+
 </script>
 
 <style type="text/scss">

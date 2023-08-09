@@ -56,10 +56,6 @@
                 let limit = 20;
                 let insArray = [];
                 const res = await window.unisat.getInscriptions(0, limit);
-                let total = res.total
-                // console.log("Total Ins: " + total);
-                // const insTotal = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + total
-                // console.log(insTotal)
                 for (let i = 0; i < 20; i++) {
                     const insID = res.list[i].inscriptionId;
                     const hiro =

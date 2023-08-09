@@ -265,7 +265,7 @@
     return texture;
   }
   
-
+  
   function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT)
@@ -308,6 +308,12 @@
     running = true
   }
 
+  $: {
+    const theme = selectedThemevalue;
+    if (theme === currentthemevalue) {
+      initCanvas(); // Call initCanvas when Theme 1 is selected
+    }
+  }
   function handleContextLost(event) {
     console.log('webgl context lost')
     event.preventDefault()

@@ -7,7 +7,6 @@
     let winuni = window.unisat;
     async function ConnectWallet() {
         // UniSat Wallet
-       
         try {
             if (typeof winuni !== "undefined") {
                 console.log("UniSat Wallet is installed!");
@@ -66,7 +65,8 @@
                     
                 }
                 $verifiedBitmapstr = true
-                console.log(insArray);
+
+                // console.log(insArray);
                 return [insArray];
 
                 } catch (e) {

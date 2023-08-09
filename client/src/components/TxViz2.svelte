@@ -30,7 +30,8 @@
     import TxRender2 from './TxRender2.svelte';
     import BitcoinAudio from './BitcoinAudio.svelte';
 
-
+  
+  let initCanvas
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
   let txController
@@ -639,7 +640,7 @@
             </div>
             {:else if $settingsBitmap.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender2 displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
+              <TxRender2 bind:initCanvas={initCanvas} displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
               
               <div class="block-area-wrapper">
                 <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>

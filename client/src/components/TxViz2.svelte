@@ -672,13 +672,7 @@
               
             </div>
             {/if}
-            <!-- {#if $selectedTx }
-
-            <TxAudio tx={$selectedTx} position={audioInfoPosition} />
-           
-          {/if}  
- -->
-           
+                      
 
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
@@ -693,7 +687,11 @@
       <div class="row">
         {#if $verifiedBitmapstr && $settingsBitmap.audioOn }
           <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
-          <BitcoinAudio />
+          {#if $selectedTx }
+
+          <TxAudio tx={$selectedTx} position={audioInfoPosition} />
+         
+        {/if}  
         {/if}
       </div>
       <div class="row">

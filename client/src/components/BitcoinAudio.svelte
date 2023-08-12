@@ -1,19 +1,47 @@
 <script >
 import RangeSlider from "./util/RangeSlider.svelte";
-import { currentColor1 } from "../stores";
+import { currentColor1, currentColor2, selectedTx } from "../stores";
 
+export let value = 770;
+export const note = value
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const oscillator = audioCtx.createOscillator();
-let value = 770;
-
-export function playNote(value) {
-
 oscillator.type = "square";
-oscillator.frequency.setValueAtTime(value, audioCtx.currentTime); // value in hertz
 oscillator.connect(audioCtx.destination);
 oscillator.start();
 
+const hexString = $selectedTx.id;
+const sliceLength = 2;
+
+function hexSliceToFrequency(hexSlice) {
+    const decimalValue = parseInt(hexSlice, 16);
+    const minFrequency = 20;  // Minimum frequency in Hz
+    const maxFrequency = 20000;  // Maximum frequency in Hz
+
+    const normalizedValue = decimalValue / 0xFFFF; // Normalize to [0, 1]
+    const mappedFrequency = minFrequency + normalizedValue * (maxFrequency - minFrequency);
+
+    return mappedFrequency;
+}
+
+function playTx() {
+    for (let i = 0; i < hexString.length; i += sliceLength) {
+
+        const frequency = hexSliceToFrequency(hexString);
+        console.log(`Frequency: ${frequency} Hz`); 
+
+        // oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
+        
+        
+        // slices.push(hexString.slice(i, i + sliceLength));
+        // // Converting and logging each slice to frequency
+        // slices.forEach((slice, index) => {
+        //     const frequency = hexSliceToFrequency(slice);
+        //     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
+            
+        // });
+    }
 }
 
 export function stopPlaying() {
@@ -41,13 +69,12 @@ export function stopPlaying() {
 </style>
 
 <div>
-    <button class="playButton" style="background-color: {$currentColor1}" on:click={playNote(value)} >Play</button>
-    <button class="stopButton" style="background-color: {$currentColor1}" on:click={stopPlaying} >Stop</button>
-    <br>
+    <button class="playButton" style="background-color: {$currentColor2}" on:click={playTx} >Play</button>
+    <button class="stopButton" style="background-color: {$currentColor2}" on:click={stopPlaying} >Stop</button>
+    <br/>
+    <br/>
 
-
-    <RangeSlider bind:value={value} on:change={(e) => value = e.detail.value} id="Frequency"  />
+    <RangeSlider bind:value={value} on:change={playTx} id="Frequency" trackColor={$currentColor2}/>
         {value}
 
-    <p>BITCOIN AUDIO</p>
 </div>

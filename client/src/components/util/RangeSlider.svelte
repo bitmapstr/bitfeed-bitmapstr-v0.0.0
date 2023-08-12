@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { fly, fade } from "svelte/transition";
+  import { currentColor2 } from "../../stores";
 
   // Props
   export let min = 0;
@@ -9,6 +10,8 @@
   export let id = null;
   export let value =
     typeof initialValue === "string" ? parseInt(initialValue) : initialValue;
+
+   export let trackColor = $currentColor2 
 
   // Node Bindings
   let container = null;
@@ -184,7 +187,7 @@
     on:mousedown={onTrackEvent}
     on:touchstart={onTrackEvent}
   >
-    <div class="range__track" bind:this={container}>
+    <div class="range__track" bind:this={container} style="background-color: {trackColor}">
       <div class="range__track--highlighted" bind:this={progressBar} />
       <div
         class="range__thumb"

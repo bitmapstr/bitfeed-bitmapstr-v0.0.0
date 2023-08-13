@@ -1,15 +1,14 @@
 <script >
 import RangeSlider from "./util/RangeSlider.svelte";
 import { currentColor1, currentColor2, selectedTx } from "../stores";
-    import TonejsAudio from "./tonejs/TonejsAudio.svelte";
 
 export let value = 770;
-export const note = value
+export const note = value;
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const oscillator = audioCtx.createOscillator();
 
-const hexString = $selectedTx.id;
+const hexString = "7717194d20d5d311502d100d16292219c284d3a58d2b679d151c9d79f45942d7";
 const sliceLength = 2;
 const slices = [];
 
@@ -84,6 +83,4 @@ export function stopPlaying() {
         {value}
 
 </div>
-<div>
-    <TonejsAudio />
-</div>
+

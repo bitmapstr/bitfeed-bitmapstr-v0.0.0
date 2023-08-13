@@ -9,12 +9,7 @@
            devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1, settingsBitmap, verifiedBitmapstr, isBitmapOwner } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
-  import TxInfo from '../components/TxInfo.svelte'
   import Sidebar from '../components/Sidebar.svelte'
-  import TransactionOverlay from '../components/TransactionOverlay.svelte'
-  import AboutOverlay from '../components/AboutOverlay.svelte'
-  import DonationOverlay from '../components/DonationOverlay.svelte'
-  import SupportersOverlay from '../components/SupportersOverlay.svelte'
   import LoadingAnimation from '../components/util/LoadingAnimation.svelte'
   import Alerts from '../components/alert/Alerts.svelte'
   import { numberFormat } from '../utils/format.js'
@@ -22,13 +17,10 @@
   import { formatCurrency } from '../utils/fx.js'
   import { fade } from 'svelte/transition'
   import config from '../config.js'
-  import Cube from './Cube.svelte'
-    import RunningOsterich from './RunningOsterich.svelte';
-    import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
-    import BitcoinAudio from './BitcoinAudio.svelte';
+    import TxAudioOverlay from './TxAudioOverlay.svelte';
 
   let initCanvas
   let width = window.innerWidth - 20
@@ -720,7 +712,7 @@
   </div>
 
   <Sidebar />
-  
+  <TxAudioOverlay />
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

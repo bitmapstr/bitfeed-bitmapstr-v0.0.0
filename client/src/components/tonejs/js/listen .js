@@ -55,15 +55,15 @@ function setupEvents(){
 /**
  *  Tone.js
  */
-var instrument;
+export var instrument;
 function makeInstrument(inst){
 	if (instrument){
 		instrument.dispose();
 	}
-	instrument = new Tone[inst]().toMaster();
+	instrument = new Tone[inst]().toDestination();
 	
 }
-
+ 
 var keyboard = new AudioKeys({
 	polyphony: 1,
 	rows: 1,

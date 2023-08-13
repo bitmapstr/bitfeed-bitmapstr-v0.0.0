@@ -1,20 +1,25 @@
+import * as Tone from 'tone'
 // *  PRESET CHOOSING
  
 function chooseRandomInstrument(){
 	var keys = Object.keys(PresetList);
 	var randomInst = keys[Math.floor(Math.random() * keys.length)];
+	console.log(randomInst)
 	return randomInst;
 }
 
 function chooseRandomPreset(instrument){
 	var keys = PresetList[instrument];
 	var randomInst = keys[Math.floor(Math.random() * keys.length)];
+	console.log(randomInst)
 	return randomInst;	
 }
 
 function loadPreset(inst, preset){
 	var xhr = new XMLHttpRequest();
 	var url = "./instrument/" + inst + "/" + preset;
+	console.log("loadPreset")
+	console.log(url)
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			codemirror.setValue(xhr.responseText);
@@ -66,13 +71,15 @@ function setupEvents(){
 /**
  *  Tone.js
  */
-var instrument;
+export var instrument;
 
-function makeInstrument(inst){
+export function makeInstrument(inst){
 	if (instrument){
 		instrument.dispose();
 	}
-	instrument =  new Tone[inst]().toMaster();
+	// instrument =  new Tone[inst]().toDestination();
+	instrument =  new Tone.Synth().toDestination();
+
 	
 }
 //bind the interface

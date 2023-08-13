@@ -1,48 +1,43 @@
-﻿var vol = new Tone.Volume(-24);
+﻿import * as Tone from 'tone'
+import { writable } from 'svelte/store';
+import {instrument, makeInstrument} from '../js/listenBA'
+
+import {selectedTx} from '../../../stores'
+
+const selectedtx = writable(selectedTx.id)
+
+var vol = new Tone.Volume(-24);
 var eq3 = new Tone.EQ3({
 
 	"lowFrequency": 400,
 	"highFrequency": 2500
 });
-var searchstr = document.getElementById("searchTB").value;
 
-var currentstring = document.getElementById('dataString');
-var currentstringlength = currentstring.length;
-var clip = document.getElementById("clipTB").value;
-var cliplength = clip.length;
-var start = -1;
-var end = start + 0;
+const start = -1;
+const end = start + 0;
 
-function slicer(sstart,send) {
-	sstart = -1;
-	send = sstart + 1;
-	console.log(sstart + ", " + send)
-
-}
-var blockstream = "https://blockstream.info/api/";
-var notation = "4n";
 var reverb = new Tone.Reverb({
 	"decay": 5,
 	"preDelay": 0.01
-}).toMaster();
-var chorus = new Tone.Chorus(8, 5, 1).toMaster();
+}).toDestination();
+var chorus = new Tone.Chorus(8, 5, 1).toDestination();
 var pingpongdelay = new Tone.PingPongDelay({
 	"delayTime": "8n",
 	"feedback": 0.8,
 	"wet": 0.25
-}).toMaster();
+}).toDestination();
 var tremolo = new Tone.Tremolo();
 var vibrato = new Tone.Vibrato({
 	"maxDelay": 0.005,
 	"frequency": 15,
 	"depth": 0.1
 
-}).toMaster();
+}).toDestination();
 var phaser = new Tone.Phaser({
 	"frequency": 8,
 	"octaves": 4,
 	"baseFrequency": 1000
-}).toMaster();
+}).toDestination();
 
 function selecteffect(effect) {
 
@@ -81,149 +76,15 @@ function selecteffect(effect) {
 	return effect;
 
 }
-function selectslice(slice) {
 
-	var slicetype = document.getElementById("slice").value;
-
-	switch (slicetype) {
-		//case "raw":
-
-		//	slice = slicestrg();			
-		//	instrument.triggerAttackRelease(slice, '4n');
-		//	$("#slicestrg").css('color', 'red', function (i) { return i + 25; });
-
-		//	break;
-		case "slice":
-
-			slice = slicestrg();
-			instrument.triggerAttackRelease(slice, notation);
-
-			break;
-
-		case "next":
-			slice = nextslice();
-			instrument.triggerAttackRelease(slice, notation);
-			break;
-
-		case "whole":
-			slice = wholeslice();
-			instrument.triggerAttackRelease(slice, notation);
-			break;
-
-		case "half":
-			slice = halfslice();
-			instrument.triggerAttackRelease(slice, notation);
-
-			break;
-	}
-	return slice;
-
-}
-
-function changeeffect() {
-	var s = instrument;
-	var e = selecteffect();
-	s.connect(e);
-}
-
-var countGetstringcalls = 0;
-var currentMerkle;
-var currentHash;
-
-function getblockinfo(hash, merkleroot) {
-	//searchstr = document.getElementById("searchTB").value;
-	//Need Hash to get Root of Height
-	$.get(blockstream + "block-height/" + searchstr, function (data) {
-		hash = `${data}`;
-		$.get(blockstream + "block/" + hash, function (block) {
-			merkleroot = `${block.merkle_root}`;
-
-			document.getElementById('consoleTB').value = merkleroot;
-		});
-	});
-
+function getstring(stringtype) {
+ stringtype = selectedtx
 	
 }
 
-var mcp = document.getElementById("makecolorpads");
-var mbp = document.getElementById("makebeatpad");
-var getblocktip;
-function getstring(stringtype, merkleroot, hash) {
-	searchstr = document.getElementById("searchTB").value;
-	stringtype = document.getElementById("stringtype").value;
-	//GET block tip
-	$.get(blockstream + "blocks/tip/height", function (data) {
-		getblocktip = `${data}`;
-		document.getElementById('blocksTB').value = getblocktip;
-		
-		if (searchstr < 0) {
-
-			alert("TOO LOW! Please select Height 0 to " + getblocktip);
-			document.getElementById("searchTB").value = 0;
-		}
-		if (searchstr > parseInt(getblocktip)) {
-			alert("TOO HIGH! Please select Height 0 to " + getblocktip);
-			document.getElementById("searchTB").value = getblocktip;
-		}
-	});
-
-	
-	//GET Root and Hash of Height
-	$.get(blockstream + "block-height/" + searchstr, function (data) {
-		hash = `${data}`;
-		$.get(blockstream + "block/" + hash, function (block) {
-			merkleroot = `${block.merkle_root}`;
-			var timestamp = `${block.timestamp}`;
-			var ts = timestamp.toString();
-			//var info = `Merkle Root: ${block.merkle_root}<br>
-			//			Hash: ${hash}<br>`;
-			//$(".blockinfo").html(info);
-			document.getElementById('consoleTB').value = "TimeStamp: " + ts;
-			switch (stringtype) {
-
-
-				case "root":
-
-					document.getElementById('dataString').value = merkleroot;
-					document.getElementById('dataStringModal').value = merkleroot;
-					document.getElementById('clipTB').value = merkleroot;
-
-					break;
-
-				case "hash":
-					document.getElementById('dataString').value = hash;
-					document.getElementById('dataStringModal').value = hash;
-					document.getElementById('clipTB').value = hash;
-					//document.getElementById('dataString').value = hash.replace(/^0+/, '');
-					//document.getElementById('dataStringModal').value = hash.replace(/^0+/, '');
-					//document.getElementById('clipTB').value = hash.replace(/^0+/, '');
-					break;
-
-				case "hashno0s":
-					
-					document.getElementById('dataString').value = hash.replace(/^0+/, '');
-					document.getElementById('dataStringModal').value = hash.replace(/^0+/, '');
-					document.getElementById('clipTB').value = hash.replace(/^0+/, '');
-					break;
-
-			}
-
-
-		});
-	});
-
-	
-	
-}
-
-function DataStringChange() {
-	makecolorpads();
-	makemidibeatpad();
-	//setTimeout(DataStringChange, 30);
-}
 function slicestrg() {
 	
-	var m = document.getElementById('clipTB').value;
+	var m = selectedtx
 	var strgslice = m.slice(start, end);
 	document.getElementById("stringindex").value = start + "," + end + " slice:" + strgslice;
 	return strgslice;
@@ -251,19 +112,6 @@ function wholeslice() {
 function halfslice() {
 	var nexthalf = wholeslice();
 }
-function resetslice() {
-	start = -1;
-	end = start + 2;
-
-	playstr();
-}
-function reverseslice() {
-	start = cliplength - 1;
-	
-	end = start + 2;
-
-	playstr();
-}
 
 function loopseq() {
 	start = 0;
@@ -274,77 +122,6 @@ function noloopseq() {
 	start = 0;
 	end = start + 2;
 	playallheights();
-}
-
-
-function heightplus100k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = 100000 + parseInt(h, 10);
-	getstring(h);
-
-}
-function heightplus10k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = 10000 + parseInt(h, 10);
-	getstring(h);
-}
-function heightplus1k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = 1000 + parseInt(h, 10);
-	getstring(h);
-}
-function heightplus100() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = 100 + parseInt(h, 10);
-	getstring(h);
-}
-function heightplus10() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = 10 + parseInt(h, 10);
-	getstring(h);
-}
-//next height
-function nextheight() {	
-	
-	var h = document.getElementById("searchTB").value;	
-	h++;
-	document.getElementById("searchTB").value = h;
-	getstring(h);	
-	
-}
-//previous height
-function prevheight() {
-	
-	var h = document.getElementById("searchTB").value;	
-	h--;
-	document.getElementById("searchTB").value = h;
-	getstring(h);
-	
-}
-function heightminus100k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = parseInt(h, 10) - 100000;
-	getstring(h);
-}
-function heightminus10k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = parseInt(h, 10) - 10000;
-	getstring(h);
-}
-function heightminus1k() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = parseInt(h, 10) - 1000;
-	getstring(h);
-}
-function heightminus100() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = parseInt(h, 10) - 100;
-	getstring(h);
-}
-function heightminus10() {
-	var h = document.getElementById("searchTB").value;
-	document.getElementById("searchTB").value = parseInt(h, 10) - 10;
-	getstring(h);
 }
 
 var cliptb = document.getElementById('clipTB');
@@ -386,155 +163,18 @@ function eighthString() {
 	cliptb.select();
 }
 
-//function saySSML(conv) {
-//		const ssml = '<speak>' +
-//			'Here are <say-as interpret-as="characters">SSML</say-as> samples. ' +
-//			'I can pause <break time="3" />. ' +
-//			'I can play a sound <audio src="https://www.example.com/MY_WAVE_FILE.wav">your wave file</audio>. ' +
-//			'I can speak in cardinals. Your position is <say-as interpret-as="cardinal">10</say-as> in line. ' +
-//			'Or I can speak in ordinals. You are <say-as interpret-as="ordinal">10</say-as> in line. ' +
-//			'Or I can even speak in digits. Your position in line is <say-as interpret-as="digits">10</say-as>. ' +
-//			'I can also substitute phrases, like the <sub alias="World Wide Web Consortium">W3C</sub>. ' +
-//			'Finally, I can speak a paragraph with two sentences. ' +
-//			'<p><s>This is sentence one.</s><s>This is sentence two.</s></p>' +
-//			'</speak>';
-//		conv.ask(ssml);
-//	}
-
-function bd() {
-	var metro = new Tone.Player("/Metronome/Box_5_BD.mp3").toMaster();
-	metro.autostart = true;
-	Tone.Transport.bpm.value = 60;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, "4n");
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-
-
-}
-function ClsdHH() {
-	var metro = new Tone.Player("/Metronome/Box_5_ClsdHH.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-}
-function OpenClsd() {
-	var metro = new Tone.Player("/Metronome/Box_5_OpenClsd.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-}
-function OpenHH() {
-	var metro = new Tone.Player("/Metronome/Box_5_OpenHH.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-}
-function RimShot() {
-	var metro = new Tone.Player("/Metronome/Box_5_RimShot.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-}
-function RimShot_2() {
-	var metro = new Tone.Player("/Metronome/Box_5_RimShot_2.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-
-}
-function playtext() {
-	speechSynthesis.cancel();
-	var speaktext = document.getElementById("t2sbox").value;
-	var msg = new SpeechSynthesisUtterance(speaktext);
-	var voices = window.speechSynthesis.getVoices();
-	msg.voice = voices[4]; //[4] = "Google UK English Female"
-	
-	msg.lang = 'en-US';
-	window.speechSynthesis.speak(msg);
-	msg.volulme = 1;
-	console.log(msg.voice);
-	//speaktext = "";
-	//responsiveVoice.speak("For those who don't know me, I'm Hal Finney. ");
-	//responsiveVoice.enableWindowClickHook();
-	//responsiveVoice.speak(speaktext, "UK English Female", { volume: 1 });
-	t2stb.blur();
-	
-}
 var timeout;
 function stoptimeout() {
 	clearTimeout(timeout);
 }
-function playselected() {
-
-	var txt = "";
-
-	if (document.getSelection) {
-		txt = document.getSelection();
-		document.getElementById("clipTB").value = txt;
-
-	}
-	cliptb.blur();
-	document.getElementById("body").focus();
-	playseq();
-}
-var speedvariable = 32;
 function playseq() {
 
 	stoptimeout();
-	var n = nextslice();
-	//var n = slicestrg();	
-	var timeMenu = document.getElementById("time");
 	// Delay Time
-	var timeTime = Number(timeMenu.options[timeMenu.selectedIndex].value);
-
+	// var timeTime = Number(timeMenu.options[timeMenu.selectedIndex].value);
 	var bpmTime = Tone.Transport.bpm.value;
-	//var timeTime = (60000 / bpmTime);
-	//var timeTime = speedvariable/(bpmTime / 600);
-
 	var time = 333 / bpmTime;
-	timeout = setTimeout(playseq, timeTime);
-	
-	//document.getElementById("consoleTB").value = "bpmTime = " + bpmTime + " time = " + time;
+	timeout = setTimeout(playseq, time);
 	try {
 		
 		playstr();
@@ -544,20 +184,16 @@ function playseq() {
 	catch (err) {
 		//bd();
 	}
-	if (n === "") {
-		loopseq();
-	}
+	
 	
 }
-function playstr(string) {
-	
-	selectslice();
-	var s = slicestrg();
-	//var n = nextslice();
-	var now = Tone.now();
-	nextslice();
-	instrument.triggerAttack(s, now);
-	instrument.triggerRelease(now + 1.5);
+export function playstr(string) {
+	makeInstrument(instrument)
+	const now = Tone.now();
+	console.log("instrument")
+	console.log(instrument)
+	instrument.triggerAttackRelease(string, now);
+	// instrument.triggerRelease(now + 1.5);
 	return string;
 }
 function changeKnobs() {
@@ -591,8 +227,6 @@ function changeKnobs() {
 			//speedvariable = this.value;
 		});
 	}
-	//playstr();
-
 
 }
 function changevolume() {
@@ -995,95 +629,7 @@ function muteaudio() {
 
 }
 
-function playallheights() {
-	var n = nextslice();
-	//var n = slicestrg();	
-	var timeMenu = document.getElementById("time");
-	delayTime = Number(timeMenu.options[timeMenu.selectedIndex].value);
-	timeout = setTimeout(playallheights, delayTime);
 
-	try {
-		playstr();
-		//document.getElementById("makebeatpad").click();
-
-	}
-	catch (err) {
-		//
-	}
-
-	if (n === "") {
-		stoptimeout();
-		nextheight();
-		noloopseq();
-
-	}
-}
-function recallheights() {
-	var n = nextslice();
-	//var n = slicestrg();	
-	var timeMenu = document.getElementById("time");
-	delayTime = Number(timeMenu.options[timeMenu.selectedIndex].value);
-	timeout = setTimeout(recallheights, delayTime);
-	playstr();
-	if (n === "") {
-		stoptimeout();
-		nextheight();
-		noloopseq();
-	}
-}
-
-function clickthruseq() {
-	var n = nextslice();
-	playstr(n);
-
-	if (n === "") {
-		resetslice();
-		//nextheight();
-	}
-}
-function clickbackseq() {
-	var p = prevslice();
-	--start;
-	--end;
-	playstr(p);
-	console.log(cliplength);
-	if (start === Math.sign(-1)) {
-		//start = cliplength.value - 2;
-		//end = start + 2;
-		reverseslice();
-		//prevheight();
-		
-	}
-}
-
-function metrostart() {
-
-	var metro = new Tone.Player("/Metronome/Box_5_BD.mp3").toMaster();
-	metro.autostart = true;
-
-	Tone.Buffer.onload = function () {
-		Tone.Transport.setInterval(function (time) {
-			metro.start(time);
-		}, notation);
-		Tone.Transport.start();
-	};
-	Tone.Transport.start();
-}
-function metrostop() {
-	Tone.Transport.stop();
-}
-function resetaudio() {
-	//Tone.context.close();
-	Tone.context = new AudioContext();
-	stoptimeout();
-}
-
-function loadblockinfo() {
-	var gblock = 0;	
-	document.getElementById("searchTB").value = gblock;		
-	getstring();
-
-}
 function loadplayground() {	
 	loadblockinfo();	
 	changevolume();

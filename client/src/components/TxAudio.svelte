@@ -4,7 +4,7 @@ import BitcoinAudioIcon from '../assets/icon/cil-bitcoinaudioicon.svg'
 import { longBtcFormat, numberFormat, feeRateFormat } from '../utils/format.js'
 import { exchangeRates, settings, sidebarToggle, newHighlightQuery, highlightingFull } from '../stores.js'
 import { formatCurrency } from '../utils/fx.js'
-import BitcoinAudio from './BitcoinAudio.svelte';
+// import BitcoinAudio from './BitcoinAudio.svelte';
 
 export let tx
 export let position
@@ -168,6 +168,5 @@ function highlight () {
  {tx.value/1000000}
 
  <!-- <p>txNote: {txNote}</p> -->
- <BitcoinAudio value={tx.value/1000000} />
  
 </div>

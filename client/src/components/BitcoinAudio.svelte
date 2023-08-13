@@ -1,18 +1,25 @@
 <script >
 import RangeSlider from "./util/RangeSlider.svelte";
 import { currentColor1, currentColor2, selectedTx } from "../stores";
+    import TonejsAudio from "./tonejs/TonejsAudio.svelte";
 
 export let value = 770;
 export const note = value
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const oscillator = audioCtx.createOscillator();
-oscillator.type = "square";
-oscillator.connect(audioCtx.destination);
-oscillator.start();
 
 const hexString = $selectedTx.id;
 const sliceLength = 2;
+const slices = [];
+
+export function playNote(value) {
+
+oscillator.type = "square";
+oscillator.frequency.setValueAtTime(value, audioCtx.currentTime); // value in hertz
+oscillator.connect(audioCtx.destination);
+oscillator.start();
+}
 
 function hexSliceToFrequency(hexSlice) {
     const decimalValue = parseInt(hexSlice, 16);
@@ -21,33 +28,32 @@ function hexSliceToFrequency(hexSlice) {
 
     const normalizedValue = decimalValue / 0xFFFF; // Normalize to [0, 1]
     const mappedFrequency = minFrequency + normalizedValue * (maxFrequency - minFrequency);
-
+    console.log("hexSliceToFrequency")
+    console.log(mappedFrequency)
     return mappedFrequency;
 }
 
 function playTx() {
+    oscillator.type = "square";
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
     for (let i = 0; i < hexString.length; i += sliceLength) {
-
-        const frequency = hexSliceToFrequency(hexString);
-        console.log(`Frequency: ${frequency} Hz`); 
-
-        // oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
         
-        
-        // slices.push(hexString.slice(i, i + sliceLength));
-        // // Converting and logging each slice to frequency
-        // slices.forEach((slice, index) => {
-        //     const frequency = hexSliceToFrequency(slice);
-        //     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
+        slices.push(hexString.slice(i, i + sliceLength));
+        // Converting and logging each slice to frequency
+        slices.forEach((slice, index) => {
+            const frequency = hexSliceToFrequency(slice);
+            // oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
+            console.log(`Frequency for Slice ${index + 1}: ${frequency} Hz`); 
             
-        // });
+        });
     }
 }
+
 
 export function stopPlaying() {
     oscillator.disconnect(audioCtx.destination)
 }
-
 </script>
 
 <style>
@@ -74,7 +80,10 @@ export function stopPlaying() {
     <br/>
     <br/>
 
-    <RangeSlider bind:value={value} on:change={playTx} id="Frequency" trackColor={$currentColor2}/>
+    <RangeSlider bind:value={value} on:change={playNote(value)} id="Frequency" trackColor={$currentColor2}/>
         {value}
 
+</div>
+<div>
+    <TonejsAudio />
 </div>

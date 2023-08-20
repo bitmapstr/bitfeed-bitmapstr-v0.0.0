@@ -21,10 +21,10 @@
             if (typeof winuni !== "undefined") {
                 console.log("UniSat Wallet is installed!");
                 accounts = await winuni.requestAccounts();
+                wallet.connected = true
                 console.log("connect success", accounts);
 
                 unisatAccounts.set(accounts)
-                wallet.connected = true
                 GetMyBitmaps();
 
             } else {

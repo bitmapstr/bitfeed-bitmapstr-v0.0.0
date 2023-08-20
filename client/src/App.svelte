@@ -13,11 +13,10 @@
 
 <main>
 	{#if $settings.showMyBitmap }   
-	<TxViz2 />
-	{:else if !$settings.showMyBitmap}
+	<TxViz2/>
+	{:else}
 	<TxViz />
 	{/if}
-	<!-- <TxViz /> -->
 
 </main>
 

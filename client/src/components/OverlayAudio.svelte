@@ -1,6 +1,6 @@
 <script>
 import analytics from '../utils/analytics.js'
-import Icon from './Icon.svelte.js'
+import Icon from './Icon.svelte'
 import closeIcon from '../assets/icon/cil-x-circle.svg'
 import { overlay, currentColor1, currentColor2 } from '../stores.js'
 import { createEventDispatcher } from 'svelte'
@@ -17,7 +17,7 @@ $: {
   const oldOpen = open
   open = $overlay === name
   if (oldOpen !== undefined && open != oldOpen) {
-    analytics.trackEvent('overlay', name, open ? 'open' : 'close')
+    analytics.trackEvent('audio-overlay', name, open ? 'open' : 'close')
   }
 }
 
@@ -28,19 +28,19 @@ function close () {
 </script>
 
 <style type="text/scss">
-  .overlay-wrapper {
+  .audio-overlay-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 200;
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .overlay-background {
+    .audio-overlay-background {
       position: absolute;
       top: 0;
       left: 0;
@@ -52,11 +52,11 @@ function close () {
       opacity: 50%;
     }
 
-    .overlay-outer {
+    .audio-overlay-outer {
       position: relative;
       padding: 1em;
       border-radius: 10px;
-      background: var(--palette-c);
+      background: var(--palette-a);
       color: var(--palette-x);
       max-width: 80%;
       max-height: 80%;
@@ -85,7 +85,7 @@ function close () {
         border-radius: 50%;
       }
 
-      .overlay-inner {
+      .audio-overlay-inner {
         overflow: auto;
         padding-right: 1em;
         max-width: 95%;
@@ -104,10 +104,10 @@ function close () {
 </style>
 
 {#if open}
-<div class="overlay-wrapper" >
-  <div class="overlay-background" on:click={close} transition:fade={{ duration: 500 }} />
-  <div class="overlay-outer" style="background-color: {color1}" class:full-size={fullSize} transition:fly={{ duration: 500, y: 50 }}>
-    <div class="overlay-inner" id="{name}Overlay">
+<div class="audio-overlay-wrapper" >
+  <div class="audio-overlay-background" on:click={close} transition:fade={{ duration: 500 }} />
+  <div class="audio-overlay-outer" style="background-color: {color1}" class:full-size={fullSize} transition:fly={{ duration: 500, y: 50 }}>
+    <div class="audio-overlay-inner" id="{name}AudioOverlay">
       <slot />
     </div>
     <button class="close-button" on:click={close} >

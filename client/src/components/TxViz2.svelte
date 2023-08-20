@@ -20,7 +20,7 @@
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
-    import TxAudioOverlay from './TxAudioOverlay.svelte';
+    import TransactionOverlayAudio from './TransactionOverlayAudio.svelte';
 
   let initCanvas
   let width = window.innerWidth - 20
@@ -216,7 +216,7 @@
 </script>
 
 <style type="text/scss">
-  .tx-area {
+  .audio-tx-area {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -596,7 +596,7 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-<div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
+<div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
             {#if !$settingsBitmap.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
@@ -712,7 +712,7 @@
   </div>
 
   <Sidebar />
-  <TxAudioOverlay />
+  <TransactionOverlayAudio />
 
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>

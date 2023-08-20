@@ -1,5 +1,5 @@
 <script>
-import AudioOverlay from './Overlay.svelte'
+import OverlayAudio from './OverlayAudio.svelte'
 import Icon from './Icon.svelte'
 import BookmarkIcon from '../assets/icon/cil-bookmark.svg'
 import { longBtcFormat, numberFormat, feeRateFormat, dateFormat } from '../utils/format.js'
@@ -615,7 +615,7 @@ async function goToBlock(e) {
   }
 </style>
 
-<AudioOverlay name="tx" on:close={onClose} >
+<OverlayAudio name="tx" on:close={onClose} >
   {#if $detailTx}
     <section class="tx-detail" >
       <div class="icon-button" class:disabled={$highlightingFull} on:click={() => addToWatchlist($detailTx.id)} title="Add transaction to watchlist">
@@ -706,7 +706,7 @@ async function goToBlock(e) {
       <BitcoinAudio />
       <TonejsAudio />
 
-      <div class="pane flow-diagram" style="grid-template-columns: minmax(0px, 1fr) {svgWidth}px minmax(0px, 1fr);">
+      <!-- <div class="pane flow-diagram" style="grid-template-columns: minmax(0px, 1fr) {svgWidth}px minmax(0px, 1fr);">
         <div class="column inputs">
           <p class="header">{$detailTx.inputs.length} input{$detailTx.inputs.length > 1 ? 's' : ''}</p>
           {#each inputs as input, index}
@@ -778,7 +778,7 @@ async function goToBlock(e) {
             </div>
           {/each}
         </div>
-      </div>
+      </div> -->
     </section>
   {/if}
-</AudioOverlay>
+</OverlayAudio>

@@ -85,24 +85,34 @@
 
     async function GetMyBitmaps() {
         if (wallet.connected = true) {
+            const regexBitmap = /^(?:0|[1-9][0-9]*).bitmap$/;
+            const regexBitmapstr = /^(?:0|[1-9][0-9]*).bitmapstr$/;
+            const hiroURL = "https://api.hiro.so/ordinals/v1/inscriptions/"
             try {
-                const regexBitmap = /^(?:0|[1-9][0-9]*).bitmap$/;
-                const regexBitmapstr = /^(?:0|[1-9][0-9]*).bitmapstr$/;
+                    
+                let limit = 30;
+                const walletInscriptions = await window.unisat.getInscriptions(0, hirolimit);
+                const hiroLimit = hiroURL + "?limit=" + walletInscriptions.total
 
-                let limit = 13;
+                const hirolimit = {
+                    limitString: "?limit=",
+                    limitNumber: function() {
+                        hiroURL + this.limitString + walletInscriptions.total;
+                        
+                    }
+
+                }
                 let insArray = [];
                 let parcelArray = [];
-                const walletInscriptions = await window.unisat.getInscriptions(0, limit);
                 console.log("walletInscriptions.total")
                 console.log(walletInscriptions.total)
-                const hiroLimit = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + walletInscriptions.total
-                console.log("hiroLimit")
-                console.log(hiroLimit)
+                // console.log("hiroLimit")
+                // console.log(hiroLimit)
 
 
                 for (let i = 0; i < walletInscriptions.total; i++) {
                     const insID = walletInscriptions.list[i].inscriptionId;
-                    const hiro = "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
+                    const hiro = hiroURL + insID;
 
                     const content = await fetch(hiro + "/content");
                     const ins = await content.text();
@@ -132,6 +142,8 @@
                     
                     // console.log("Content: " + ins)
                     // console.log("InsID: " + insID)
+                    console.log("hirolimit")
+                    console.log(hirolimit.limitNumber.bind(hirolimit))
                     console.log("parcelNumber")
                     console.log(parcelNumber)
 

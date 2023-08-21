@@ -47,34 +47,94 @@
 
     }
 
+    async function GetBitmapArray() {
+        const ipv4Addresses = [
+            "string.5.8888.bitmap",
+            "string.9.bitmap",
+            "0.100.bitmap",
+            "20.777777.bitmap",
+            "5.bitmap"
+            ];
+        // const addresses = await GetMyBitmaps()
+
+        // const regexBitmap = /^(.*?)(?:0|[1-9][0-9]*)(\.bitmap)$/;
+        const regexBitmap = /^(.*?)\.(\d+(\.\d+)?)(\.\d+(\.\d+)?)\.bitmap$/;
+
+        const extractedParts = ipv4Addresses.map((item) => {
+        const match = item.match(regexBitmap);
+        if (match) {
+            const anyPart = match[0];
+            const firstNumber = match[1];
+            const secondNumber = match[2];
+            const thirdNumber = match[3];
+
+            return {
+            anyPart,
+            firstNumber,
+            secondNumber,
+            thirdNumber
+            };
+        }
+        return null;
+        });
+
+            console.log("extractedParts");
+            console.log(extractedParts);
+
+    }
+
     async function GetMyBitmaps() {
-        if (wallet.connected =true) {
+        if (wallet.connected = true) {
             try {
                 const regexBitmap = /^(?:0|[1-9][0-9]*).bitmap$/;
                 const regexBitmapstr = /^(?:0|[1-9][0-9]*).bitmapstr$/;
 
-                let limit = 20;
+                let limit = 13;
                 let insArray = [];
-                const res = await window.unisat.getInscriptions(0, limit);
-                for (let i = 0; i < 20; i++) {
-                    const insID = res.list[i].inscriptionId;
-                    const hiro =
-                        "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
+                let parcelArray = [];
+                const walletInscriptions = await window.unisat.getInscriptions(0, limit);
+                console.log("walletInscriptions.total")
+                console.log(walletInscriptions.total)
+                const hiroLimit = "https://api.hiro.so/ordinals/v1/inscriptions?limit=" + walletInscriptions.total
+                console.log("hiroLimit")
+                console.log(hiroLimit)
+
+
+                for (let i = 0; i < walletInscriptions.total; i++) {
+                    const insID = walletInscriptions.list[i].inscriptionId;
+                    const hiro = "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
+
                     const content = await fetch(hiro + "/content");
                     const ins = await content.text();
                     const inscriptionParts = ins.split(".");
-                    // console.log(inscriptionParts);
+                    console.log(inscriptionParts);
                     const bitmapNum = inscriptionParts[0];
+                    const parcelNumber = inscriptionParts[0]
                     const bitmapText = regexBitmap.test(ins)
                     const bitmapstrText = regexBitmapstr.test(ins)
-                    
+
                     if (bitmapText) {
                         insArray.push(bitmapNum);
+                        // switch(ins.length) {
+                        //     case 2:
+                        //     inscriptionParts.length = 2
+                            
+                        //     break;
+
+                        //     case 3:
+                        //     inscriptionParts.length = 3
+                        //     parcelArray.push(parcelNumber);
+                        //     break;
+
+                        // }                        
                         
                     }
                     
-                    //console.log("Content: " + ins)
-                    //console.log("InsID: " + insID)
+                    // console.log("Content: " + ins)
+                    // console.log("InsID: " + insID)
+                    console.log("parcelNumber")
+                    console.log(parcelNumber)
+
                     
                 }
                 $verifiedBitmapstr = true

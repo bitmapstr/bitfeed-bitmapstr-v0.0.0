@@ -86,8 +86,8 @@
     async function GetWalletInsTotal() {
         let limit;
         const walletInscriptions = await window.unisat.getInscriptions(0, limit);
-        console.log(" GetWalletInsTotal()")
-        console.log(walletInscriptions.total)
+        // console.log(" GetWalletInsTotal()")
+        // console.log(walletInscriptions.total)
         return walletInscriptions.total
 
     }
@@ -119,31 +119,23 @@
                     const bitmapstrText = regexBitmapstr.test(ins)
 
                     if (bitmapText) {
-                        insArray.push(bitmapNum);
-                        // switch(ins.length) {
-                        //     case 2:
-                        //     inscriptionParts.length = 2
-                            
-                        //     break;
 
-                        //     case 3:
-                        //     inscriptionParts.length = 3
-                        //     parcelArray.push(parcelNumber);
-                        //     break;
-
-                        // }                        
+                        if(inscriptionParts.length == 2) {
+                            insArray.push(bitmapNum);
+                        } else if(inscriptionParts.length == 3) {
+                            parcelArray.push(parcelNumber);
+                        } else {
+                            //
+                        }             
                         
                     }
                     
-                    // console.log("Content: " + ins)
-                    // console.log("InsID: " + insID)
                     console.log("parcelNumber")
                     console.log(parcelNumber)
-
-                    
+                   
                 }
                 $verifiedBitmapstr = true
-
+                console.log(parcelArray)
                 console.log(insArray);
                 return [insArray];
 
@@ -201,7 +193,6 @@
         console.log($currentHeight)
         VerifyBitmap()
     }
-
 
     let selected;
 </script>

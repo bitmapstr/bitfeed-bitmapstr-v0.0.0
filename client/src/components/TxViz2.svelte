@@ -647,9 +647,9 @@
                  {/if}
                  {/if}
                     
-                  <div class="block-area">
+                  <!-- <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
+                  </div> -->
                   {#if config.dev && config.debug && $devSettings.guides }
                     <div class="guide-area" />
                   {/if}

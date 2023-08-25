@@ -81,9 +81,9 @@
   let canvasInitialized = false;
   $: currentthemevalue = $currentThemevalue;
 
-  async function initializeCanvas() {
+  export async function initializeCanvas() {
 
-    await initCanvas(); // Assuming initCanvas is an async function
+    await initCanvas(); 
     canvasInitialized = true;
     
     currentThemevalue.subscribe(value => {

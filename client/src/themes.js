@@ -4,7 +4,7 @@ export const themes = [
     { name: 'PINK-RED', value: 100 },
     { name: 'LIGHT PINK', value: 150 },
     { name: 'ORANGY AUTUMN', value: 256 },
-    // { name: 'AQUA BLUES', value: 500 },
+    { name: 'AQUA BLUES', value: 500 },
     { name: 'AQUA', value: 450 },
     { name: 'GREEN/PINK', value: 350 },
     { name: 'BLOOD', value: 5 },

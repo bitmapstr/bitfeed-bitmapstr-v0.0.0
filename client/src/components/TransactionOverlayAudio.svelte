@@ -3,7 +3,7 @@ import OverlayAudio from './OverlayAudio.svelte'
 import Icon from './Icon.svelte'
 import BookmarkIcon from '../assets/icon/cil-bookmark.svg'
 import { longBtcFormat, numberFormat, feeRateFormat, dateFormat } from '../utils/format.js'
-import { exchangeRates, settings, sidebarToggle, newHighlightQuery, highlightingFull, detailTx, pageWidth, latestBlockHeight, highlightInOut, loading, urlPath, currentBlock, overlay, explorerBlock, isBitmapOwner, currentColor2 } from '../stores.js'
+import { exchangeRates, settings, sidebarToggle, newHighlightQuery, highlightingFull, detailTx, pageWidth, latestBlockHeight, highlightInOut, loading, urlPath, currentBlock, overlay, explorerBlock, isBitmapOwner,currentColor1, currentColor2 } from '../stores.js'
 import { formatCurrency } from '../utils/fx.js'
 import { hlToHex, mixColor, teal, purple } from '../utils/color.js'
 import { SPKToAddress } from '../utils/encodings.js'
@@ -12,6 +12,11 @@ import { searchTx, searchBlockHash, searchBlockHeight, fetchSpends } from '../ut
 import { fade } from 'svelte/transition'
     import BitcoinAudio from './BitcoinAudio.svelte';
     import TonejsAudio from './tonejs/TonejsAudio.svelte';
+    import RangeSlider from './util/RangeSlider.svelte';
+
+let color1 = $currentColor1
+let color2 = $currentColor2
+
 
 function onClose () {
   $detailTx = null
@@ -375,6 +380,7 @@ async function goToBlock(e) {
       padding: 16px;
       border-radius: .5em;
       margin: 0 0 1em;
+      box-shadow: inset 0px 0px 15px #000000;
 
       .field {
         display: flex;
@@ -615,170 +621,9 @@ async function goToBlock(e) {
   }
 </style>
 
-<OverlayAudio name="tx" on:close={onClose} >
-  {#if $detailTx}
-    <section class="tx-detail" >
-      <div class="icon-button" class:disabled={$highlightingFull} on:click={() => addToWatchlist($detailTx.id)} title="Add transaction to watchlist">
-        <Icon icon={BookmarkIcon}/>
-      </div>
-      {#if $detailTx.block && $latestBlockHeight != null}
-        <span class="confirmation-badge">
-          {numberFormat.format(confirmations)} confirmation{confirmations == 1 ? '' : 's'}
-        </span>
-      {:else}
-        <span class="confirmation-badge unconfirmed">
-          unconfirmed
-        </span>
-      {/if}
-      <h2><span class="title">{#if $detailTx.isCoinbase }Coinbase{:else}Transaction{/if}</span> <span class="tx-id">{ $detailTx.id }</span></h2>
-      {#if $detailTx.block}
-        <a class="pane fields clickable" href="/block/{$detailTx.block.hash || $detailTx.block.id}" draggable="false" on:click={goToBlock}>
-          <div class="field">
-            <span class="label">confirmed</span>
-            <span class="value" style="color: {feeColor};">{ dateFormat.format($detailTx.block.time) }</span>
-          </div>
-          <span class="operator"></span>
-          <div class="field">
-            <span class="label">block height</span>
-            <span class="value" style="color: {feeColor};">{ numberFormat.format($detailTx.block.height) }</span>
-          </div>
-        </a>
-      {/if}
-      {#if $detailTx.isCoinbase}
-        <div class="pane fields">
-          <div class="field">
-            <span class="label">block subsidy</span>
-            <span class="value">{ formatBTC($detailTx.coinbase.subsidy) }</span>
-          </div>
-          <span class="operator">+</span>
-          <div class="field">
-            <span class="label">fees</span>
-            <span class="value">{ formatBTC($detailTx.coinbase.fees) }</span>
-          </div>
-          <span class="operator">=</span>
-          <div class="field">
-            <span class="label">total reward</span>
-            <span class="value">{ formatBTC($detailTx.value) }</span>
-          </div>
-        </div>
-
-        <div class="pane fields">
-          <div class="field">
-            <span class="label">coinbase</span>
-            <span class="value coinbase-sig">{ $detailTx.coinbase.sigAscii }</span>
-          </div>
-        </div>
-      {:else}
-        {#if $detailTx.fee != null && $detailTx.feerate != null}
-          <div class="pane fields">
-            <div class="field">
-              <span class="label">fee</span>
-              <span class="value" style="color: {feeColor};">{ numberFormat.format($detailTx.fee) } sats</span>
-            </div>
-            <span class="operator">/</span>
-            <div class="field">
-              <span class="label">size</span>
-              <span class="value" style="color: {feeColor};">{ numberFormat.format($detailTx.vbytes) } vbytes</span>
-            </div>
-            <span class="operator">=</span>
-            <div class="field">
-              <span class="label">fee rate</span>
-              <span class="value" style="color: {feeColor};">{ numberFormat.format($detailTx.feerate.toFixed(2)) } sats/vbyte</span>
-            </div>
-          </div>
-        {:else}
-        <div class="pane fields">
-          <div class="field">
-            <span class="label">size</span>
-            <span class="value" style="color: {feeColor};">{ numberFormat.format($detailTx.vbytes) } vbytes</span>
-          </div>
-        </div>
-        {/if}
-
-        <div class="pane total-value">
-          <div class="field">
-            <span class="label">total value</span>
-            <span class="value" style="color: {feeColor};">{ formatBTC($detailTx.value) }</span>
-          </div>
-        </div>
-      {/if}
-
-      <BitcoinAudio />
-      <TonejsAudio />
-
-      <!-- <div class="pane flow-diagram" style="grid-template-columns: minmax(0px, 1fr) {svgWidth}px minmax(0px, 1fr);">
-        <div class="column inputs">
-          <p class="header">{$detailTx.inputs.length} input{$detailTx.inputs.length > 1 ? 's' : ''}</p>
-          {#each inputs as input, index}
-            <div class="entry" class:clickable={input.rest} class:highlight={highlight.in != null && highlight.in === index} on:click={() => clickItem(input)}>
-              {#if input.prev_txid }
-                <a href="/tx/{input.prev_txid}:{input.prev_vout}" on:click={(e) => goToInput(e, input)} class="put-link" transition:fade|local={{ duration: 200 }}>
-                  <svg class="raw-svg left" height="1.2em" width="1.2em" viewBox="0 0 512 512">
-                    <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-                  </svg>
-                </a>
-              {/if}
-              <p class="address" title={input.title || input.address}><span class="truncatable">{input.address.slice(0,-6)}</span><span class="suffix">{input.address.slice(-6)}</span></p>
-              <p class="amount">{ input.value == null ? '???' : formatBTC(input.value) }</p>
-            </div>
-          {/each}
-        </div>
-        <div class="column diagram">
-          {#if sankeyLines && $pageWidth > 410}
-            <svg class="sankey" height="{sankeyHeight}px" width="{svgWidth}px">
-              <defs>
-                {#each sankeyLines as line, index}
-                  <linearGradient id="lg{index}" x1="0%" y1="0%" x2="100%" y2="0%">
-                    {#if line.in}
-                      <stop offset="0%"   stop-color={hlToHex(mixColor(teal, purple, 0, Math.max(1,line.total-1), line.index))}/>
-                      <stop offset="100%" stop-color={midColor}/>
-                    {:else}
-                      <stop offset="0%" stop-color={midColor}/>
-                      <stop offset="100%"   stop-color={hlToHex(mixColor(purple, teal, 0, Math.max(1,line.total-1), line.index))}/>
-                    {/if}
-                  </linearGradient>
-                {/each}
-              </defs>
-              {#each sankeyLines as line, index }
-                <polyline points="{line.points}" stroke="url(#lg{index})" style="stroke-width: {line.weight + 1}px;" />
-                {#if line.in}
-                  <polyline points="0,{line.index * 60} {triangleWidth},{(line.index * 60 )+ 30} 0,{(line.index * 60) + 60}" stroke="var(--grey)" style="stroke-width: 1px;" />
-                {:else}
-                  <polyline points="{svgWidth},{line.index * 60} {svgWidth - triangleWidth},{(line.index * 60 )+ 30} {svgWidth},{(line.index * 60) + 60}" stroke="var(--grey)" style="stroke-width: 1px;" />
-                {/if}
-              {/each}
-            </svg>
-          {/if}
-        </div>
-        <div class="column outputs">
-          <p class="header">{$detailTx.outputs.length} output{$detailTx.outputs.length > 1 ? 's' : ''} {#if $detailTx.fee}+ fee{/if}</p>
-          {#each outputs as output}
-            <div class="entry" class:clickable={output.rest} class:highlight={highlight.out != null && highlight.out === output.index} on:click={() => clickItem(output)}>
-              {#if loadingSpends}
-                <span class="put-link loading" out:fade|local={{ duration: 500 }}>
-                  <svg class="raw-svg right" height="1.2em" width="1.2em" viewBox="0 0 512 512">
-                    <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-                  </svg>
-                </span>
-              {:else if (!output.opreturn && spends[output.index] == true)}
-              <span class="put-link disabled" in:fade|local={{ duration: 200 }} title="spent">
-                <svg class="raw-svg right" height="1.2em" width="1.2em" viewBox="0 0 512 512">
-                  <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-                </svg>
-              </span>
-              {:else if (!output.opreturn && spends[output.index])}
-                <a href="/tx/{spends[output.index].vin}:{spends[output.index].txid}" on:click={(e) => goToSpend(e, spends[output.index])} title="spent" class="put-link" in:fade|local={{ duration: 200 }}>
-                  <svg class="raw-svg right" height="1.2em" width="1.2em" viewBox="0 0 512 512">
-                    <path d="M 107.628,257.54 327.095,38.078 404,114.989 261.506,257.483 404,399.978 327.086,476.89 Z" class="outline" />
-                  </svg>
-                </a>
-              {/if}
-              <p class="address" title={output.title || output.address}><span class="truncatable">{output.address.slice(0,-6)}</span><span class="suffix">{output.address.slice(-6)}</span></p>
-              <p class="amount">{ output.value == null ? '???' : formatBTC(output.value) }</p>
-            </div>
-          {/each}
-        </div>
-      </div> -->
-    </section>
-  {/if}
+<OverlayAudio name="tx" on:close={onClose} style="background-color: {color1}">
+  <BitcoinAudio />
+  <RangeSlider />
+  
+      <!-- <TonejsAudio /> -->
 </OverlayAudio>

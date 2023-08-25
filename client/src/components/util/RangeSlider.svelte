@@ -173,6 +173,7 @@
   on:mouseup={onDragEnd}
   on:resize={resizeWindow}
 />
+
 <div class="range">
   <div
     class="range__wrapper"

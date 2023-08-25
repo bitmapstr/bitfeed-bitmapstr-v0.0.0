@@ -1,6 +1,13 @@
+
 <script >
+    import '../components/tonejs/js/BA-webaudio-controls'
+    import '../components/tonejs/js/playground-midi'
+    import '../components/tonejs/js/listenBA'
+    import '../components/tonejs/js/playgroundrecorder'
 import RangeSlider from "./util/RangeSlider.svelte";
 import { currentColor1, currentColor2, selectedTx } from "../stores";
+let color1 = $currentColor1
+let color2 = $currentColor2
 
 export let value = 770;
 export const note = value;
@@ -73,14 +80,119 @@ export function stopPlaying() {
 
 </style>
 
+<div id="blockinfogroup" class="blockinfogroup" style="font-family: 'Orbitron', sans-serif;">
+    <label id="blocksTBLabel" for="blocksTB">Highest Block: </label>
+    <input id="blocksTB" class="TB" type="text" name="blocksTB">
+
+    <label id="searchLabel" for="searchTB">Now Playing: </label>
+    <input type="text" id="searchTB" class="TB" onchange="getstring()" autocomplete="off" placeholder="ENTER BLOCK HEIGHT">
+
+    <input type="text" id="dataString" class="TB" name="dataString" onselect="playselected()" />
+
+    <input type="text" id="clipTB" class="TB" name="clipTB" value="" onselect="playseq()" />
+
+    <input type="text" id="consoleTB" class="TB" name="consoleTB" value="" />
+
+
+</div>
+
 <div>
-    <button class="playButton" style="background-color: {$currentColor2}" on:click={playTx} >Play</button>
+    <!-- <button class="playButton" style="background-color: {$currentColor2}" on:click={playTx} >Play</button>
     <button class="stopButton" style="background-color: {$currentColor2}" on:click={stopPlaying} >Stop</button>
     <br/>
-    <br/>
+    <br/> -->
 
-    <RangeSlider bind:value={value} on:change={playNote(value)} id="Frequency" trackColor={$currentColor2}/>
-        {value}
+    <!-- <RangeSlider bind:value={value} on:change={playNote(value)} id="Frequency" trackColor={$currentColor2}/>
+        {value} -->
+
+
+
+    <div id="player" >
+                    
+                    <span>
+                        <p class="inline-label">Loop Start</p>
+                        <webaudio-slider id="loopstart" style="position: relative" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="0" min="0" max="64" step="1" units="%" tooltip="Loop Start" midicc="0.25" midilearn="1"></webaudio-slider>
+                        <webaudio-param link="loopstart"></webaudio-param>
+                    </span>
+                    <br />
+                    <webaudio-slider id="looplink" style="position: relative" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="0" min="0" max="64" step="1" tooltip="Loop Link" midicc="0.25" midilearn="1"></webaudio-slider>
+
+                    <br />
+                    <span>
+                        <p class="inline-label">Loop  End</p>
+                        <webaudio-slider id="loopend" style="position: relative" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="64" min="0" max="64" step="1" units="%" tooltip="Loop End" midicc="0.25" midilearn="1"></webaudio-slider>
+                        <webaudio-param link="loopend"></webaudio-param>
+                    </span>
+                    <div id="sliceinfo">
+                        <input id="stringindex" type="text" class="TB text-center" name="stringindex" />
+                    </div>
+                    <div id="notebuttons" class="notebuttons">
+                        <button id="wholeswitch" value="wholeswitch" onclick="wholeString()"></button>
+                        <button id="halfswitch" value="halfswitch" onclick="halfString()"></button>
+                        <button id="quarterswitch" value="quarterswitch" onclick="quarterString()"></button>
+                        <button id="eighthswitch" value="eighthswitch" onclick="eighthString()"></button>
+                        <div id="midiswitches" class="midiswitches">
+                            <!--<webaudio-switch id="wholeswitchmidi" src="../images/notes/wholeBtn.svg" width="80" height="25" type="kick" midicc="2.81" midilearn="1"></webaudio-switch>
+                                          <webaudio-switch id="halfswitchmidi" src="../images/notes/halfBtn.svg"  width="80" height="25";  type="kick"  midicc="2.83" midilearn="1" ></webaudio-switch>
+                            <webaudio-switch id="quarterswitchmidi" src="../images/notes/quarterBtn.svg"  width="80" height="25";  type="kick"  midicc="2.84" midilearn="1" ></webaudio-switch>
+                            <webaudio-switch id="eighthswitchmidi" src="../images/notes/eighthBtn.svg"  width="80" height="25";  type="kick"  midicc="2.86" midilearn="1" ></webaudio-switch>-->
+                        </div>
+                    </div>
+                    <div id="transporter">
+                        <button id="prevslicebutton" class="" onclick="clickbackseq()" />
+                        <button id="playtoneseq" class="" onclick="playseqBPM()"></button>
+                        <button id="playallheights" class="" onclick="playallBPM()"></button>
+                        <button id="muteBTN" class="" onclick="muteaudio()"></button>
+                        <button id="record" class=""></button>
+                        <button id="cancel" class="" hidden="true"></button>
+                        <button id="clickthrubutton" class="" onclick="clickthruseq()" />
+                    </div>
+
+                </div>
+                <br />
+                <div id="slider-controls" class="slider-controls">
+                    <div id="sliders">
+                        <p id="vert-label" class="vert-label">Volume</p>
+                        <span>
+                            <webaudio-slider id="vol" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="-18" min="-60" max="40" step=".5" tooltip="volume" midicc="0.12" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="vol"></webaudio-param>
+                        </span>
+                        <span>
+                            <webaudio-slider id="slider1" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="0" min="-80" max="6" midicc="0.13" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="slider1"></webaudio-param>
+                        </span>
+                        <span>
+                            <webaudio-slider id="slider2" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="0" min="-80" max="6" midicc="0.14" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="slider2"></webaudio-param>
+                        </span>
+                        <p id="vert-label" class="vert-label">Equalizer</p>
+                        <span>
+                            <webaudio-slider id="slider3" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="0" min="-80" max="6" midicc="0.15" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="slider3"></webaudio-param>
+                        </span>
+                        <span>
+                            <webaudio-slider id="slider4" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="0" min="-80" max="6" midicc="0.16" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="slider4"></webaudio-param>
+                        </span>
+                        <span>
+                            <webaudio-slider id="slider5" src="../images/vsliderbody.png" knobsrc="../images/slice-slider-knob.svg" direction="vert" value="0" min="-80" max="6" midicc="0.17" midilearn="1"></webaudio-slider>
+                            <br />
+                            <webaudio-param link="slider5"></webaudio-param>
+                        </span>
+                        <span>
+                          <p class="inline-label">Pan</p>
+                          <webaudio-slider id="pan" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="0" min="-1" max="1" step=".1" units="%" tooltip="Pan" midicc="0.24" midilearn="1"><br /></webaudio-slider>
+                          <webaudio-param link="pan"></webaudio-param>
+                      </span>
+                  
+                    </div>
+                  </div>
+                  
 
 </div>
 

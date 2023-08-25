@@ -77,8 +77,8 @@ function selecteffect(effect) {
 
 }
 
-function getstring(stringtype) {
- stringtype = selectedtx
+function getstring(selectedStr) {
+	selectedStr = selectedtx
 	
 }
 

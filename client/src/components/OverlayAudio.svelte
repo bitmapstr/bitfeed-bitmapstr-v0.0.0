@@ -11,6 +11,8 @@ export let name = 'none'
 export let fullSize = false
 
 let color1 = $currentColor1
+let color2 = $currentColor2
+
 
 let open
 $: {
@@ -64,6 +66,9 @@ function close () {
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      // background: url(../img/bg-logo-0.png);
+      // background-repeat: round;
+      // background-blend-mode: hard-light;
 
       @media (min-width: 1200px) {
         max-width: 960px;
@@ -81,7 +86,7 @@ function close () {
         margin: -0.2em;
         cursor: pointer;
 
-        background: var(--palette-c);
+        // background: var(--palette-c);
         border-radius: 50%;
       }
 
@@ -106,7 +111,7 @@ function close () {
 {#if open}
 <div class="audio-overlay-wrapper" >
   <div class="audio-overlay-background" on:click={close} transition:fade={{ duration: 500 }} />
-  <div class="audio-overlay-outer" style="background-color: {color1}" class:full-size={fullSize} transition:fly={{ duration: 500, y: 50 }}>
+  <div class="audio-overlay-outer" style="background-color: {$currentColor1}" class:full-size={fullSize} transition:fly={{ duration: 500, y: 50 }}>
     <div class="audio-overlay-inner" id="{name}AudioOverlay">
       <slot />
     </div>

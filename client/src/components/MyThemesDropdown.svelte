@@ -16,6 +16,7 @@ import { onMount } from 'svelte';
       currentThemename.set(name)
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
+
       // console.log("currentColor1")
       // console.log($currentColor1)
       // console.log("currentColor2")

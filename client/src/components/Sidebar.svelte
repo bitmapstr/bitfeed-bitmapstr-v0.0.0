@@ -147,6 +147,7 @@ function showBlock () {
     </span>
     <div slot="content">
       <ConnectWallet />
+      <MyThemesDropdown />
     </div>
   </SidebarTab>
   
@@ -157,12 +158,12 @@ function showBlock () {
     </span>
     <div slot="content">
 
-      <MyThemesDropdown />
+      <!-- <MyThemesDropdown /> -->
       <SettingsBitmap />
     </div>
   </SidebarTab>
   {/if}
-
+  
 
 
 </div>

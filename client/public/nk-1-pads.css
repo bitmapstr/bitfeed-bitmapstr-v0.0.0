@@ -140,7 +140,7 @@ body {
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: 24px 24px 24px 24px;
-    grid-template-areas: 'blocksTBLabel blocksTB searchLabel searchTB' ' dataString dataString dataString dataString' ' clipTB clipTB clipTB clipTB' 'testTB testTB testTB testTB';
+    grid-template-areas: 'blocksTBLabel blocksTB searchLabel searchTB' ' dataString dataString dataString dataString' ' dataString2 dataString2 dataString2 dataString2' ' clipTB clipTB clipTB clipTB' 'testTB testTB testTB testTB';
 }
 
 .TB {
@@ -178,6 +178,10 @@ body {
 }
 #dataString {
     grid-area: dataString;
+    background: rgba(253, 255, 131, 0.00);
+}
+#dataString2 {
+    grid-area: dataString2;
     background: rgba(253, 255, 131, 0.00);
 }
 #clipTB {
@@ -375,8 +379,8 @@ body {
     }
 #stringindex {
     grid-area: stringindex;
-    background: #FDFF83;
-    box-shadow: inset 0px 4px 4px rgb(0, 0, 0);
+    background: #ffffff6f;
+    box-shadow: inset 0px 1px 4px rgb(0, 0, 0);
     border-radius: 5px;
     color: #000000;
 }

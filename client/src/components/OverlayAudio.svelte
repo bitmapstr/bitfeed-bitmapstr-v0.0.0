@@ -66,6 +66,7 @@ function close () {
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      opacity: 95%;
       // background: url(../img/bg-logo-0.png);
       // background-repeat: round;
       // background-blend-mode: hard-light;

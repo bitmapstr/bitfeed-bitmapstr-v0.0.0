@@ -5,7 +5,7 @@
     import '../components/tonejs/js/listenBA'
     import '../components/tonejs/js/playgroundrecorder'
 import RangeSlider from "./util/RangeSlider.svelte";
-import { currentColor1, currentColor2, selectedTx } from "../stores";
+import { currentColor1, currentColor2, currentHeight, selectedTx, currentBlock, detailTx } from "../stores";
 let color1 = $currentColor1
 let color2 = $currentColor2
 
@@ -34,32 +34,120 @@ function hexSliceToFrequency(hexSlice) {
 
     const normalizedValue = decimalValue / 0xFFFF; // Normalize to [0, 1]
     const mappedFrequency = minFrequency + normalizedValue * (maxFrequency - minFrequency);
-    console.log("hexSliceToFrequency")
-    console.log(mappedFrequency)
+    // console.log("hexSliceToFrequency")
+    // console.log(mappedFrequency)
     return mappedFrequency;
 }
 
-function playTx() {
-    oscillator.type = "square";
+var start = 0;
+var end = start + 2;
+const m = $detailTx.id
+function slicestrg() {
+	
+	const strgslice = m.slice(start, end);
+	document.getElementById("stringindex").value = start + "," + end + " slice:" + strgslice;
+    console.log("slicestrg()")
+    console.log(strgslice)
+	return strgslice;
+
+}
+function nextslice() {
+	var nextstart = start++;
+	var nextend = nextstart + 2
+	var nextindex = m.slice(nextstart, nextend);
+    console.log(nextindex)
+    document.getElementById("stringindex").value = nextstart + "," + nextend + " slice:" + nextindex;
+
+	return nextindex;
+}
+function prevslice() {
+	var prevstart = start-- ;
+	var prevend = prevstart + 2 
+	var previndex = m.slice(prevstart, prevend);
+    console.log(previndex)
+    document.getElementById("stringindex").value = prevstart + "," + prevend + " slice:" + previndex;
+
+	return previndex;
+}
+function playTxNote() {
+    
+    const strgslice = nextslice()
+    const frequency = hexSliceToFrequency(strgslice);
+
+    console.log("frequency")
+    console.log(frequency)
+
+    oscillator.type = "sine";
     oscillator.connect(audioCtx.destination);
     oscillator.start();
-    for (let i = 0; i < hexString.length; i += sliceLength) {
-        
-        slices.push(hexString.slice(i, i + sliceLength));
-        // Converting and logging each slice to frequency
-        slices.forEach((slice, index) => {
-            const frequency = hexSliceToFrequency(slice);
-            // oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
-            console.log(`Frequency for Slice ${index + 1}: ${frequency} Hz`); 
-            
-        });
-    }
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
+   
 }
+var timeout;
+function playTx() {
+   timeout = setInterval(playTxNote, 750);
 
-
+}
 export function stopPlaying() {
+    stoptimeout(timeout)
     oscillator.disconnect(audioCtx.destination)
 }
+
+function stoptimeout() {
+	clearTimeout(timeout);
+}
+function playselected() {
+
+	var txt = "";
+
+	if (document.getSelection) {
+		txt = document.getSelection();
+		document.getElementById("clipTB").value = txt;
+
+	}
+	//cliptb.blur();
+	//document.getElementById("body").focus();
+	playTx();
+}
+function playseq() {
+	
+	try {
+
+		playstr();		
+		
+	}
+	catch (err) {
+		//bd();
+	}
+	// if (n === "") {
+	// 	loopseq();
+	// }
+	
+}
+
+function playstr() {
+
+
+
+    timeout = setTimeout(playTx, 500);
+
+
+}
+function loopseq() {
+	// start = 0;
+	// let end = start + 2;
+	playseq();
+}
+function enterHeight(height) {
+        searchBlockHeight(height);
+        $currentHeight = height
+        console.log("currentHeight");
+        console.log($currentHeight)
+        VerifyBitmap()
+    }
+
+    
+
 </script>
 
 <style>
@@ -81,13 +169,13 @@ export function stopPlaying() {
 </style>
 
 <div id="blockinfogroup" class="blockinfogroup" style="font-family: 'Orbitron', sans-serif;">
-    <label id="blocksTBLabel" for="blocksTB">Highest Block: </label>
-    <input id="blocksTB" class="TB" type="text" name="blocksTB">
+    <label id="blocksTBLabel" for="blocksTB">Txinfo: </label>
+    <input id="blocksTB" class="TB" type="text" name="blocksTB" >
 
     <label id="searchLabel" for="searchTB">Now Playing: </label>
-    <input type="text" id="searchTB" class="TB" onchange="getstring()" autocomplete="off" placeholder="ENTER BLOCK HEIGHT">
-
-    <input type="text" id="dataString" class="TB" name="dataString" onselect="playselected()" />
+    <input type="text" id="searchTB" class="TB" value={$currentHeight} autocomplete="off" placeholder="ENTER BLOCK HEIGHT">
+    <input type="text" id="dataString" class="TB" name="dataString" on:select={playselected}  value={$detailTx.id}/>
+    <input type="text" id="dataString2" class="TB" name="dataString" on:select={playselected}  value={$detailTx.value}/>
 
     <input type="text" id="clipTB" class="TB" name="clipTB" value="" onselect="playseq()" />
 
@@ -139,13 +227,13 @@ export function stopPlaying() {
                         </div>
                     </div>
                     <div id="transporter">
-                        <button id="prevslicebutton" class="" onclick="clickbackseq()" />
-                        <button id="playtoneseq" class="" onclick="playseqBPM()"></button>
+                        <button id="prevslicebutton" class="" on:click={prevslice} />
+                        <button id="playtoneseq" class="" on:click={playTx}></button>
                         <button id="playallheights" class="" onclick="playallBPM()"></button>
-                        <button id="muteBTN" class="" onclick="muteaudio()"></button>
+                        <button id="muteBTN" class="" on:click={stopPlaying}></button>
                         <button id="record" class=""></button>
                         <button id="cancel" class="" hidden="true"></button>
-                        <button id="clickthrubutton" class="" onclick="clickthruseq()" />
+                        <button id="clickthrubutton" class="" on:click={nextslice} />
                     </div>
 
                 </div>
@@ -184,13 +272,14 @@ export function stopPlaying() {
                             <br />
                             <webaudio-param link="slider5"></webaudio-param>
                         </span>
-                        <span>
-                          <p class="inline-label">Pan</p>
-                          <webaudio-slider id="pan" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="0" min="-1" max="1" step=".1" units="%" tooltip="Pan" midicc="0.24" midilearn="1"><br /></webaudio-slider>
-                          <webaudio-param link="pan"></webaudio-param>
-                      </span>
+                        
                   
                     </div>
+                    <span>
+                        <p class="inline-label">Pan</p>
+                        <webaudio-slider id="pan" src="../images/slice-slider.svg" knobsrc="../images/slice-slider-knob.svg" direction="horz" value="0" min="-1" max="1" step=".1" units="%" tooltip="Pan" midicc="0.24" midilearn="1"><br /></webaudio-slider>
+                        <webaudio-param link="pan"></webaudio-param>
+                    </span>
                   </div>
                   
 

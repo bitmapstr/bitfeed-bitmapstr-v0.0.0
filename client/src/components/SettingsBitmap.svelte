@@ -18,6 +18,9 @@ function onChange(setting, value) {
 let settingConfig = { 
   audioOn: {
     label: 'Audio On',
+    type: 'pill',
+    falseLabel: 'Off',
+    trueLabel: 'On',
     valueType: 'bool'
   },
   showBlockInfo: {
@@ -26,6 +29,9 @@ let settingConfig = {
   },
   showMyBitmap: {
     label: 'My Bitmap',
+    type: 'pill',
+    falseLabel: 'Bitfeed',
+    trueLabel: 'Bitmapstr',
     valueType: 'bool'
   },
   showNav: {

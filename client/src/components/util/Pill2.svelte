@@ -7,19 +7,25 @@ export let right
 export let leftDisabled = false
 export let rightDisabled = false
 
+let background;
+$: background && background.style.setProperty('--palette-good', $currentColor1 )
+
 </script>
 
-<div class="pill" class:active={active} on:click>
+<div class="pill2"  class:active={active} on:click >
   {#if !leftDisabled}
-    <span class="side left" class:selected={!active} ><slot name="left">{ left }</slot></span>
+    <span class="side left" bind:this={background} class:selected={!active} ><slot name="left">{ left }</slot></span>
   {/if}
   {#if !rightDisabled}
-    <span class="side right" class:selected={active} ><slot name="right">{ right }</slot></span>
+    <span class="side right" bind:this={background} class:selected={active} ><slot name="right">{ right }</slot></span>
   {/if}
 </div>
 
 <style type="text/scss">
-.pill {
+:root {
+  --background: inherit;
+}
+.pill2 {
   display: inline-block;
   cursor: pointer;
   display: flex;

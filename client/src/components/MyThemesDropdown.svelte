@@ -53,7 +53,7 @@ import { onMount } from 'svelte';
     
      
   </script>
-  <h3>Themes</h3>
+  <h2>Themes</h2>
   <div class="dropdown" class:open={isOpen} >
 
     {#if $settingsBitmap.showMyBitmap}

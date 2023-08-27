@@ -21,11 +21,13 @@ import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
 import walletIcon from '../assets/icon/cil-bitfeed-wallet.svg'
+import bitcoinaudioicon from '../assets/icon/cil-bitcoinaudio-icon.svg'
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize, settingsBitmap, walletConnected, verifiedBitmapstr } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
     import MyThemesDropdown from './MyThemesDropdown.svelte';
     import NostrLogin from './NostrLogin.svelte';
+    import SettingsBitcoinAudio from './SettingsBitcoinAudio.svelte';
 let searchTabComponent
 
 let blockHidden = false
@@ -155,13 +157,10 @@ function showBlock () {
   {#if  $verifiedBitmapstr}
   <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
     <span slot="tab" title="Verified">
-      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+      <Icon icon={bitcoinaudioicon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-
-      <SettingsBitmap />
-      <MyThemesDropdown />
-
+      <SettingsBitcoinAudio />
     </div>
   </SidebarTab>
   <SidebarTab open={$sidebarToggle === 'relays'} on:click={() => {settings('relays')}} tooltip="Relays">
@@ -169,7 +168,11 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-      <h2>Relays</h2>
+
+      <h3>Bitmapstr Settings</h3>
+      <SettingsBitmap />
+      <MyThemesDropdown />
+
     </div>
   </SidebarTab>
   <SidebarTab open={$sidebarToggle === 'nostr'} on:click={() => {settings('nostr')}} tooltip="nostr login">

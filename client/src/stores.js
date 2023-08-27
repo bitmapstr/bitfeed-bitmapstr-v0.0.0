@@ -123,7 +123,7 @@ export const blockAreaSize = writable(0)
 export const settingsOpen = writable(false)
 
 export const currentHeight = writable(0)
-export const walletConnected = writable()
+export const walletConnected = writable(true)
 export const verifiedBitmapstr = writable()
 export const unisatAccounts = writable("no accounts")
 export const isBitmapOwner = writable(false)
@@ -142,10 +142,10 @@ const defaultSettings = {
 	showMessages: true,
 	showSearch: true,
 	showBlockInfo: false,
-	showMyBitmap: false,
+	showMyBitmap: true,
 	noTrack: false,
 	blocksEnabled: true,
-	verifiedBitmapstr: false,
+	verifiedBitmapstr: true,
 	showNav: false
 }
 

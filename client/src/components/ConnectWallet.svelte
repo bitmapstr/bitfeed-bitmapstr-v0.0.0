@@ -258,7 +258,7 @@
         {#if $settingsBitmap.showMyBitmap}
 
         <p>Connect yer wallet</p>
-        <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
+        <button style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
         <br />
         <button style="background-color: {$currentColor1}">Hiro</button>
         <br />
@@ -291,7 +291,7 @@
       
     }
     .dropdown button {
-      background-color: var(--palette-good);
+      /* background-color: var(--palette-good); */
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;

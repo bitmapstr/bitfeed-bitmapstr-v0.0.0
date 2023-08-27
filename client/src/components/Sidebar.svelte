@@ -20,6 +20,7 @@ import MempoolLegend from '../components/MempoolLegend.svelte'
 import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
+import walletIcon from '../assets/icon/cil-bitfeed-wallet.svg'
 import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize, settingsBitmap, walletConnected, verifiedBitmapstr } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
@@ -143,10 +144,22 @@ function showBlock () {
 
   <SidebarTab open={$sidebarToggle === 'bitmaps'} on:click={() => {settings('bitmaps')}} tooltip="Connect Wallet">
     <span slot="tab" title="Connect Wallet">
-      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+      <Icon icon={walletIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
       <ConnectWallet />
+
+    </div>
+  </SidebarTab>
+  
+  {#if  $verifiedBitmapstr}
+  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
+    <span slot="tab" title="Verified">
+      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+
+      <SettingsBitmap />
       <MyThemesDropdown />
 
     </div>
@@ -167,17 +180,7 @@ function showBlock () {
       <NostrLogin />
     </div>
   </SidebarTab>
-  
-  {#if  $verifiedBitmapstr}
-  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
-    <span slot="tab" title="Verified">
-      <Icon icon={bitmapIcon} color="var(--bold-a)" />
-    </span>
-    <div slot="content">
 
-      <SettingsBitmap />
-    </div>
-  </SidebarTab>
   {/if}
   
 

@@ -22,11 +22,6 @@
   import { formatCurrency } from '../utils/fx.js'
   import { fade } from 'svelte/transition'
   import config from '../config.js'
-    import TxRender2 from './TxRender2.svelte';
-    import NavBar from './NavBar.svelte';
-    import BlockInfo2 from './BlockInfo2.svelte';
-
-
 
   let width = window.innerWidth - 20
   let height = window.innerHeight - 20
@@ -213,7 +208,6 @@
     }
     if (txController) txController.mouseMove(position)
   }
-
 </script>
 
 <style type="text/scss">
@@ -235,12 +229,6 @@
   }
 
   .canvas-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bitmap-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
@@ -379,14 +367,6 @@
     height: 3.5em;
     flex-grow: 1;
   }
-  .nav-bar-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 3.5em;
-    flex-grow: 1;
-  }
 
   .alert-bar-wrapper {
     width: 20em;
@@ -413,10 +393,6 @@
       .block-area {
         padding-top: 100%;
       }
-
-      // .bitmapstr-block-area {
-      //   padding-top: 100%;
-      // }
 
       .guide-area {
         background: #00FF00;
@@ -499,48 +475,6 @@
     }
   }
 
-  .tx-scene {
-  position: absolute;
-  width: auto;
-  left: 7px;
-  right: 0;
-  top: -16px;
-  bottom: 0;
-  /* pointer-events: none; */
-  overflow: hidden;
-  z-index: 0;
-}
-
-.bitmapstr {
-    width: auto;
-    position: relative;
-    left: 0;
-    right: 0;
-    top: 145px;
-    bottom: 0;
-    overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-    z-index: -1;
-
-}
-
-.bitmap-cube {
-
-  position: absolute;
-}
-.bg-logo-w-text {
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-    // top: -38px;
-    // left: -42px;
-    // position: absolute;
-    // object-fit: contain;
-}
-
   @media screen and (max-width: 640px) {
     .search-bar-wrapper {
       position: fixed;
@@ -562,80 +496,48 @@
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
 <div class="tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
-          
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              
-            {#if !$settings.showMyBitmap }   
-            <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender controller={txController} />
-        
-              <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
-                <div class="height-bar" />
-                {#if $tinyScreen}
-                  <div class="mempool-info">
-                    <span class="left">Mempool</span>
-                    <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
-                  </div>
-                {:else}
-                  <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
-                {/if}
-              </div>
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  <div class="block-area">
-                    <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-              </div>
-              
-            </div>
-            {:else if $settings.showMyBitmap}
-            <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
-              <TxRender2 controller={txController} />
-              
-              <div class="block-area-wrapper">
-                <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
-                <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
-                  {#if $settings.showBlockInfo }  
-                    <img src="/img/bg-logo-w-text.svg" alt="" class="bg-logo-w-text">
-                    {/if}
-                    
-                  <div class="block-area">
-                    <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div>
-                  {#if config.dev && config.debug && $devSettings.guides }
-                    <div class="guide-area" />
-                  {/if}
-                </div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-                <!-- <RunningOsterich /> -->
+  <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick}>
+    <TxRender controller={txController} />
 
-              </div>
-              
-            </div>
-            {/if}
+    <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
+      <div class="height-bar" />
+      {#if $tinyScreen}
+        <div class="mempool-info">
+          <span class="left">Mempool</span>
+          <span class="right">{ numberFormat.format(Math.round($mempoolCount)) }</span>
+        </div>
+      {:else}
+        <span class="mempool-count">Mempool: { numberFormat.format(Math.round($mempoolCount)) } unconfirmed</span>
+      {/if}
+    </div>
 
-            {#if $selectedTx }
+    <div class="block-area-wrapper">
+      <div class="spacer" style="flex: {$pageWidth <= 640 ? '1.5' : '1'}"></div>
+      <div class="block-area-outer" style="width: {$blockAreaSize}px; height: {$blockAreaSize}px">
+        <div class="block-area">
+          <BlockInfo block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
+        </div>
+        {#if config.dev && config.debug && $devSettings.guides }
+          <div class="guide-area" />
+        {/if}
+      </div>
+      <div class="spacer"></div>
+      <div class="spacer"></div>
+    </div>
+  </div>
 
-              <TxInfo tx={$selectedTx} position={mousePosition} />
-             
-            {/if}
-</div>
+  {#if $selectedTx }
+    <TxInfo tx={$selectedTx} position={mousePosition} />
+  {/if}
+
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
       <div class="row">
         {#if $settings.showFX && fxLabel }
-          <span class="fx-ticker {fxColor}"  on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
+          <span class="fx-ticker {fxColor}" on:click={() => { $sidebarToggle = 'settings'}}>{ fxLabel }</span>
         {/if}
         {#if $tinyScreen && $currentBlock }
-          <span class="block-height"><b></b>{ numberFormat.format($currentBlock.height) }</span>
+          <span class="block-height"><b>Block: </b>{ numberFormat.format($currentBlock.height) }</span>
         {/if}
       </div>
       <div class="row">
@@ -645,13 +547,10 @@
       </div>
     </div>
     {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
-      <div class="search-bar-wrapper">                         
-            <SearchBar />                       
+      <div class="search-bar-wrapper">
+        <SearchBar />
       </div>
     {/if}
-    {#if $settings.showBlockInfo && !$settings.showSearch }  
-    <NavBar />                        
-    {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}
@@ -667,7 +566,6 @@
 
   <TransactionOverlay />
   <AboutOverlay />
-
   {#if config.donationsEnabled }
     <DonationOverlay />
     {#if $haveSupporters}

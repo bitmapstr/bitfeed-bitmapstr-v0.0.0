@@ -1,6 +1,6 @@
 <script>
 import analytics from '../utils/analytics.js'
-import { settingsBitmap, settings} from '../stores.js'
+import { settingsBitmap } from '../stores.js'
 import SidebarMenuItem2 from './SidebarMenuItem2.svelte';
 
 function toggle(setting) {
@@ -20,16 +20,16 @@ let settingConfig = {
     label: 'Audio On',
     valueType: 'bool'
   },
-  showSearch: {
-    label: 'Search Bar',
-    valueType: 'bool'
-  },
   showBlockInfo: {
     label: 'Block Info',
     valueType: 'bool'
   },
   showMyBitmap: {
     label: 'My Bitmap',
+    valueType: 'bool'
+  },
+  showNav: {
+    label: 'Navigation',
     valueType: 'bool'
   }
  

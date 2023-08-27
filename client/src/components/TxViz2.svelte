@@ -21,6 +21,7 @@
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
     import TransactionOverlayAudio from './TransactionOverlayAudio.svelte';
+    import NavBar from './NavBar.svelte';
 
   let initCanvas
   let width = window.innerWidth - 20
@@ -647,9 +648,9 @@
                  {/if}
                  {/if}
                     
-                  <!-- <div class="block-area">
+                  <div class="block-area">
                     <BlockInfo2 block={$currentBlock} visible={$blockVisible && !$tinyScreen} on:hideBlock={hideBlock} on:quitExploring={quitExploring} />
-                  </div> -->
+                  </div>
                   {#if config.dev && config.debug && $devSettings.guides }
                     <div class="guide-area" />
                   {/if}
@@ -692,14 +693,14 @@
         {/if}
       </div>
     </div>
-    {#if $settingsBitmap.showSearch && !$tinyScreen && !$compactScreen }
+    {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
             <SearchBar />                       
       </div>
     {/if}
-    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
-    <NavBar />                        
-    {/if}  -->
+   {#if $settingsBitmap.showNav }  
+             <NavBar />                        
+    {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}

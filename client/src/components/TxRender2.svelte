@@ -253,7 +253,7 @@
     currentColorValue1 = currentColorValue1
     currentColor1.set(currentColorValue1) 
 
-    currentColorValue2 = rgbArray[currentthemevalue + 255]
+    currentColorValue2 = rgbArray[currentthemevalue + 100]
     currentColorValue2 = currentColorValue2
     currentColor2.set(currentColorValue2) 
 
@@ -276,7 +276,7 @@
     return texture;
   }
   
-  async function initCanvas () {
+  export async function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT)
 

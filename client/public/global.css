@@ -1,7 +1,7 @@
 :root {
-  --dark-a: #000000;
-  --dark-b: #111b1ef3;
-  --dark-c: #2a2b2b;
+  --dark-a: #102226;
+  --dark-b: #1d2f33;
+  --dark-c: #2a3c40;
   --dark-d: #374a4f;
   --dark-e: #45585d;
 
@@ -14,7 +14,7 @@
   --light-b: #cbe1e5;
   --light-c: #bfd1d5;
   --light-d: #7bbdcd; */
-  --light-a: rgba(255, 255, 255, 0.81);
+  --light-a: white;
   /* --light-b: #cae2dd;
   --light-c: #bad1cc;
   --light-d: #a9c0bc;

@@ -145,7 +145,8 @@ const defaultSettings = {
 	showMyBitmap: true,
 	noTrack: false,
 	blocksEnabled: true,
-	verifiedBitmapstr: true
+	verifiedBitmapstr: true,
+	showNav: false
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}

@@ -24,7 +24,6 @@ import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, fre
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
     import MyThemesDropdown from './MyThemesDropdown.svelte';
-    import BitcoinAudio from './BitcoinAudio.svelte';
 let searchTabComponent
 
 let blockHidden = false
@@ -148,6 +147,7 @@ function showBlock () {
     <div slot="content">
       <ConnectWallet />
       <MyThemesDropdown />
+
     </div>
   </SidebarTab>
   
@@ -158,7 +158,6 @@ function showBlock () {
     </span>
     <div slot="content">
 
-      <!-- <MyThemesDropdown /> -->
       <SettingsBitmap />
     </div>
   </SidebarTab>

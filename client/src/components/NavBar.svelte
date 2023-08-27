@@ -110,14 +110,18 @@ async function focusOut(e) {
 <Icon icon={bitmapIcon} color="var(--bold-a)" />
 
 <ul id="menu">
-	<li><a href="/" on:click|preventDefault={() => (menu = 1)}>Indexer</a></li> |
-	<li><a href="/" on:click|preventDefault={() => (menu = 2)}>Indexer-Local</a></li>
+	<li><a href="/" on:click|preventDefault={() => (menu = 1)}>Bitmaps</a></li> |
+	<li><a href="/" on:click|preventDefault={() => (menu = 2)}>Inscriptions</a></li> |
+  <li><a href="/" on:click|preventDefault={() => (menu = 3)}>Bitmapstr</a></li>
+
 </ul>
 
 {#if menu === 1}
-<Indexer />
+<p>item one</p>
 {:else if menu === 2}
-<IndexerLocal />
+<p>item two</p>
+{:else if menu === 3}
+<p>item three</p>
 {:else}
 <h1>
 	Page Not Found

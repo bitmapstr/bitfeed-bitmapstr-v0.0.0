@@ -1,8 +1,9 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner} from "../stores";
+    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner, settingsBitmap} from "../stores";
     import io from 'socket.io-client'
+    import LoadingAnimation from "./util/LoadingAnimation.svelte";
 
     export let wallet = walletConnected;
     export let accounts = unisatAccounts;
@@ -22,12 +23,14 @@
                 console.log("UniSat Wallet is installed!");
                 accounts = await winuni.requestAccounts();
                 wallet.connected = true
+                settingsBitmap.showMyBitmap = true
                 console.log("connect success", accounts);
 
                 unisatAccounts.set(accounts)
                 GetMyBitmaps();
 
             } else {
+                settingsBitmap.showMyBitmap = false
                 console.log("UniSat Wallet is not installed :(");
                 console.log("connect failed");
                 alert("Install a compatible wallet.");
@@ -198,15 +201,16 @@
 </script>
 
 <div class="dropdown"> 
-    {#if wallet.connected}
+    {#if wallet.connected }
+        {#if $settingsBitmap.showMyBitmap}
         <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
             >Disconnect Wallet</button>
-        <!-- <h3>{$verifiedBitmapstr}</h3> -->
         <form  on:submit|preventDefault={handleSubmit(selected)}>
             <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
                 {#await GetMyBitmaps()}
-                    <p>...waiting for my bitmaps</p>
+                    <p>.Loading bitmaps</p>
+                    <LoadingAnimation />
                 {:then bitmaps}
                     {console.log("BITMAPS: " + bitmaps)}
                     {#each bitmaps[0] as bitmap, index}
@@ -221,15 +225,56 @@
             {/if}
 
         </form>
+
+        {:else}
+        <button class="dropdown button"  on:click={DisconnectWallet}
+            >Disconnect Wallet</button>
+        <!-- <h3>{$verifiedBitmapstr}</h3> -->
+        <form  on:submit|preventDefault={handleSubmit(selected)}>
+            <select class="dropdown"  bind:value={selected} on:change={() => handleSubmit(selected)}>
+                <option>Select ur bitmap</option>
+                {#await GetMyBitmaps()}
+                    <p>...waiting for my bitmaps</p>
+                {:then bitmaps}
+                    {console.log("BITMAPS: " + bitmaps)}
+                    {#each bitmaps[0] as bitmap, index}
+                        <option value={bitmap}>{bitmap}</option>
+                    {/each}
+                {/await}
+            </select>
+            {#if $isBitmapOwner}
+            <p>{selected} Verified</p>
+            {:else}
+            <p>{selected} Not Verified</p>
+            {/if}
+
+        </form>
+
+        {/if}
     
 
     {:else if !wallet.connected}
+
+        {#if $settingsBitmap.showMyBitmap}
+
         <p>Connect yer wallet</p>
         <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
         <br />
         <button style="background-color: {$currentColor1}">Hiro</button>
         <br />
         <button style="background-color: {$currentColor1}">Xverse</button>
+        {:else}
+
+        <p>Connect yer wallet</p>
+        <button class="primary" on:click={ConnectWallet}>UniSat</button>
+        <br />
+        <button class="primary">Hiro</button>
+        <br />
+        <button class="primary">Xverse</button>
+
+        {/if}
+
+
     {:else}
         <p>something else happened here</p>
     {/if}

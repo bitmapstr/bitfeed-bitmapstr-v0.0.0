@@ -3,7 +3,7 @@
 	import analytics from './utils/analytics.js'
 	import config from './config.js'
 	import Router from './controllers/Router.js'
-	import {settings} from './stores.js'
+	import {settings, settingsBitmap} from './stores.js'
     import TxViz2 from './components/TxViz2.svelte';
 
 	if (!$settings.noTrack && config.public) analytics.init()
@@ -12,7 +12,7 @@
 </script>
 
 <main>
-	{#if $settings.showMyBitmap }   
+	{#if $settingsBitmap.showMyBitmap }   
 	<TxViz2/>
 	{:else}
 	<TxViz />

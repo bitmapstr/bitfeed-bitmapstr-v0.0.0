@@ -10,6 +10,7 @@
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import Sidebar from '../components/Sidebar.svelte'
+  import Sidebarleft from '../components/SidebarLeft.svelte'
   import LoadingAnimation from '../components/util/LoadingAnimation.svelte'
   import Alerts from '../components/alert/Alerts.svelte'
   import { numberFormat } from '../utils/format.js'

@@ -2,7 +2,7 @@
   import config from '../config.js'
   import analytics from '../utils/analytics.js'
   
-  import SidebarTab from '../components/SidebarTab.svelte'
+  import SidebarTabLeft from '../components/SidebarTabLeft.svelte'
   import Icon from '../components/Icon.svelte'
   
   import Settings from '../components/Settings.svelte'
@@ -75,54 +75,55 @@
   
   <div class="sidebar-left" class:frozen={$freezeResize}>
     <!-- displayed in reverse order, to preserve proper z-index layering -->
-      <SidebarTab  on:click={() => handleThis()} tooltip="Show Latest Block">
+      <SidebarTabLeft  on:click={() => handleThis()} tooltip="Show Latest Block">
         <span slot="tab">
           <Icon icon={gridIcon} color="var(--bold-a)" />
         </span>
         <div slot="content">
         </div>
-      </SidebarTab> 
-    <SidebarTab on:click={() => handleThis()} tooltip="About">
+      </SidebarTabLeft> 
+    <SidebarTabLeft on:click={() => handleThis()} tooltip="About">
       <span slot="tab">
         <Icon icon={questionIcon} color="var(--bold-a)" />
       </span>
-    </SidebarTab>
-    <SidebarTab open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Contact">
+    </SidebarTabLeft>
+    <SidebarTabLeft open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Contact">
       <span slot="tab">
         <Icon icon={atIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
       </div>
-    </SidebarTab>
-    <SidebarTab open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Key">
+    </SidebarTabLeft>
+    <SidebarTabLeft open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Key">
       <span slot="tab">
         <Icon icon={infoIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
       </div>
-    </SidebarTab>
-    <SidebarTab open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Search & Highlight" bind:this={searchTabComponent}>
+    </SidebarTabLeft>
+    <SidebarTabLeft open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Search & Highlight" bind:this={searchTabComponent}>
       <span slot="tab" title="Search & Highlight">
         <Icon icon={bookmarkIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
       </div>
-    </SidebarTab>
-    <SidebarTab open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="Relays">
-      <span slot="tab" title="Settings">
+    </SidebarTabLeft>
+    <SidebarTabLeft open={$sidebarToggle === 'relays'} on:click={() => {settings('relays')}} tooltip="Relays">
+      <span slot="tab" title="Relays">
         <Icon icon={cogIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
+        <h2>Relays</h2>
       </div>
-    </SidebarTab>
-    <SidebarTab open={$sidebarToggle === ''} on:click={() => handleThis()} tooltip="nostr login">
-      <span slot="tab" title="Bitmaps">
+    </SidebarTabLeft>
+    <SidebarTabLeft open={$sidebarToggle === 'nostr'} on:click={() => {settings('nostr')}} tooltip="nostr login">
+      <span slot="tab" title="Nostr">
         <Icon icon={bitmapIcon} color="var(--bold-a)" />
       </span>
       <div slot="content">
         <NostrLogin />
       </div>
-    </SidebarTab>
+    </SidebarTabLeft>
   
   </div>
   

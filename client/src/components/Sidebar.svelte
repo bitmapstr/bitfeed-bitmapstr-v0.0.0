@@ -24,6 +24,7 @@ import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, fre
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
     import MyThemesDropdown from './MyThemesDropdown.svelte';
+    import NostrLogin from './NostrLogin.svelte';
 let searchTabComponent
 
 let blockHidden = false
@@ -148,6 +149,22 @@ function showBlock () {
       <ConnectWallet />
       <MyThemesDropdown />
 
+    </div>
+  </SidebarTab>
+  <SidebarTab open={$sidebarToggle === 'relays'} on:click={() => {settings('relays')}} tooltip="Relays">
+    <span slot="tab" title="Relays">
+      <Icon icon={cogIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      <h2>Relays</h2>
+    </div>
+  </SidebarTab>
+  <SidebarTab open={$sidebarToggle === 'nostr'} on:click={() => {settings('nostr')}} tooltip="nostr login">
+    <span slot="tab" title="Nostr">
+      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      <NostrLogin />
     </div>
   </SidebarTab>
   

@@ -142,10 +142,10 @@ const defaultSettings = {
 	showMessages: true,
 	showSearch: true,
 	showBlockInfo: false,
-	showMyBitmap: true,
+	showMyBitmap: false,
 	noTrack: false,
 	blocksEnabled: true,
-	verifiedBitmapstr: true,
+	verifiedBitmapstr: false,
 	showNav: false
 }
 

@@ -1,52 +1,50 @@
 <script>
-import { currentColor1 } from "../../stores";
-export let active
-</script>
-
-<div class="toggle" class:active={active} on:click>
-
-  <div class="track" >
-    <div class="handle" />
+  export let active
+  
+  </script>
+  
+  <div class="toggle" class:active={active} on:click>
+    <div class="track">
+      <div class="handle" />
+    </div>
   </div>
   
-</div>
-
-<style type="text/scss">
-.toggle {
-  display: inline-block;
-  cursor: pointer;
-
-  .track {
-    position: relative;
-    width: 2em;
-    height: 1em;
-    border-radius: .5em;
-    background: var(--palette-e);
-
-    transition: background 200ms;
-
-    .handle {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 1em;
-      height: 1em;
-      border-radius: 50%;
-      background: white;
-
-      transition: left 200ms;
-    }
-  }
-
-  &.active {
+  <style type="text/scss">
+  .toggle {
+    display: inline-block;
+    cursor: pointer;
+  
     .track {
-      background: var(--palette-good);
-
+      position: relative;
+      width: 2em;
+      height: 1em;
+      border-radius: .5em;
+      background: var(--palette-e);
+  
+      transition: background 200ms;
+  
       .handle {
-        left: 1em;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        background: white;
+  
+        transition: left 200ms;
+      }
+    }
+  
+    &.active {
+      .track {
+        background: var(--palette-good);
+  
+        .handle {
+          left: 1em;
+        }
       }
     }
   }
-}
-</style>
+  </style>

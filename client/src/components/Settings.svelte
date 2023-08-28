@@ -87,7 +87,8 @@
   </script>
   
   {#each Object.keys($settings) as setting (setting) }
-    {#if settingConfig[setting]}
+    {#if settingConfig[setting] }
       <SidebarMenuItem {...getSettings(setting)} value={$settings[setting]} on:click={() => { toggle(setting) }} on:input={(e) => { onChange(setting, e.detail)}} />
+    
     {/if}
   {/each}

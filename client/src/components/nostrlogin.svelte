@@ -28,7 +28,26 @@ async function nostrConnect() {
 
 </script>
 <style>
-
+.primary {
+    color: orange;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .dropdown {
+      position: relative;
+      
+    }
+    .dropdown button {
+      /* background-color: var(--palette-good); */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 </style>
-<div><h1>nostr login</h1></div>
-<button style="background-color: {$currentColor1}" on:click={nostrConnect}>log-in</button>
+<div>
+<h1>Nostr login</h1>
+<button class="primary" style="background-color: {$currentColor1}" on:click={nostrConnect}>log-in</button>
+
+</div>

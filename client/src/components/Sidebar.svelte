@@ -140,6 +140,7 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
+
       <Settings />
     </div>
   </SidebarTab>
@@ -180,6 +181,7 @@ function showBlock () {
       <Icon icon={bitmapIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
+      
       <NostrLogin />
     </div>
   </SidebarTab>

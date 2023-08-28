@@ -22,6 +22,8 @@
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
     import TransactionOverlayAudio from './TransactionOverlayAudio.svelte';
+    import TransactionOverlay from './TransactionOverlay.svelte';
+
     import NavBar from './NavBar.svelte';
 
   let initCanvas
@@ -714,8 +716,11 @@
   </div>
 
   <Sidebar />
-  <TransactionOverlayAudio />
-
+{#if $settingsBitmap.audioOn}
+<TransactionOverlayAudio />
+{:else}
+  <TransactionOverlay />
+{/if}
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>
       <div class="loading-wrapper">

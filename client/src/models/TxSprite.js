@@ -231,3 +231,4 @@ const VI = []
     })
   })
 })
+console.log(VI)

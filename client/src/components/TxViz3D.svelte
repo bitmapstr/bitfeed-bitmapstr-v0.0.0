@@ -607,6 +607,7 @@
           
             {#if !$settingsBitmap.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+              
               <TxRender controller={txController} />
         
               <div class="mempool-height" style="bottom: calc({$mempoolScreenHeight + 20}px)">
@@ -638,6 +639,7 @@
             </div>
             {:else if $settingsBitmap.showMyBitmap}
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
+             
               <TxRender2 bind:initCanvas={initCanvas}  displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
               
               <div class="block-area-wrapper">
@@ -669,6 +671,7 @@
               </div>
               
             </div>
+           
             {/if}
                       
 

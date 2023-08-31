@@ -143,6 +143,7 @@ const defaultSettings = {
 	showSearch: true,
 	showBlockInfo: true,
 	showMyBitmap: false,
+	show3DBitmap: true,
 	noTrack: false,
 	blocksEnabled: true,
 	verifiedBitmapstr: false,

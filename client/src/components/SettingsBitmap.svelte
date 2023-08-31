@@ -23,6 +23,13 @@ let settingConfig = {
     trueLabel: 'Bitmapstr',
     valueType: 'bool'
   },
+  show3DBitmap: {
+    label: '3D Bitmap',
+    type: 'pill',
+    falseLabel: 'Off',
+    trueLabel: 'On',
+    valueType: 'bool'
+  },
   showNav: {
     label: 'Show Navigation',
     valueType: 'bool'

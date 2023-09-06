@@ -151,7 +151,7 @@ function showBlock () {
     </span>
     <div slot="content">
       <ConnectWallet />
-
+      <NostrLogin />
     </div>
   </SidebarTab>
   

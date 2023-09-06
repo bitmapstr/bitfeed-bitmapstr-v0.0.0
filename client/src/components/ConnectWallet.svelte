@@ -183,9 +183,9 @@
 
     }
     function DisconnectWallet() {
-        wallet.connected = false;
-        $verifiedBitmapstr = false
-        $isBitmapOwner = false
+        // wallet.connected = false;
+        // $verifiedBitmapstr = false
+        // $isBitmapOwner = false
         console.log("Wallet disconnected");
     }
 

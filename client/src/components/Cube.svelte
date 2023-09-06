@@ -15,8 +15,7 @@
 	let color1 = $currentColor1
 	let color2 = $currentColor2
 
-
-
+	let txdetail = $detailTx;
 
 	onMount(() => {const container = document.querySelector('#scene-container');
 	const scene = new THREE.Scene();

@@ -25,7 +25,6 @@
     import TransactionOverlay from './TransactionOverlay.svelte';
 
     import NavBar from './NavBar.svelte';
-    import Cube from './Cube.svelte';
 
   let initCanvas
   let width = window.innerWidth - 20
@@ -601,8 +600,6 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-
-
 <div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
             {#if !$settingsBitmap.showMyBitmap }   
@@ -665,6 +662,7 @@
                                </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
+                <!-- <RunningOsterich /> -->
 
               </div>
               

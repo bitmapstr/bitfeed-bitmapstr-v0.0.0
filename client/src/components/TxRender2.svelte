@@ -5,13 +5,12 @@
   import fragShaderSrc from '../shaders/tx.frag'
   import TxSprite from '../models/TxSprite.js'
   import { color, hcl } from 'd3-color'
-  import { darkMode, settings, devSettings, freezeResize, settingsBitmap } from '../stores.js'
+  import { darkMode, settings, devSettings, freezeResize } from '../stores.js'
   import config from '../config.js'
   import {currentThemevalue}  from '../stores';
 
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
-    import Cube from './Cube.svelte';
 
    
   export let selectedThemevalue = writable(currentThemevalue);
@@ -358,11 +357,6 @@
 
 <svelte:window on:resize={resizeCanvas} on:load={windowReady} on:dblclick={initCanvas} />
 
-{#if $settingsBitmap.show3DBitmap}
-<div id="scene-container">
-  <Cube />
-</div>
-{:else}
 <canvas
   class="tx-scene2"
   width={displayWidth}
@@ -370,6 +364,3 @@
   style="width: {cssWidth}px; height: {cssHeight}px;"
   bind:this={canvas}
 ></canvas>
-{/if}
-
-

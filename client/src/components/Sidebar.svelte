@@ -183,8 +183,6 @@ function showBlock () {
     <div slot="content">
       
       <NostrLogin />
-      <SettingsBitmap />
-
     </div>
   </SidebarTab>
 

@@ -353,6 +353,7 @@
   width: auto;
   /* pointer-events: none; */
   overflow: hidden;
+  z-index: -15;
 }
 </style>
 
@@ -362,6 +363,13 @@
 <div id="scene-container">
   <Cube />
 </div>
+<canvas
+  class="tx-scene2"
+  width={displayWidth}
+  height={displayHeight}
+  style="width: {cssWidth}px; height: {cssHeight}px;"
+  bind:this={canvas}
+></canvas>
 {:else}
 <canvas
   class="tx-scene2"

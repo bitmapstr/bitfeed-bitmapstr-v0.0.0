@@ -1,9 +1,10 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner, settingsBitmap} from "../stores";
+    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner, settingsBitmap, insarray} from "../stores";
     import io from 'socket.io-client'
     import LoadingAnimation from "./util/LoadingAnimation.svelte";
+    import { writable } from "svelte/store";
 
     export let wallet = walletConnected;
     export let accounts = unisatAccounts;
@@ -43,10 +44,10 @@
         // Xverse
 
     }
-  
+
     function reconnectWallet() {
         DisconnectWallet()
-        ConnectWallet()
+        // ConnectWallet()
 
     }
 
@@ -94,6 +95,8 @@
         return walletInscriptions.total
 
     }
+    export let insArray = [writable([0])];
+    let parcelArray = [];
 
     async function GetMyBitmaps() {
         if (wallet.connected = true) {
@@ -105,8 +108,7 @@
                 const limit = await GetWalletInsTotal()                 
                 const walletInscriptions = await window.unisat.getInscriptions(0, limit);
                 
-                let insArray = [];
-                let parcelArray = [];
+                
                 
                 for (let i = 0; i < walletInscriptions.total; i++) {
                     const insID = walletInscriptions.list[i].inscriptionId;
@@ -140,6 +142,9 @@
                 $verifiedBitmapstr = true
                 console.log(parcelArray)
                 console.log(insArray);
+                insarray.set(insArray)
+                console.log("$insarray")
+                console.log($insarray)
                 return [insArray];
 
                 } catch (e) {
@@ -151,8 +156,10 @@
             console.log("else GetMyBitmaps ERROR");
         }
     }
+ $: insArray = insArray
+ 
 
-    function VerifyBitmap() {
+ function VerifyBitmap() {
 
         console.log($unisatAccounts[0], $currentHeight)
 
@@ -202,9 +209,8 @@
 
 <div class="dropdown"> 
     {#if wallet.connected }
-        {#if $settingsBitmap.showMyBitmap}
-        <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}
-            >Disconnect Wallet</button>
+    <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}>Disconnect Wallet</button>
+        {#if $settingsBitmap.showMyBitmap}       
         <form  on:submit|preventDefault={handleSubmit(selected)}>
             <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>

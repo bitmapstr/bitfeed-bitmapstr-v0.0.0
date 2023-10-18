@@ -11,7 +11,9 @@
 
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
-    import Cube from './Cube.svelte';
+  import Cube from './Cube.svelte';
+  import { insarray } from '../stores.js'; 
+
 
    
   export let selectedThemevalue = writable(currentThemevalue);
@@ -361,16 +363,22 @@
 
 {#if $settingsBitmap.show3DBitmap}
 <div id="scene-container">
-  <Cube />
+  <Cube/>
+  {#each $insarray as ins}
+<p>{[ins]}</p>
+{/each}
 </div>
-<canvas
+
+<!-- <canvas
   class="tx-scene2"
-  width={displayWidth}
-  height={displayHeight}
-  style="width: {cssWidth}px; height: {cssHeight}px;"
+  width={150}
+  height={150}
+  style="width: {150}px; height: {150}px;"
   bind:this={canvas}
-></canvas>
+></canvas> -->
+
 {:else}
+
 <canvas
   class="tx-scene2"
   width={displayWidth}
@@ -378,6 +386,7 @@
   style="width: {cssWidth}px; height: {cssHeight}px;"
   bind:this={canvas}
 ></canvas>
+
 {/if}
 
 

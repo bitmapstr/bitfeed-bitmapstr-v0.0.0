@@ -127,6 +127,7 @@ export const walletConnected = writable()
 export const verifiedBitmapstr = writable()
 export const unisatAccounts = writable("no accounts")
 export const isBitmapOwner = writable(false)
+export const insarray = writable([])
 
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'

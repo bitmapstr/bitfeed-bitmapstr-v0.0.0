@@ -11,16 +11,14 @@
 	export const widthSegments = 1
 	export const heightSegments = 1
 	export const depthSegments = 1
+	export const id = 0
 
 	let color1 = $currentColor1
 	let color2 = $currentColor2
 
-
-
-
 	onMount(() => {const container = document.querySelector('#scene-container');
 	const scene = new THREE.Scene();
-	const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
+	const camera = new THREE.PerspectiveCamera(2, window.innerWidth / window.innerHeight, 1, 1000);
 	const renderer = new THREE.WebGL1Renderer();
 
 	const controls = new OrbitControls( camera, renderer.domElement );
@@ -29,20 +27,17 @@
 
 	loader.load (
 		// resource URL
-	'models/gltf/bitmaps/PRISTINEPP-000.gltf',
+	'models/gltf/bitmaps/PRISTINEPP-001.gltf',
 	// called when the resource is loaded
 	function ( gltf ) {
 
-
 		scene.add( gltf.scene );
 		
-
 		gltf.animations; // Array<THREE.AnimationClip>
 		gltf.scene; // THREE.Group
 		gltf.scenes; // Array<THREE.Group>
 		gltf.cameras; // Array<THREE.Camera>
 		gltf.asset; // Object
-
 
 	},
 	// called while loading is progressing
@@ -59,8 +54,6 @@
 	}
 	);
 
-
-	
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.setClearColor( 0x000000, 0)
 	//document.body.appendChild(renderer.domElement);

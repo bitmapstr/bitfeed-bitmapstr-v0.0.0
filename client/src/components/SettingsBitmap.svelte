@@ -1,46 +1,44 @@
 <script>
 import analytics from '../utils/analytics.js'
-import { settingsBitmap, settings} from '../stores.js'
+import { settingsBitmap } from '../stores.js'
 import SidebarMenuItem2 from './SidebarMenuItem2.svelte';
 
 function toggle(setting) {
   if (settingConfig[setting] != null && settingConfig[setting].valueType === 'bool') {
-    onChange(setting, !$settings[setting])
+    onChange(setting, !$settingsBitmap[setting])
   }
 }
 
 function onChange(setting, value) {
-  $settings[setting] = value
-  analytics.trackEvent('settings', setting, $settings[setting])
+  $settingsBitmap[setting] = value
+  analytics.trackEvent('settingsBitmap', setting, $settingsBitmap[setting])
 }
 
 
 let settingConfig = { 
-  audioOn: {
-    label: 'Audio On',
+  showMyBitmap: {
+    label: 'My Bitmap',
+    type: 'pill',
+    falseLabel: 'Bitfeed',
+    trueLabel: 'Bitmapstr',
     valueType: 'bool'
   },
-  unverifiedtheme: {
-    label: 'Unverified',
-    type: 'dropdown',
-    valueType: 'string'
+  show3DBitmap: {
+    label: '3D Bitmap',
+    type: 'pill',
+    falseLabel: 'Off',
+    trueLabel: 'On',
+    valueType: 'bool'
   },
-  showSearch: {
-    label: 'Search Bar',
+  showNav: {
+    label: 'Show Navigation',
     valueType: 'bool'
   },
   showBlockInfo: {
-    label: 'Block Info',
+    label: 'Show block Info',
     valueType: 'bool'
   },
-  showMyBitmap: {
-    label: 'My Bitmap',
-    valueType: 'bool'
-  },
-  verified: {
-    label: 'Verified',
-    valueType: 'bool'
-  }
+ 
 }
 
 
@@ -50,8 +48,8 @@ function getSettings(setting) {
 
 </script>
 
-{#each Object.keys($settings) as setting (setting) }
+{#each Object.keys($settingsBitmap) as setting (setting) }
   {#if settingConfig[setting]}
-    <SidebarMenuItem2 {...getSettings(setting)} value={$settings[setting]} on:click={() => { toggle(setting) }} on:input={(e) => { onChange(setting, e.detail)}} />
+    <SidebarMenuItem2 {...getSettings(setting)} value={$settingsBitmap[setting]} on:click={() => { toggle(setting) }} on:input={(e) => { onChange(setting, e.detail)}} />
   {/if}
 {/each}

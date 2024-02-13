@@ -1,91 +1,241 @@
 <script>
     import { searchBlockHeight } from "../utils/search";
     import GetAllInscriptions from "./Indexer.svelte";
-    import MySlider from "./MySlider.svelte";
+    import  {currentHeight, currentColor1, currentColor2, walletConnected, verifiedBitmapstr, unisatAccounts, isBitmapOwner, settingsBitmap, insarray} from "../stores";
+    import io from 'socket.io-client'
+    import LoadingAnimation from "./util/LoadingAnimation.svelte";
+    import { writable } from "svelte/store";
 
-    let wallet = { connected: false };
+    export let wallet = walletConnected;
+    export let accounts = unisatAccounts;
     let winuni = window.unisat;
+    winuni.on('accountsChanged', function(accounts) {
+        reconnectWallet()
+    });
+
+    winuni.removeListener('accountsChanged', function(accounts) {
+        reconnectWallet()
+    });
     async function ConnectWallet() {
         // UniSat Wallet
        
         try {
             if (typeof winuni !== "undefined") {
                 console.log("UniSat Wallet is installed!");
-                let accounts = await winuni.requestAccounts();
+                accounts = await winuni.requestAccounts();
+                wallet.connected = true
+                settingsBitmap.showMyBitmap = true
                 console.log("connect success", accounts);
-                wallet.connected = !wallet.connected;
+
+                unisatAccounts.set(accounts)
                 GetMyBitmaps();
+
             } else {
+                settingsBitmap.showMyBitmap = false
                 console.log("UniSat Wallet is not installed :(");
                 console.log("connect failed");
                 alert("Install a compatible wallet.");
             }
         } catch {
-            console.log("Connect wallet");
+            // console.log("Connect wallet");
+            alert("UniSat Wallet is installed! Connect your Wallet")
         }
 
         // Xverse
 
     }
 
+    function reconnectWallet() {
+        DisconnectWallet()
+        // ConnectWallet()
+
+    }
+
+    async function GetBitmapArray() {
+        const ipv4Addresses = [
+            "string.5.8888.bitmap",
+            "string.9.bitmap",
+            "0.100.bitmap",
+            "20.777777.bitmap",
+            "5.bitmap"
+            ];
+        // const addresses = await GetMyBitmaps()
+
+        // const regexBitmap = /^(.*?)(?:0|[1-9][0-9]*)(\.bitmap)$/;
+        const regexBitmap = /^(.*?)\.(\d+(\.\d+)?)(\.\d+(\.\d+)?)\.bitmap$/;
+
+        const extractedParts = ipv4Addresses.map((item) => {
+        const match = item.match(regexBitmap);
+        if (match) {
+            const anyPart = match[0];
+            const firstNumber = match[1];
+            const secondNumber = match[2];
+            const thirdNumber = match[3];
+
+            return {
+            anyPart,
+            firstNumber,
+            secondNumber,
+            thirdNumber
+            };
+        }
+        return null;
+        });
+
+            console.log("extractedParts");
+            console.log(extractedParts);
+
+    }
+
+    async function GetWalletInsTotal() {
+        let limit;
+        const walletInscriptions = await window.unisat.getInscriptions(0, limit);
+        console.log(" GetWalletInsTotal()")
+        console.log(walletInscriptions.total)
+        return walletInscriptions.total
+
+    }
+    export let insArray = [writable([0])];
+    let parcelArray = [];
+
     async function GetMyBitmaps() {
-        if (wallet.connected) {
-            try {
-                let limit = 30;
-                let insArray = [];
-                const res = await window.unisat.getInscriptions(0, limit);
-                console.log("Total Ins: " + res.total);
-                for (let i = 0; i < limit; i++) {
-                    const insID = res.list[i].inscriptionId;
-                    const hiro =
-                        "https://api.hiro.so/ordinals/v1/inscriptions/" + insID;
+        if (wallet.connected = true) {
+            const regexBitmap = /^(?:0|[1-9][0-9]*).bitmap$/;
+            const regexBitmapstr = /^(?:0|[1-9][0-9]*).bitmapstr$/;
+            const hiroURL = "https://api.hiro.so/ordinals/v1/inscriptions/"
+            
+            try { 
+                const limit = await GetWalletInsTotal()                 
+                const walletInscriptions = await window.unisat.getInscriptions(0, limit);
+                
+                
+                
+                for (let i = 0; i < walletInscriptions.total; i++) {
+                    const insID = walletInscriptions.list[i].inscriptionId;
+                    const hiro = hiroURL + insID;
+
                     const content = await fetch(hiro + "/content");
                     const ins = await content.text();
                     const inscriptionParts = ins.split(".");
                     console.log(inscriptionParts);
                     const bitmapNum = inscriptionParts[0];
-                    const textFilter = [];
-                    const bitmapText = "bitmap";
+                    const parcelNumber = inscriptionParts[0]
+                    const bitmapText = regexBitmap.test(ins)
+                    const bitmapstrText = regexBitmapstr.test(ins)
 
-                    if (inscriptionParts.length > 1) {
-                        insArray.push(bitmapNum);
+                    if (bitmapText) {
+
+                        if(inscriptionParts.length == 2) {
+                            insArray.push(bitmapNum);
+                        } else if(inscriptionParts.length == 3) {
+                            parcelArray.push(parcelNumber);
+                        } else {
+                            //
+                        }             
+                        
                     }
-                    //console.log("Content: " + ins)
-                    //console.log("InsID: " + insID)
+                    
+                    console.log("parcelNumber")
+                    console.log(parcelNumber)
+                   
                 }
-
+                $verifiedBitmapstr = true
+                console.log(parcelArray)
                 console.log(insArray);
+                insarray.set(insArray)
+                console.log("$insarray")
+                console.log($insarray)
                 return [insArray];
 
                 } catch (e) {
+                    console.log(" catch GetMyBitmaps ERROR");
                     console.log(e);
                 }
 
         } else {
-            console.log("no Inscriptions!?");
+            console.log("else GetMyBitmaps ERROR");
         }
     }
+ $: insArray = insArray
+ 
 
+ function VerifyBitmap() {
+
+        console.log($unisatAccounts[0], $currentHeight)
+
+        const trac = io("https://bitmap.trac.network", {
+            autoConnect : true,
+            reconnection: true,
+            reconnectionDelay: 500,
+            econnectionDelayMax : 500,
+            randomizationFactor : 0
+        });
+        trac.connect();
+        trac.on('response', async function(msg)
+        {
+            $isBitmapOwner = JSON.parse(msg.result)
+            isBitmapOwner.set($isBitmapOwner)
+            console.log("$isBitmapOwner")
+            console.log($isBitmapOwner)
+        });
+        trac.on('error', async function(msg)
+        {
+            console.log(msg);
+        });
+        trac.emit('get', {
+        func : 'isBitmapOwner',
+        args : [$unisatAccounts[0], $currentHeight],
+        call_id : ''
+        });
+
+    }
     function DisconnectWallet() {
-        wallet.connected = !wallet.connected;
-        console.log("disconnect here");
+        wallet.connected = false;
+        $verifiedBitmapstr = false
+        $isBitmapOwner = false
+        console.log("Wallet disconnected");
     }
 
     function handleSubmit(height) {
         searchBlockHeight(height);
-        console.log("searchBlockHeight");
+        $currentHeight = height
+        console.log("currentHeight");
+        console.log($currentHeight)
+        VerifyBitmap()
     }
-    $: accounts = accounts;
+
     let selected;
 </script>
 
 <div class="dropdown"> 
-    {#if wallet.connected}
-        <button class="danger" on:click={DisconnectWallet}
-            >Disconnect Wallet</button>
-        <h3>unverified bitmaps</h3>
+    {#if wallet.connected }
+    <button class="dropdown button" style="background-color: {$currentColor1}" on:click={DisconnectWallet}>Disconnect Wallet</button>
+        {#if $settingsBitmap.showMyBitmap}       
         <form  on:submit|preventDefault={handleSubmit(selected)}>
-            <select class="dropdown" bind:value={selected} on:change={() => handleSubmit(selected)}>
+            <select class="dropdown" style="background-color: {$currentColor1}" bind:value={selected} on:change={() => handleSubmit(selected)}>
+                <option>Select ur bitmap</option>
+                {#await GetMyBitmaps()}
+                    <p>.Loading bitmaps</p>
+                    <LoadingAnimation />
+                {:then bitmaps}
+                    {console.log("BITMAPS: " + bitmaps)}
+                    {#each bitmaps[0] as bitmap, index}
+                        <option style="background-color: {$currentColor1} color: {$currentColor2}" value={bitmap}>{bitmap}</option>
+                    {/each}
+                {/await}
+            </select>
+            {#if $isBitmapOwner}
+            <p>{selected} Verified</p>
+            {:else}
+            <p>{selected} Not Verified</p>
+            {/if}
+
+        </form>
+
+        {:else}
+    
+        <form  on:submit|preventDefault={handleSubmit(selected)}>
+            <select class="dropdown"  bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>
                 {#await GetMyBitmaps()}
                     <p>...waiting for my bitmaps</p>
@@ -96,72 +246,60 @@
                     {/each}
                 {/await}
             </select>
-            <input
-                bind:value={selected}
-                on:change={() => handleSubmit(selected)}
-            />
-            <!-- <button disabled={!selected} type="submit"> Submit </button> -->
-            <p>selected bitmap {selected ? selected : "[waiting...]"}</p>
+            {#if $isBitmapOwner}
+            <p>{selected} Verified</p>
+            {:else}
+            <p>{selected} Not Verified</p>
+            {/if}
 
-            <div />
         </form>
+
+        {/if}
+    
+
     {:else if !wallet.connected}
+
+        {#if $settingsBitmap.showMyBitmap}
+
+        <p>Connect yer wallet</p>
+        <button style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
+        <br />
+        <button style="background-color: {$currentColor1}">Hiro</button>
+        <br />
+        <button style="background-color: {$currentColor1}">Xverse</button>
+        {:else}
+
         <p>Connect yer wallet</p>
         <button class="primary" on:click={ConnectWallet}>UniSat</button>
         <br />
-        <button>Hiro</button>
+        <button class="primary">Hiro</button>
         <br />
-        <button>Xverse</button>
+        <button class="primary">Xverse</button>
+
+        {/if}
+
+
     {:else}
         <p>something else happened here</p>
     {/if}
+
 </div>
 
 
 <style>
-
 .primary {
         color: orange;
     }
-    .danger {
-        color: rgba(255, 119, 0, 0.675);
-    }
-    input {
-        display: block;
-        width: 200px;
-        max-width: 100%;
-    }
     .dropdown {
       position: relative;
+      
     }
     .dropdown button {
-      background-color: var(--palette-good);
+      /* background-color: var(--palette-good); */
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       cursor: pointer;
     }
-    .dropdown ul {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: 1;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color:var(--palette-good);
-    }
-    .dropdown ul li {
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    .dropdown ul li:hover {
-      background-color: #f1f1f1;
-    }
-    .open .dropdown ul {
-      display: block;
-    }
-  </style>
+</style>
 

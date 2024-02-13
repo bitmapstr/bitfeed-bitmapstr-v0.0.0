@@ -21,15 +21,15 @@ currentThemevalue.subscribe(value => {
  export const currentColor1 = writable(initialRGB1)
  currentColor1.subscribe(value => {
 	localStorage.setItem("currentColor1", value.toString())
-	console.log("currentColor1 From stores.js")
-	console.log(value)
+	// console.log("currentColor1 From stores.js")
+	// console.log(value)
 });
  const initialRGB2 = localStorage.getItem('currentColor2') || "null"
  export const currentColor2 = writable(initialRGB2)
  currentColor2.subscribe(value => {
 	localStorage.setItem("currentColor2", value.toString())
-	console.log("currentColor2 From stores.js")
-	console.log(value)
+	// console.log("currentColor2 From stores.js")
+	// console.log(value)
 });
 
 function createCounter () {
@@ -122,6 +122,13 @@ export const blockAreaSize = writable(0)
 
 export const settingsOpen = writable(false)
 
+export const currentHeight = writable(0)
+export const walletConnected = writable()
+export const verifiedBitmapstr = writable()
+export const unisatAccounts = writable("no accounts")
+export const isBitmapOwner = writable(false)
+export const insarray = writable([])
+
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
 
@@ -135,11 +142,13 @@ const defaultSettings = {
 	colorByFee: false,
 	showMessages: true,
 	showSearch: true,
-	showBlockInfo: false,
+	showBlockInfo: true,
 	showMyBitmap: false,
+	show3DBitmap: true,
 	noTrack: false,
-	blocksEnabled: true
-
+	blocksEnabled: true,
+	verifiedBitmapstr: false,
+	showNav: false
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}

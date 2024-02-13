@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "svelte-grid-responsive": "^1.2.4"
+  }
+}

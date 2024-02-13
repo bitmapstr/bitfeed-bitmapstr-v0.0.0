@@ -20,16 +20,18 @@ import MempoolLegend from '../components/MempoolLegend.svelte'
 import ContactTab from '../components/ContactTab.svelte'
 import SearchTab from '../components/SearchTab.svelte'
 import bitmapIcon from '../assets/icon/cil-bitfeed-ostrich.svg'
-import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize } from '../stores.js'
+import walletIcon from '../assets/icon/cil-bitfeed-wallet.svg'
+import bitcoinaudioicon from '../assets/icon/cil-bitcoinaudio-icon.svg'
+import { sidebarToggle, overlay, currentBlock, blockVisible, haveSupporters, freezeResize, settingsBitmap, walletConnected, verifiedBitmapstr } from '../stores.js'
     import ConnectWallet from './ConnectWallet.svelte';
     import SettingsBitmap from './SettingsBitmap.svelte';
     import MyThemesDropdown from './MyThemesDropdown.svelte';
-    import BitcoinAudio from './BitcoinAudio.svelte';
+    import NostrLogin from './NostrLogin.svelte';
+    import SettingsBitcoinAudio from './SettingsBitcoinAudio.svelte';
 let searchTabComponent
 
 let blockHidden = false
 $: blockHidden = ($currentBlock && !$blockVisible)
-
 function settings (tab) {
   if ($sidebarToggle) analytics.trackEvent('sidebar', $sidebarToggle, 'close')
   if ($sidebarToggle === tab) {
@@ -138,27 +140,56 @@ function showBlock () {
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
+
       <Settings />
     </div>
   </SidebarTab>
-  <SidebarTab open={$sidebarToggle === 'bitmaps'} on:click={() => {settings('bitmaps')}} tooltip="Bitmaps">
-    <span slot="tab" title="Bitmaps">
-      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+
+  <SidebarTab open={$sidebarToggle === 'bitmaps'} on:click={() => {settings('bitmaps')}} tooltip="Connect Wallet">
+    <span slot="tab" title="Connect Wallet">
+      <Icon icon={walletIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
       <ConnectWallet />
+
     </div>
   </SidebarTab>
-
-  <SidebarTab open={$sidebarToggle === 'verified'} on:click={() => {settings('verified')}} tooltip="Verified?">
-    <span slot="tab" title="Bitmaps">
+  
+  {#if  $verifiedBitmapstr}
+  <SidebarTab open={$sidebarToggle === 'verifiedBitmapstr'} on:click={() => {settings('verifiedBitmapstr')}} tooltip="Verified">
+    <span slot="tab" title="Verified">
+      <Icon icon={bitcoinaudioicon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      <SettingsBitcoinAudio />
+    </div>
+  </SidebarTab>
+  <SidebarTab open={$sidebarToggle === 'relays'} on:click={() => {settings('relays')}} tooltip="Relays">
+    <span slot="tab" title="Relays">
       <Icon icon={cogIcon} color="var(--bold-a)" />
     </span>
     <div slot="content">
-      <MyThemesDropdown />
+
+      <h3>Bitmapstr Settings</h3>
       <SettingsBitmap />
-      <BitcoinAudio />
+      <MyThemesDropdown />
+
     </div>
   </SidebarTab>
+  <SidebarTab open={$sidebarToggle === 'nostr'} on:click={() => {settings('nostr')}} tooltip="nostr login">
+    <span slot="tab" title="Nostr">
+      <Icon icon={bitmapIcon} color="var(--bold-a)" />
+    </span>
+    <div slot="content">
+      
+      <NostrLogin />
+      <SettingsBitmap />
+
+    </div>
+  </SidebarTab>
+
+  {/if}
+  
+
 
 </div>

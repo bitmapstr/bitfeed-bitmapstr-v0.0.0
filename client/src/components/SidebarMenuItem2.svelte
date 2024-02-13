@@ -1,7 +1,6 @@
 <script>
-import { tick } from 'svelte'
-import Toggle from './util/Toggle.svelte'
-import Pill from './util/Pill.svelte'
+import Toggle2 from './util/Toggle2.svelte'
+import Pill2 from './util/Pill2.svelte'
 import Select from 'svelte-select'
 import { createEventDispatcher } from 'svelte'
 import { freezeResize } from '../stores.js'
@@ -44,7 +43,7 @@ async function focusOut(e) {
 </script>
 
 <style type="text/scss">
-  .sidebar-menu-item {
+  .sidebar-menu-item2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -82,16 +81,16 @@ async function focusOut(e) {
   }
 </style>
 
-<div class="sidebar-menu-item" class:active={value} on:click>
+<div class="sidebar-menu-item2" class:active={value}  on:click>
   {#if type === 'pill'}
     <span class="label">{ label }</span>
-    <Pill active={value} left={falseLabel} right={trueLabel} />
+    <Pill2 active={value} left={falseLabel} right={trueLabel} />
   {:else if type === 'dropdown'}
     <div class="select" on:focusin={focusIn} on:focusOut={focusOut}>
       <Select items={ options } value={selectedOption} isSearchable={true} isClearable={false} itemFilter={filterSelectItems} placeholder={label} on:select={onSelect} showIndicator={true} />
     </div>
   {:else}
     <span class="label">{ label }</span>
-    <Toggle active={value} />
+    <Toggle2 active={value} />
   {/if}
 </div>

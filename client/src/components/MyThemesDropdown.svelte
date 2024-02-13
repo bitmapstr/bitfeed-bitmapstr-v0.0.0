@@ -1,7 +1,7 @@
 <script>
 import { writable } from 'svelte/store';
 import { themes } from '../themes';
-import { currentColor1, currentColor2, currentThemename, currentThemevalue } from '../stores';
+import { currentColor1, currentColor2, currentThemename, currentThemevalue, settingsBitmap } from '../stores';
 import { onMount } from 'svelte';
 
     let isOpen = false;
@@ -17,10 +17,10 @@ import { onMount } from 'svelte';
       selectedThemevalue.set(value);
       currentThemevalue.set(value)
 
-      console.log("currentColor1")
-      console.log($currentColor1)
-      console.log("currentColor2")
-      console.log($currentColor2)
+      // console.log("currentColor1")
+      // console.log($currentColor1)
+      // console.log("currentColor2")
+      // console.log($currentColor2)
 
       toggleDropdown();      
     }
@@ -53,15 +53,24 @@ import { onMount } from 'svelte';
     
      
   </script>
-  <h3>Themes</h3>
-  <div class="dropdown" class:open={isOpen}>
-    <button class="dropdown" on:click={toggleDropdown}>
+  <h2>Themes</h2>
+  <div class="dropdown" class:open={isOpen} >
+
+    {#if $settingsBitmap.showMyBitmap}
+
+    <button class="dropdown" style="background-color: {$currentColor1}" on:click={toggleDropdown} >
       {$selectedThemename || 'Select a theme'}
     </button>
+    {:else}
+    <button class="dropdown" on:click={toggleDropdown} >
+      {$selectedThemename || 'Select a theme'}
+    </button>
+
+    {/if}
     {#if isOpen}
       <ul>
         {#each themes as theme}
-          <li on:click={() => selectTheme(theme.name, theme.value)}>{theme.name}</li>
+        <li style="background-color: {$currentColor1}" on:click={(e) => selectTheme(theme.name, theme.value)}>{theme.name}</li>
         {/each}
       </ul>
     {/if}

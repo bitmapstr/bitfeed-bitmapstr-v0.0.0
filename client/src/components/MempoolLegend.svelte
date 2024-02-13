@@ -51,7 +51,7 @@ function calcSizes (gridSize, unitWidth, unitPadding) {
   sizes.forEach(size => {
     size.size = calcSize(size)
   })
-  sizes = sizes
+  // sizes = sizes
 }
 
 $: {

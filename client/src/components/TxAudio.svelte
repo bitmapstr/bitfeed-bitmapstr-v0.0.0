@@ -163,6 +163,4 @@ function highlight () {
     <p class="field inputs">{ tx.outputs.length } output{#if tx.outputs.length != 1}s{/if}</p>
   {/if}
  
- <p>audio info hear</p>
-
 </div>

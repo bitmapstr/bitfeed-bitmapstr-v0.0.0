@@ -362,21 +362,20 @@
 <svelte:window on:resize={resizeCanvas} on:load={windowReady} on:dblclick={initCanvas} />
 
 {#if $settingsBitmap.show3DBitmap}
-<div id="scene-container">
+<!-- <div id="scene-container">
   <Cube/>
   {#each $insarray as ins}
 <p>{[ins]}</p>
 {/each}
-</div>
+</div> -->
 
-<!-- <canvas
+<canvas
   class="tx-scene2"
-  width={150}
-  height={150}
-  style="width: {150}px; height: {150}px;"
+  width={displayWidth}
+  height={displayHeight}
+  style="width: {cssWidth}px; height: {cssHeight}px;"
   bind:this={canvas}
-></canvas> -->
-
+></canvas>
 {:else}
 
 <canvas

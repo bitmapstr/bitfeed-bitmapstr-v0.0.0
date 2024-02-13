@@ -603,7 +603,7 @@
 
 
 
-<div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
+<div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="width: {canvasWidth}; height: {canvasHeight}">
           
             {#if !$settingsBitmap.showMyBitmap }   
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >

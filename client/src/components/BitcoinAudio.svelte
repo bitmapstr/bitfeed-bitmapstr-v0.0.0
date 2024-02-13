@@ -6,6 +6,7 @@
     import RangeSlider from "./util/RangeSlider.svelte";
     import {currentColor1, currentColor2, currentHeight, selectedTx, currentBlock, detailTx, latestBlockHeight} from "../stores";
     import Cube from "./Cube.svelte";
+    import Grid from "svelte-grid-responsive";
     let color1 = $currentColor1;
     let color2 = $currentColor2;
     let txdetail = $detailTx;
@@ -167,6 +168,7 @@
     }
     
 </script>
+
 <div id="audio-wrapper">
    
     <h3 style="text-align: left;">BEATFEED by Bitcoin Audio</h3>

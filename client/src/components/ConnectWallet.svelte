@@ -90,8 +90,8 @@
     async function GetWalletInsTotal() {
         let limit;
         const walletInscriptions = await window.unisat.getInscriptions(0, limit);
-        // console.log(" GetWalletInsTotal()")
-        // console.log(walletInscriptions.total)
+        console.log(" GetWalletInsTotal()")
+        console.log(walletInscriptions.total)
         return walletInscriptions.total
 
     }
@@ -233,9 +233,7 @@
         </form>
 
         {:else}
-        <button class="dropdown button"  on:click={DisconnectWallet}
-            >Disconnect Wallet</button>
-        <!-- <h3>{$verifiedBitmapstr}</h3> -->
+    
         <form  on:submit|preventDefault={handleSubmit(selected)}>
             <select class="dropdown"  bind:value={selected} on:change={() => handleSubmit(selected)}>
                 <option>Select ur bitmap</option>

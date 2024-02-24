@@ -151,7 +151,13 @@ function showBlock () {
     </span>
     <div slot="content">
       <ConnectWallet />
+<<<<<<< Updated upstream
 
+=======
+      <NostrLogin />
+      <MyThemesDropdown />
+<div class="spacer"></div>
+>>>>>>> Stashed changes
     </div>
   </SidebarTab>
   
@@ -172,7 +178,6 @@ function showBlock () {
 
       <h3>Bitmapstr Settings</h3>
       <SettingsBitmap />
-      <MyThemesDropdown />
 
     </div>
   </SidebarTab>

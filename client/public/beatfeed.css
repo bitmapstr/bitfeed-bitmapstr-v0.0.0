@@ -1,272 +1,22 @@
-﻿body {
-    background-color: #474747 !important;
-   overflow-y: scroll;
-}
-body::-webkit-scrollbar {
-    display:none;
-}
-body {
-    -ms-overflow-style:none;
-}
-/*navbar begin*/
-
-#navbar {
-    display: grid;
-    grid-auto-rows: 114px;
-    grid-template-columns: 110px 90px 90px 580px 90px 90px auto;
-    grid-template-areas: 'powerCol negButtons negButtons2 blockinfogroup posButtons posButtons2 hash-root';
-    background: url(../images/img-nk-1-pads/nk-navbar-bkg.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-size: 100%;
-    width: 1200px;
-    height: 114px;
-    margin: auto;
-    margin-left: auto;
-    margin-top: 20px;
-    margin-bottom: 0px;
-}
-#powerCol {
-    margin-top: 17px;
-    margin-left:35px;
-}
-#logo {
-    background: url(../images/bitcoinaudio-icon-2020-005.png);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-size: 100%;
-    width: 70px;
-    height: 70px;
-    margin:auto;
-    
-}
-#power {
-    background: url(../images/img-nk-1-pads/POWER.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    width: 125px;
-    height: 30px;
-    margin-right: 0;
-    margin-left: 0;
-    margin-bottom: -10px;
-}
-#offLight {
-    background: url(../images/img-nk-1-pads/Off.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size:50%;
-    width: 125px;
-    height: 30px;
-}
-#powerToggle {
-    margin-right: 0;
-    margin-left: 35px;
-    margin-top: -15px;
-    margin-bottom: -15px;
-}
-#onLight {
-    background: url(../images/img-nk-1-pads/On.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    width: 125px;
-    height: 30px;
-}
-
-#navbar-minus {
-   
-}
-
-.navbutton {
-    
-    background-color: transparent;
-    width: 90px;
-    height: 35px;
-    border: none;
-    color: #ffd800;
-}
-
-
-#minus100kbtn {
-    background: url(../images/img-nk-1-pads/minus100kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#minus10kbtn {
-    background: url(../images/img-nk-1-pads/minus10kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#minus1kbtn {
-    background: url(../images/img-nk-1-pads/minus1kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#minus100btn {
-    background: url(../images/img-nk-1-pads/minus100btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#minus10btn {
-    background: url(../images/img-nk-1-pads/minus10btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#minus1btn {
-    background: url(../images/img-nk-1-pads/minus1btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-.blockinfogroup {
+﻿.blockinfogroup {
     font-size: 12px;
-    margin: auto;
+margin: auto;
     background: #ffffff89;
-    width: 100%;
+width: 100%;
     box-shadow: inset 0px 1px 4px rgb(0, 0, 0);
     border-radius: 5px;
     color: #000000;
-    height: 116px;
-    margin-top: 9px;
-    margin-left: 0px;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: 24px 24px 24px 24px 24px;
-    grid-template-areas: 'blocksTBLabel blocksTB searchLabel searchTB' ' dataString dataString dataString dataString' ' dataString2 dataString2 dataString2 dataString2' ' clipTB clipTB clipTB clipTB' 'testTB testTB testTB testTB';
-}
+   }
 
-.TB {
+.tb {
     border: none;
-    width: auto;
+    width: 100%;
     height: 20px;
     text-align: center;
-
-}
-
-#blocksTB {
-    grid-area: blocksTB;
-    text-align: left;   
-    background: rgba(253, 255, 131, 0.00);
-}
-#searchLabel {
-    padding: 3px;
-    grid-area: searchLabel;
-    text-align: right;
-    display: block;
-    background: rgba(253, 255, 131, 0.00);
-}
-#blocksTBLabel {
-    padding: 3px;
-    grid-area: blocksTBLabel;
-    text-align: right;
-    display: block;
-    background: rgba(253, 255, 131, 0.00);
-}
-#searchTB {
-    grid-area: searchTB;
-    text-align: left;
     background: rgba(253, 255, 131, 0.00);
     border-radius: 4px;
 }
-#dataString {
-    grid-area: dataString;
-    background: rgba(253, 255, 131, 0.00);
-}
-#dataString2 {
-    grid-area: dataString2;
-    background: rgba(253, 255, 131, 0.00);
-}
-#clipTB {
-    grid-area: clipTB;
-    background: rgba(253, 255, 131, 0.00);
-}
-#consoleTB {
-    grid-area: testTB;
-    background: rgba(253, 255, 131, 0.00);
-}
 
-#blockinfo {
-    /*margin-left: 10px;*/
-    font-size: 12px;
-    width: 480px;
-    height: 45px;
-    background: #FDFF83;
-    box-shadow: inset 0px 4px 4px rgb(0, 0, 0);
-    border-radius: 5px;
-    color: #000000;
-}
-
-
-#plus100kbtn {
-    background: url(../images/img-nk-1-pads/plus100kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#plus10kbtn {
-    background: url(../images/img-nk-1-pads/plus10kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#plus1kbtn {
-    background: url(../images/img-nk-1-pads/plus1kbtn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#plus100btn {
-    background: url(../images/img-nk-1-pads/plus100btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#plus10btn {
-    background: url(../images/img-nk-1-pads/plus10btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
-#plus1btn {
-    background: url(../images/img-nk-1-pads/plus1btn.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-#hash-root {
-    margin-right: 10px;
-}
-#hash {
-    background: url(../images/img-nk-1-pads/hashbutton.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size:75%;
-    width: 125px;
-    height: 30px;
-}
-
-#hrToggle {
-    margin-right: 0;
-    margin-left: 35px;
-    margin-top: -15px;
-    margin-bottom: -15px;
-}
-
-#root {
-    background: url(../images/img-nk-1-pads/rootbutton.svg);
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: 75%;
-    width: 125px;
-    height: 30px;
-}
 #nkplay {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -285,28 +35,7 @@ body {
     margin-left: 40px;
     height:400px;
 }
-/*#colorpads-container {
-    width: 450px;
-    height: 450px;
-    box-shadow: inset 0px 0px 15px #000000;
-    border-radius: 14px;
-}*/
-#colorpads {
-   
-}
 
-#beatpads {
-    box-shadow: inset 0px 0px 15px #000000;
-    border-radius: 14px;   
-    grid-area: pads-container;
-    padding: 10px;
-    width: 340px;
-    height: 340px;
-    display: grid;
-    grid-template-columns: 80px 80px 80px 80px;
-    grid-template-rows: 80px 80px 80px 80px;
-    grid-template-areas: 'pad13 pad14 pad15 pad16' 'pad9 pad10 pad11 pad12' 'pad5 pad6 pad7 pad8' 'pad1 pad2 pad3 pad4';
-}
 
 #knob-controls {
     display: grid;   
@@ -381,12 +110,7 @@ body {
 #midiswitches {
 
 }
-#sliceinfo {
-    display: grid;
-    grid-template-columns: auto auto auto auto ;
-    grid-auto-rows: 30px;
-    grid-template-areas: 'prevslicebutton  stringindex stringindex clickthrubutton ';
-}
+
 #prevslicebutton {
     grid-area: prevslicebutton;
     background-image: url(../images/blocknav/backbutton.svg);
@@ -401,13 +125,7 @@ body {
     #prevslicebutton:hover {
        
     }
-#stringindex {
-    grid-area: stringindex;
-    background: #ffffff6f;
-    box-shadow: inset 0px 1px 4px rgb(0, 0, 0);
-    border-radius: 5px;
-    color: #000000;
-}
+
 #clickthrubutton {
     grid-area: clickthrubutton;
     background-image: url(../images/blocknav/nextbutton.svg);
@@ -660,7 +378,7 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 10px;
 }
-/* .dropdown {
+.bfdropdown {
     background: url(../images/synth-btn-bgn.svg);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -678,22 +396,23 @@ body {
     padding: .6em 1.4em .5em .8em;
     box-sizing: border-box;
     margin: 0;
+    appearance: none;
     -moz-appearance: none;
-} */
-/* .dropdown::-ms-expand {
+}
+.bfdropdown::-ms-expand {
     display: none;
 }
-    .dropdown:hover {
-       
+    .bfdropdown:hover {
+        color: #ffd800;
     }
-    .dropdown:focus {
+    .bfdropdown:focus {
         color: #ffd800;
         outline: none;
     }
-    .dropdown option {
+    .bfdropdown option {
         background-color: black;
         font-size: small;
-    } */
+    }
 
 .colorsbtn {
     background: url(../images/synth-btn-bgn.svg);
@@ -714,6 +433,7 @@ body {
     padding: .6em 1.4em .5em .8em;
     box-sizing: border-box;
     margin: 0;
+    appearance: none;
     -moz-appearance: none;
 }
 

@@ -606,6 +606,7 @@
 <div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
             {#if !$settingsBitmap.showMyBitmap }   
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
@@ -637,6 +638,7 @@
               
             </div>
             {:else if $settingsBitmap.showMyBitmap}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 bind:initCanvas={initCanvas}  displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
               

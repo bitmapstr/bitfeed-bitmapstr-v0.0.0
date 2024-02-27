@@ -262,19 +262,19 @@
         {#if $settingsBitmap.showMyBitmap}
 
         <p>Connect yer wallet</p>
-        <button style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
-        <br />
+        <button class="primary" style="background-color: {$currentColor1}" on:click={ConnectWallet}>UniSat</button>
+        <!-- <br />
         <button style="background-color: {$currentColor1}">Hiro</button>
         <br />
-        <button style="background-color: {$currentColor1}">Xverse</button>
+        <button style="background-color: {$currentColor1}">Xverse</button> -->
         {:else}
 
         <p>Connect yer wallet</p>
         <button class="primary" on:click={ConnectWallet}>UniSat</button>
-        <br />
+        <!-- <br />
         <button class="primary">Hiro</button>
         <br />
-        <button class="primary">Xverse</button>
+        <button class="primary">Xverse</button> -->
 
         {/if}
 

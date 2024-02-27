@@ -1,0 +1,466 @@
+﻿.blockinfogroup {
+    font-size: 12px;
+margin: auto;
+    background: #ffffff89;
+width: 100%;
+    box-shadow: inset 0px 1px 4px rgb(0, 0, 0);
+    border-radius: 5px;
+    color: #000000;
+   }
+
+.tb {
+    border: none;
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    background: rgba(253, 255, 131, 0.00);
+    border-radius: 4px;
+}
+
+#nkplay {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: 'left-panel colors-container pads-container';
+    background: url(../images/img-nk-1-pads/synth-base-panel.svg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 100%;
+    width: 1200px;
+    height: 470px;
+    margin: auto;
+    margin-bottom: -1px;
+}
+#left-panel {
+    margin-left: 40px;
+    height:400px;
+}
+
+
+#knob-controls {
+    display: grid;   
+    justify-items: center;
+    box-shadow: inset 0px 0px 15px #000000;
+    border-radius: 14px;
+    height: 62px;
+}
+#knobs {
+    display: grid;
+    grid-template-columns: 64px 64px 64px 64px;
+    grid-template-areas: 'knob1 knob2 knob3 knob4';
+    justify-items: center;
+    align-items: center;
+}
+#slider-controls {
+    display: grid;
+    justify-items: center;
+}
+#sliders {
+    display: grid;
+    grid-template-columns:auto 25px auto 25px auto 25px auto 25px auto auto auto auto auto auto;
+   
+    grid-template-areas: 'pan vol slider-effect slider2 slider3 slider4 slider5 Names Preset effect';
+
+    grid-template-rows: auto auto;
+    grid-auto-rows: auto ;
+                          
+
+    justify-items: center;
+    padding: 8px;
+}
+
+#panSlider {
+
+    display: grid;
+    grid-template-columns: auto;   
+    grid-template-areas: 'pan ';
+    grid-template-rows: auto auto auto;
+    grid-auto-rows: auto ;
+    justify-items: center; 
+    padding: 8px;
+}
+
+#transporter {
+
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;   
+    grid-template-areas: 'prevslicebutton playtoneseq playallheights muteBTN record clickthrubutton';
+    justify-items: center;
+    padding: 8px;
+}
+
+#slicer {
+    height: auto;
+    text-align: center;
+    box-shadow: inset 0px 0px 15px #000000;
+    border-radius: 14px;
+}
+#transporter {
+    display: grid;
+    /* grid-template-columns: 60px 60px 60px 60px 60px 60px; */
+    grid-template-areas: 'prevslicebutton playtoneseq playallheights muteBTN record clickthrubutton';
+    justify-items: center;
+}
+#notebuttons {
+    display: grid;
+    grid-template-columns: 80px 80px 80px 80px;
+    grid-template-areas: 'wholeswitch halfswitch quarterswitch eighthswitch';
+    justify-content:center;
+}
+#midiswitches {
+
+}
+
+#prevslicebutton {
+    grid-area: prevslicebutton;
+    background-image: url(../images/blocknav/backbutton.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 70px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+}
+
+    #prevslicebutton:hover {
+       
+    }
+
+#clickthrubutton {
+    grid-area: clickthrubutton;
+    background-image: url(../images/blocknav/nextbutton.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 70px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+}
+
+#wholeswitch {
+    background-image: url(/images/notes/wholeBtn.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 80px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+}
+
+    #wholeswitch:hover {
+        background-image: url(/images/notes/wholeBtn-hvr.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 80px;
+        height: 25px;
+        border: none;
+        background-color: transparent;
+    }
+
+#halfswitch {
+    background-image: url(/images/notes/halfBtn.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 80px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+}
+
+    #halfswitch:hover {
+        background-image: url(/images/notes/halfBtn-hvr.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 80px;
+        height: 25px;
+        border: none;
+        background-color: transparent;
+    }
+
+#quarterswitch {
+    background-image: url(../images/notes/quarterBtn.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 80px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+}
+
+    #quarterswitch:hover {
+        background-image: url(../images/notes/quarterBtn-hvr.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 80px;
+        height: 25px;
+        border: none;
+        background-color: transparent;
+    }
+
+#eighthswitch {
+    background-image: url(../images/notes/eighthBtn.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 80px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+}
+
+    #eighthswitch:hover {
+        background-image: url(../images/notes/eighthBtn-hvr.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 80px;
+        height: 25px;
+        border: none;
+        background-color: transparent;
+    }
+
+#lowercontrols {
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-template-areas: 'preset-group sound-group';
+}
+#sound-group {
+    grid-area: sound-group;
+    display: grid;
+    grid-template-columns: 120px 120px 120px ;
+    grid-template-rows:auto;
+    grid-template-areas: 'time name preset ';
+}
+#pad-group {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: ' makecolorpads save makebeatpad';
+}
+
+#makecolorpads {
+    grid-area: makecolorpads;
+}
+#save {
+    grid-area: save;
+}
+#makebeatpad {
+    grid-area: makebeatpad;
+}
+.pad {
+    background-color: wheat;
+    height: 80px;
+    width: 80px;
+}
+
+
+/*navbar end*/
+/*Player Controls*/
+#playtoneseq {
+    background-image: url(../images/BAplayer/playbutton.svg) !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 70px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+}
+
+#playallheights {
+    background-image: url(../images/BAplayer/playallbtn.svg) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 70px;
+    height: 40px;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+#muteBTN {
+    background-image: url(../images/BAplayer/pausebutton.svg) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 70px;
+    height: 40px;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+#record {
+    background-image: url(../images/BAplayer/recordbtn.svg) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 70px;
+    height: 40px;   
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+#cancel {
+    background-image: url(../images/BAplayer/stoprecordbtn.svg) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 60px;
+    height: 40px;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+}
+#tempo {
+  display: flex;
+  
+
+}
+
+#av-controls {
+    background: url(../images/img-nk-1-pads/nk-navbar-bkg.svg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 100%;
+    width: 1200px;
+    height: 116px;
+    margin: auto;
+    margin-left: auto;
+    margin-bottom: 1px;
+}
+
+#lowercontrols {
+    margin-left: 45px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: 'sound-group sound-group nk-1-logo';
+}
+#nk-1-logo {
+    background: url(../images/NK-1-logo.png);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 100%;
+    width: 200px;
+    height: 25px;
+    margin-left:415px;    
+    margin-top:70px;
+}
+.lower {
+    margin-top: 10px;
+}
+/* .label {
+    text-align: center;
+    display: block;
+    color: #FDFF83 !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size:small;
+} */
+.inline-label {
+   
+    text-align: center;
+    display: inline-block;
+    color: #FDFF83 !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: small;
+}
+.vert-label {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    text-align: center;
+    display: inline-block;
+    color: #FDFF83 !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: small;
+}
+.vert-label-knob {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    text-align: center;
+    display: inline-block;
+    color: #FDFF83 !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+}
+.bfdropdown {
+    background: url(../images/synth-btn-bgn.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: transparent;
+    width: 120px;
+    height: 35px;
+    border: none;
+    color: #ffd800;
+    font-size: small !important;
+    display: block;
+    font-family: sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    box-sizing: border-box;
+    margin: 0;
+    appearance: none;
+    -moz-appearance: none;
+}
+.bfdropdown::-ms-expand {
+    display: none;
+}
+    .bfdropdown:hover {
+        color: #ffd800;
+    }
+    .bfdropdown:focus {
+        color: #ffd800;
+        outline: none;
+    }
+    .bfdropdown option {
+        background-color: black;
+        font-size: small;
+    }
+
+.colorsbtn {
+    background: url(../images/synth-btn-bgn.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: transparent;
+    width: 120px;
+    height: 35px;
+    border: none;
+    color: #ffd800;
+    font-size: small !important;
+    display: block;
+    /*font-size: 16px;*/
+    font-family: sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    box-sizing: border-box;
+    margin: 0;
+    appearance: none;
+    -moz-appearance: none;
+}
+
+
+CODE MIRROR
+*/
+.CodeMirror {
+    border: 2px solid #777;
+    height: auto;
+}
+
+.CodeMirror-focused {
+    border: 2px solid #22DBC0;
+}
+
+.cm-s-default .cm-property {
+    color: #3833ED !important;
+}
+
+.cm-s-default .cm-string {
+    color: #7F33ED;
+}
+
+.cm-s-default .cm-number {
+    color: #f5871f;
+}
+
+.Error {
+    border-color: red;
+}

@@ -13,6 +13,7 @@ import { fade } from 'svelte/transition'
     import BitcoinAudio from './BitcoinAudio.svelte';
     import TonejsAudio from './tonejs/TonejsAudio.svelte';
     import RangeSlider from './util/RangeSlider.svelte';
+    import Beatfeed from './Beatfeed.svelte';
 
 let color1 = $currentColor1
 let color2 = $currentColor2
@@ -622,11 +623,12 @@ async function goToBlock(e) {
 </style>
 
 <OverlayAudio name="tx" on:close={onClose} style="background-color: {color1}">
-  <BitcoinAudio />
+  <Beatfeed />
   <!-- <RangeSlider /> -->
 
   {#if $detailTx}
   <section class="tx-detail">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="icon-button" class:disabled={$highlightingFull} on:click={() => addToWatchlist($detailTx.id)} title="Add transaction to watchlist">
       <Icon icon={BookmarkIcon}/>
     </div>

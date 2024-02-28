@@ -5,12 +5,15 @@
   import fragShaderSrc from '../shaders/tx.frag'
   import TxSprite from '../models/TxSprite.js'
   import { color, hcl } from 'd3-color'
-  import { darkMode, settings, devSettings, freezeResize } from '../stores.js'
+  import { darkMode, settings, devSettings, freezeResize, settingsBitmap } from '../stores.js'
   import config from '../config.js'
   import {currentThemevalue}  from '../stores';
 
   import { currentColor1 } from '../stores.js'
   import { currentColor2 } from '../stores.js'
+  import Cube from './Cube.svelte';
+  import { insarray } from '../stores.js'; 
+
 
    
   export let selectedThemevalue = writable(currentThemevalue);
@@ -81,9 +84,9 @@
   let canvasInitialized = false;
   $: currentthemevalue = $currentThemevalue;
 
-  async function initializeCanvas() {
+  export async function initializeCanvas() {
 
-    await initCanvas(); // Assuming initCanvas is an async function
+    await initCanvas(); 
     canvasInitialized = true;
     
     currentThemevalue.subscribe(value => {
@@ -253,7 +256,7 @@
     currentColorValue1 = currentColorValue1
     currentColor1.set(currentColorValue1) 
 
-    currentColorValue2 = rgbArray[currentthemevalue + 255]
+    currentColorValue2 = rgbArray[currentthemevalue + 100]
     currentColorValue2 = currentColorValue2
     currentColor2.set(currentColorValue2) 
 
@@ -276,7 +279,7 @@
     return texture;
   }
   
-  async function initCanvas () {
+  export async function initCanvas () {
     gl.clearColor(0.0, 0.0, 0.0, 0.0)
     gl.clear(gl.COLOR_BUFFER_BIT)
 
@@ -352,10 +355,19 @@
   width: auto;
   /* pointer-events: none; */
   overflow: hidden;
+  z-index: -15;
 }
 </style>
 
 <svelte:window on:resize={resizeCanvas} on:load={windowReady} on:dblclick={initCanvas} />
+
+{#if $settingsBitmap.show3DBitmap}
+<!-- <div id="scene-container">
+  <Cube/>
+  {#each $insarray as ins}
+<p>{[ins]}</p>
+{/each}
+</div> -->
 
 <canvas
   class="tx-scene2"
@@ -364,3 +376,16 @@
   style="width: {cssWidth}px; height: {cssHeight}px;"
   bind:this={canvas}
 ></canvas>
+{:else}
+
+<canvas
+  class="tx-scene2"
+  width={displayWidth}
+  height={displayHeight}
+  style="width: {cssWidth}px; height: {cssHeight}px;"
+  bind:this={canvas}
+></canvas>
+
+{/if}
+
+

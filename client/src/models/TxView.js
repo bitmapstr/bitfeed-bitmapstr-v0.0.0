@@ -1,6 +1,6 @@
 import TxSprite from './TxSprite.js'
 
-const highlightTransitionTime = 300
+const highlightTransitionTime = 3000
 
 // converts from this class's update format to TxSprite's update format
 // now, id, value, position, size, color, alpha, duration, adjust

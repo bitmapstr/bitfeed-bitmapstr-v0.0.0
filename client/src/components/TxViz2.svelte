@@ -9,12 +9,8 @@
            devEvents, devSettings, pageWidth, pageHeight, loading, freezeResize, currentColor1, settingsBitmap, verifiedBitmapstr, isBitmapOwner } from '../stores.js'
   import BlockInfo from '../components/BlockInfo.svelte'
   import SearchBar from '../components/SearchBar.svelte'
-  import TxInfo from '../components/TxInfo.svelte'
   import Sidebar from '../components/Sidebar.svelte'
-  import TransactionOverlay from '../components/TransactionOverlay.svelte'
-  import AboutOverlay from '../components/AboutOverlay.svelte'
-  import DonationOverlay from '../components/DonationOverlay.svelte'
-  import SupportersOverlay from '../components/SupportersOverlay.svelte'
+  import Sidebarleft from '../components/SidebarLeft.svelte'
   import LoadingAnimation from '../components/util/LoadingAnimation.svelte'
   import Alerts from '../components/alert/Alerts.svelte'
   import { numberFormat } from '../utils/format.js'
@@ -22,13 +18,14 @@
   import { formatCurrency } from '../utils/fx.js'
   import { fade } from 'svelte/transition'
   import config from '../config.js'
-  import Cube from './Cube.svelte'
-    import RunningOsterich from './RunningOsterich.svelte';
-    import NavBar from './NavBar.svelte';
     import BlockInfo2 from './BlockInfo2.svelte';
     import TxAudio from './TxAudio.svelte';
     import TxRender2 from './TxRender2.svelte';
-    import BitcoinAudio from './BitcoinAudio.svelte';
+    import TransactionOverlayAudio from './TransactionOverlayAudio.svelte';
+    import TransactionOverlay from './TransactionOverlay.svelte';
+
+    import NavBar from './NavBar.svelte';
+    import Cube from './Cube.svelte';
 
   let initCanvas
   let width = window.innerWidth - 20
@@ -224,7 +221,7 @@
 </script>
 
 <style type="text/scss">
-  .tx-area {
+  .audio-tx-area {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -604,9 +601,12 @@
 <svelte:window on:resize={resize} on:load={resize} on:click={pointerLeave} />
 <!-- <svelte:window on:resize={resize} on:click={pointerMove} /> -->
 
-<div class="tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
+
+
+<div class="audio-tx-area" class:light-mode={!$settings.darkMode} style="background-color: {color1}; width: {canvasWidth}; height: {canvasHeight}">
           
             {#if !$settingsBitmap.showMyBitmap }   
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="canvas-wrapper"  on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender controller={txController} />
         
@@ -638,6 +638,7 @@
               
             </div>
             {:else if $settingsBitmap.showMyBitmap}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="canvas-wrapper" on:pointerleave={pointerLeave} on:pointermove={pointerMove} on:click={onClick} >
               <TxRender2 bind:initCanvas={initCanvas}  displayHeight={canvasHeight} displayWidth={canvasWidth} controller={txController} />
               
@@ -666,19 +667,12 @@
                                </div>
                 <div class="spacer"></div>
                 <div class="spacer"></div>
-                <!-- <RunningOsterich /> -->
 
               </div>
               
             </div>
             {/if}
-            <!-- {#if $selectedTx }
-
-            <TxAudio tx={$selectedTx} position={audioInfoPosition} />
-           
-          {/if}  
- -->
-           
+                      
 
   <div class="top-bar">
     <div class="status" class:tiny={$tinyScreen}>
@@ -693,7 +687,11 @@
       <div class="row">
         {#if $verifiedBitmapstr && $settingsBitmap.audioOn }
           <div class="audioOn-light {connectionColor}" title={connectionTitle}></div>
-          <BitcoinAudio />
+          {#if $selectedTx }
+
+          <TxAudio tx={$selectedTx} position={audioInfoPosition} />
+         
+        {/if}  
         {/if}
       </div>
       <div class="row">
@@ -702,14 +700,14 @@
         {/if}
       </div>
     </div>
-    {#if $settingsBitmap.showSearch && !$tinyScreen && !$compactScreen }
+    {#if $settings.showSearch && !$tinyScreen && !$compactScreen }
       <div class="search-bar-wrapper">                         
             <SearchBar />                       
       </div>
     {/if}
-    <!-- {#if $settings.showBlockInfo && !$settings.showSearch }  
-    <NavBar />                        
-    {/if}  -->
+   {#if $settingsBitmap.showNav }  
+             <NavBar />                        
+    {/if} 
     {#if !$tinyScreen}
       <div class="alert-bar-wrapper">
         {#if config.messagesEnabled && $settings.showMessages}
@@ -722,8 +720,11 @@
   </div>
 
   <Sidebar />
-  
-
+{#if $settingsBitmap.audioOn}
+<TransactionOverlayAudio />
+{:else}
+  <TransactionOverlay />
+{/if}
   {#if $loading}
     <div class="loading-overlay" in:fade={{ delay: 1000, duration: 500 }} out:fade={{ duration: 200 }}>
       <div class="loading-wrapper">

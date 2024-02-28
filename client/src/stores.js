@@ -127,6 +127,7 @@ export const walletConnected = writable()
 export const verifiedBitmapstr = writable()
 export const unisatAccounts = writable("no accounts")
 export const isBitmapOwner = writable(false)
+export const insarray = writable([])
 
 let localeCurrencyCode = LocaleCurrency.getCurrency(navigator.language)
 if (!currencies[localeCurrencyCode]) localeCurrencyCode = 'USD'
@@ -141,11 +142,13 @@ const defaultSettings = {
 	colorByFee: false,
 	showMessages: true,
 	showSearch: true,
-	showBlockInfo: false,
-	showMyBitmap: true,
+	showBlockInfo: true,
+	showMyBitmap: false,
+	show3DBitmap: true,
 	noTrack: false,
 	blocksEnabled: true,
-	verifiedBitmapstr: true
+	verifiedBitmapstr: false,
+	showNav: false
 }
 
 const searchParams = URL ? (new URL(document.location)).searchParams : {}

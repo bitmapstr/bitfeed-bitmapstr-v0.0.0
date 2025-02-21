@@ -1,5 +1,5 @@
 :root {
-  --dark-a: #102226;
+  --dark-a: #000000;
   --dark-b: #1d2f33;
   --dark-c: #2a3c40;
   --dark-d: #374a4f;
@@ -78,7 +78,7 @@ html, body {
 }
 
 body {
-  color: #333;
+  color: #000000;
   margin: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
